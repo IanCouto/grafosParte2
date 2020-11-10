@@ -168,7 +168,7 @@ Grafo *leitura(ifstream &arquivo_entrada)
     arquivo_entrada >> leitura;
     for (int i = 0; i < ordem; i++)
     {
-        for (int j = 0; j<ordem; j++, arquivo_entrada> > leitura)
+        for (int j = 0; j<ordem; j++, arquivo_entrada >> leitura)
         {
             if (leitura == 1 && i != j)
             {
