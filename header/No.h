@@ -9,17 +9,15 @@ private:
 
 public:
     //Contrutor e Destrutor
-    No(int peso, int noDestino);
+    No(int noDestino);
     No();
     ~No();
 
     //Getters
-    int getPeso();
     int getNoDestino();
     No* getProximoNo();
 
     //Setters
-    void setPeso(int peso);
     void setNoDestino(int noDestino);
     void setProximoNo(No* proximoNo);
 };

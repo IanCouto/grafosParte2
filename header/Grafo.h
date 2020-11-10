@@ -40,16 +40,10 @@ public:
     void setQuantAresta(int val);
 
     //Outros métodos
-    void inserirAresta(int id, int id_destino, float peso);
+    void inserirAresta(int id, int id_destino);
     void mostrarGrafo(ofstream &arquivo_saida);
     void mostrarArestas(ofstream &arquivo_saida);
     void mostrarNos(ofstream &arquivo_saida);
-    void caminhamentoLargura(int id_no, ofstream &arquivo_saida);
-    void caminhamentoProfundidade(int id_no, ofstream &arquivo_saida);
-    void dijkstra(int idOrigem, int idDestino, ofstream &arquivo_saida);
-    void floyd(int idOrigem, int idDestino, ofstream &arquivo_saida);
-    void AGMPrim(ofstream &arquivo_saida);
-    void AGMKruskal(ofstream &arquivo_saida);
     void gerarResultadosGrafo(ofstream &arquivo_saida);
     int guloso(ofstream &arquivo_saida);
     int gulosoRandomizado(float alfa);

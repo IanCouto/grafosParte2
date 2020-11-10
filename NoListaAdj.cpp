@@ -16,7 +16,7 @@ using namespace std;
         this->id = id;
         this->noAnterior = nullptr;
         this->proximoNo = nullptr;
-        this->vizinhos = new No(0, vizinho);
+        this->vizinhos = new No(vizinho);
         this->grau = 1;
     }
 
@@ -86,7 +86,7 @@ using namespace std;
     }
 
     void NoListaAdj::adicionaVizinho(int val){
-        No *p = new No (0,val);
+        No *p = new No (val);
         if(vizinhos==nullptr){
             vizinhos = p;
             grau++;

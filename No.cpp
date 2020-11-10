@@ -3,14 +3,12 @@
 using namespace std;
 
 //Construtor
-No::No(int peso, int noDestino) {
-    this->peso = peso;
+No::No(int noDestino) {
     this->noDestino = noDestino;
     this->proximoNo = nullptr;
 };
 
 No::No() {
-    this->peso = -1;
     this->noDestino = -1;
     this->proximoNo = nullptr;
 }
@@ -20,13 +18,6 @@ No::~No() {
 }
 
 //Getters
-/**
- * Função que retorna o peso da aresta
- * @return peso
- */
-int No::getPeso(){
-    return this->peso;
-}
 
 /**
  * Função que retorna o no destino da aresta
@@ -45,13 +36,6 @@ No* No::getProximoNo(){
 }
 
 //Setters
-/**
- * Função que altera o peso da aresta
- * @param peso
- */
-void No::setPeso(int peso){
-    this->peso = peso;
-}
 
 /**
  * Função que altera o no destino da aresta
