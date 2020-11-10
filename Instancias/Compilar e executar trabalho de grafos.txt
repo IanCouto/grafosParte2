@@ -1,2 +1,0 @@
-g++ *.c* -o exec.exe
-exec.exe Instancias/instance_1 resultado.txt

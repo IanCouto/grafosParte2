@@ -1,192 +1,348 @@
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>
-#include "Grafo.h"
-#include <math.h>
-#include <ctime>
+#include <unistd.h>
 #include <chrono>
+#include <time.h>
+#include "header/Grafo.h"
+
 using namespace std::chrono;
 using namespace std;
-int menu(){
+/**
+ * Trabalho de grafos do GRUPO 9
+ * 
+ * @author ANTÔNIO HENRIQUE PASSAMAI PENIZOLLO
+ * @author IAN COUTO DE PAULA
+ * @author LEONARDO AZALIM DE OLIVEIRA
+ * @author MARCELO GONÇALVES DE SOUZA COSTA
+ * @author RAÍH CÉSAR SILVA DE LIMA
+ */
+
+/**
+ * Função utilizada para imprimir o menu e computar a funcionalidade escolhida pelo usuário
+ * @return int escolha do usuário
+ */
+int menu()
+{
 
     int selecao;
-    cout << "MENU" << endl;
-    cout << "----" << endl;
-    cout << "[1] Mostrar Aps e seus clientes" << endl;
-    cout << "[2] Mostrar Grafo de conflito" << endl;
-    cout << "[3] Guloso" << endl;
-    cout << "[4] Guloso Randomizado" << endl;
-    cout << "[5] Guloso Randomizado Reativo" << endl;
-    cout << "[0] Sair" << endl;
-
+    cout << "----------------------------------" << endl;
+    cout << "   Subconjunto dominante minimo" << endl;
+    cout << "----------------------------------" << endl;
+    cout << "               MENU" << endl;
+    cout << "----------------------------------" << endl;
+    cout << " Opcao | Descricao" << endl;
+    cout << "----------------------------------" << endl;
+    cout << "  [1]  | Mostrar Grafo" << endl;
+    cout << "  [2]  | Mostrar Nos e suas informacoes" << endl;
+    cout << "  [3]  | Mostrar Arestas e suas informacoes" << endl;
+    cout << "  [4]  | Caminhamento em largura" << endl;
+    cout << "  [5]  | Caminhamento em profundidade" << endl;
+    cout << "  [6]  | Dijkstra: caminho minimo" << endl;
+    cout << "  [7]  | Floyd: caminho minimo" << endl;
+    cout << "  [8]  | Arvore Geradora Minima - Prim" << endl;
+    cout << "  [9]  | Arvore Geradora Minima - Kruskal" << endl;
+    cout << "  [10] | Guloso" << endl;
+    cout << "  [11] | Guloso randomizado" << endl;
+    cout << "  [0]  | Sair" << endl;
+    cout << "----------------------------------" << endl;
     cin >> selecao;
 
     return selecao;
-
 }
+/**
+ * função utilizada para selecionar a funcionalidade escolhida pelo usuário
+ * @param selecao funcionalidade escolhida pelo usuário
+ * @param grafo grafo
+ * @param arquivo_saida arquivo de saída de dados
+ */
+void selecionar(int selecao, Grafo *grafo, ofstream &arquivo_saida)
+{
 
-void infoGulosoRandomizado(ofstream& arquivo_saida,Grafo* grafo, int execucoes,int interacoes,float alfa,float vetResultados[]){
-    float melhorExecucao=99999,piorExecucao=0,media=0,execucaoAtual;
-    float melhorTempo=9999999, piorTempo=0, mediaTempo=0;
-    double tempoAtualSegundos;
+    switch (selecao)
+    {
 
-    arquivo_saida << ">>>>>>>>>>ALFA "<<alfa<<"<<<<<<<<<<" << endl;
-    arquivo_saida << "Execucão: Interferencia Total / Tempo de Execução(segundos)" << endl;
-    for (int i = 0; i < execucoes; i++){
+        //mostrar grafo
+    case 1:
+    {
+        grafo->mostrarGrafo(arquivo_saida);
+        break;
+    }
+        //mostrar nos
+    case 2:
+    {
+        grafo->mostrarNos(arquivo_saida);
+        break;
+    }
+        //mostrar arestas
+    case 3:
+    {
+        grafo->mostrarArestas(arquivo_saida);
+        break;
+    }
+        //Caminhamento em largura
+    case 4:
+    {
+        int idOrigem;
+        cout << "Digite o id do no inicial: ";
+        cin >> idOrigem;
+        if (grafo->isComecaZero())
+        {
+            if (!(idOrigem < 0 || idOrigem >= grafo->getOrdem()))
+            {
+                grafo->caminhamentoLargura(idOrigem, arquivo_saida);
+            }
+            else
+                cout << endl
+                     << "Id inexistente!" << endl;
+        }
+        else
+        {
+            if (!(idOrigem <= 0 || idOrigem > grafo->getOrdem()))
+            {
+                if (idOrigem == grafo->getOrdem())
+                {
+                    idOrigem = 0;
+                }
+                grafo->caminhamentoLargura(idOrigem, arquivo_saida);
+            }
+            else
+                cout << endl
+                     << "Id inexistente!" << endl;
+        }
+        break;
+    }
+        //Caminhamento em profundidade
+    case 5:
+    {
+        int idOrigem;
+        cout << "Digite o id do no inicial: ";
+        cin >> idOrigem;
+
+        if (grafo->isComecaZero())
+        {
+            if (!(idOrigem < 0 || idOrigem >= grafo->getOrdem()))
+            {
+                grafo->caminhamentoProfundidade(idOrigem, arquivo_saida);
+            }
+            else
+                cout << endl
+                     << "Id inexistente!" << endl;
+        }
+        else
+        {
+            if (!(idOrigem <= 0 || idOrigem > grafo->getOrdem()))
+            {
+                if (idOrigem == grafo->getOrdem())
+                {
+                    idOrigem = 0;
+                }
+                grafo->caminhamentoProfundidade(idOrigem, arquivo_saida);
+            }
+            else
+                cout << endl
+                     << "Id inexistente!" << endl;
+        }
+        break;
+    }
+        //Dijkstra: caminho minimo
+    case 6:
+    {
+        int idOrigem, idDestino;
+        cout << "Digite o id do no inicial: ";
+        cin >> idOrigem;
+        cout << "Digite o id do no de destino: ";
+        cin >> idDestino;
+        if (grafo->isComecaZero())
+        {
+            if (!(idOrigem < 0 || idOrigem >= grafo->getOrdem()) || !(idDestino < 0 || idDestino >= grafo->getOrdem()))
+            {
+                grafo->dijkstra(idOrigem, idDestino, arquivo_saida);
+            }
+            else
+            {
+                cout << endl
+                     << "Id inexistente!" << endl;
+            }
+        }
+        else
+        {
+            if (!(idOrigem <= 0 || idOrigem > grafo->getOrdem()) || !(idDestino <= 0 || idDestino > grafo->getOrdem()))
+            {
+                if (idOrigem == grafo->getOrdem())
+                {
+                    idOrigem = 0;
+                }
+                if (idDestino == grafo->getOrdem())
+                {
+                    idDestino = 0;
+                }
+                grafo->dijkstra(idOrigem, idDestino, arquivo_saida);
+            }
+            else
+            {
+                cout << endl
+                     << "Id inexistente!" << endl;
+            }
+        }
+        break;
+    }
+        //Floyd: caminho minimo
+    case 7:
+    {
+        int idOrigem, idDestino;
+        cout << "Digite o id do no inicial: ";
+        cin >> idOrigem;
+        cout << "Digite o id do no de destino: ";
+        cin >> idDestino;
+        if (grafo->isComecaZero())
+        {
+            if (!(idOrigem < 0 || idOrigem >= grafo->getOrdem()) || !(idDestino < 0 || idDestino >= grafo->getOrdem()))
+            {
+                grafo->floyd(idOrigem, idDestino, arquivo_saida);
+            }
+            else
+                cout << endl
+                     << "Id inexistente!" << endl;
+        }
+        else
+        {
+            if (!(idOrigem <= 0 || idOrigem > grafo->getOrdem()) || !(idDestino <= 0 || idDestino > grafo->getOrdem()))
+            {
+                if (idOrigem == grafo->getOrdem())
+                {
+                    idOrigem = 0;
+                }
+                if (idDestino == grafo->getOrdem())
+                {
+                    idDestino = 0;
+                }
+                grafo->floyd(idOrigem, idDestino, arquivo_saida);
+            }
+            else
+                cout << endl
+                     << "Id inexistente!" << endl;
+        }
+
+        break;
+    }
+        //Arvore Geradora Minima - Prim
+    case 8:
+    {
+        grafo->AGMPrim(arquivo_saida);
+        break;
+    }
+        //Arvore Geradora Minima - Kruskal
+    case 9:
+    {
+        grafo->AGMKruskal(arquivo_saida);
+        break;
+    }
+    case 10:
+    {
+        arquivo_saida << "-----------GULOSO------------" << endl;
+        arquivo_saida << "Tamanho / Tempo de Execução(segundos)" << endl;
 
         auto start = high_resolution_clock::now();
-        execucaoAtual=grafo->gulosoRandomizado(alfa,interacoes);
+        int resultado = grafo->guloso(arquivo_saida);
+
         auto stop = high_resolution_clock::now();
 
-        //INFO DE INTERFERENCIA
-        media += execucaoAtual;
-        if(execucaoAtual<melhorExecucao) melhorExecucao = execucaoAtual;
-        if(execucaoAtual>piorExecucao) piorExecucao = execucaoAtual;
-
-        //INFO DE TEMPO DE EXECUÇÃO
-        auto tempoAtual = duration_cast<microseconds>(stop - start);
-        tempoAtualSegundos = tempoAtual.count()/1000000.0;
-        mediaTempo += tempoAtualSegundos;
-        if(tempoAtualSegundos<melhorTempo) melhorTempo = tempoAtualSegundos;
-        if(tempoAtualSegundos>piorTempo) piorTempo = tempoAtualSegundos;
-
-
-        arquivo_saida << i+1 << ": " << execucaoAtual <<" / "<< tempoAtualSegundos << endl;
+        auto duration = duration_cast<microseconds>(stop - start);
+        double tempoEmSegundos = duration.count() / 1000000.0;
+        arquivo_saida << resultado << " / " << tempoEmSegundos << endl
+                      << endl;
+        break;
     }
-    arquivo_saida << endl;
-    arquivo_saida << "INFO INTERFERENCIA" << endl;
-    arquivo_saida << "Melhor: " << melhorExecucao << endl;
-    arquivo_saida << "Pior: " << piorExecucao << endl;
-    arquivo_saida << "Media: " << media/30 << endl << endl;
+    case 11:
+    {
 
-    arquivo_saida << "INFO TEMPO" << endl;
-    arquivo_saida << "Melhor: " << melhorTempo << endl;
-    arquivo_saida << "Pior: " << piorTempo << endl;
-    arquivo_saida << "Media: " << mediaTempo/30 << endl << endl;
-    arquivo_saida << endl;
-    vetResultados[0]+=media;
-    vetResultados[1]+=mediaTempo;
-}
+        int melhorResultado = grafo->getOrdem(), piorResultado = 0;
+        float alfas[5] = {0.1, 0.2, 0.3, 0.5, 0.7};
+        for (int j = 0; j < 1; j++)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                arquivo_saida << endl
+                     << "=================================================================" << endl
+                     << "Execucao: " << i + 1 << " Alfa: " << alfas[j]<<endl
+                     << "=================================================================" << endl;
 
-
-void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida){
-
-    switch (selecao) {
-        case 1:{
-            grafo->mostrarNos(arquivo_saida);
-            break;
-        }
-
-        case 2:{
-            grafo->mostrarGrafo(arquivo_saida);
-            break;
-        }
-
-        case 3:{
-            arquivo_saida << "-----------GULOSO------------" << endl;
-            arquivo_saida << "Interferencia Total / Tempo de Execução(segundos)" <<endl;
-
-            auto start = high_resolution_clock::now();
-            float resultado = grafo->guloso();
-            auto stop = high_resolution_clock::now();
-
-            auto duration = duration_cast<microseconds>(stop - start);
-            double tempoEmSegundos = duration.count()*1000000.0;
-            arquivo_saida << resultado<<" / "<< tempoEmSegundos  << endl <<endl;
-            break;
-        }
-
-        case 4:{
-            arquivo_saida << "-----------GULOSO RANDOMIZADO------------" << endl;
-            float vetResultados[2] = {0,0};
-            infoGulosoRandomizado(arquivo_saida,grafo,30,5,0.2,vetResultados);
-            infoGulosoRandomizado(arquivo_saida,grafo,30,5,0.4,vetResultados);
-            infoGulosoRandomizado(arquivo_saida,grafo,30,5,0.5,vetResultados);
-            arquivo_saida << endl;
-            arquivo_saida << "Media de interferencia todos alfas: " << vetResultados[0]/90 << endl;
-            arquivo_saida << "Media do tempo de todos alfas: " << vetResultados[1]/30 <<endl;
-            break;
-        }
-
-        case 5:{
-            arquivo_saida << "-----------GULOSO RANDOMIZADO REATIVO------------" << endl;
-            float melhorExecucao=99999,piorExecucao=0,media=0,execucaoAtual = 0, vetorAlfas[10] = {0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0};
-            float melhorTempo = 99999,piorTempo=0, mediaTempo=0;
-            double tempoAtualSegundos;
-            arquivo_saida << "Execucão: Interferencia Total / Tempo de Execução(segundos)" << endl;
-            for (int i = 0; i < 100; i++){
+                arquivo_saida << "-----------GULOSO RANDOMIZADO------------" << endl;
+                arquivo_saida << "Tamanho / Tempo de Execução(segundos)" << endl;
 
                 auto start = high_resolution_clock::now();
-                execucaoAtual=grafo->gulosoRandomizadoReativo(100,vetorAlfas);
+                int resultado = grafo->gulosoRandomizado(alfas[j]);
+
+                if (resultado < melhorResultado)
+                    melhorResultado = resultado;
+                if (resultado > piorResultado)
+                    piorResultado = resultado;
+
                 auto stop = high_resolution_clock::now();
 
-                media += execucaoAtual;
-                if (execucaoAtual < melhorExecucao) melhorExecucao = execucaoAtual;
-                if (execucaoAtual > piorExecucao) piorExecucao = execucaoAtual;
-
-                //INFO DE TEMPO DE EXECUÇÃO
-
-                auto tempoAtual = duration_cast<microseconds>(stop - start);
-                tempoAtualSegundos = tempoAtual.count()/1000000.0;
-                mediaTempo += tempoAtualSegundos;
-                if(tempoAtualSegundos<melhorTempo) melhorTempo = tempoAtualSegundos;
-                if(tempoAtualSegundos>piorTempo) piorTempo = tempoAtualSegundos;
-                arquivo_saida << i+1 << ": " << execucaoAtual << " / "<< tempoAtualSegundos << endl;
-           }
-
-            arquivo_saida << "Melhor Execucao: " << melhorExecucao << endl;
-            arquivo_saida << "Pior Execucao: " << piorExecucao << endl;
-            arquivo_saida << "Media: " << media/30 << endl;
-            arquivo_saida << endl;
-            arquivo_saida << "INFO TEMPO" << endl;
-            arquivo_saida << "Melhor: " << melhorTempo << endl;
-            arquivo_saida << "Pior: " << piorTempo << endl;
-            arquivo_saida << "Media: " << mediaTempo/30 << endl << endl;
-            arquivo_saida << endl;
-            break;
+                auto duration = duration_cast<microseconds>(stop - start);
+                double tempoEmSegundos = duration.count() / 1000000.0;
+                arquivo_saida << resultado << " / " << tempoEmSegundos << endl
+                              << endl;
+            }
         }
-
+        arquivo_saida << "Melhor resultado: " << melhorResultado << endl;
+        arquivo_saida << "Pior resultado: " << piorResultado << endl;
+        break;
+    }
+    //opção inválida
+    default:
+    {
+        cout << "Opcao invalida" << endl;
+        break;
+    }
     }
 }
 
+/**
+ * função para ler os dados do arquivo de entrada e armazenados na estrutura de um grafo
+ * @param arquivo_entrada arquivo de entrada de dados
+ * @return Grafo*
+ */
+Grafo *leitura(ifstream &arquivo_entrada)
+{
+    int ordem;
+    int idNoOrigem;
+    int idNoDestino;
 
-Grafo* leitura(ifstream& arquivo_entrada){
+    arquivo_entrada >> ordem;
 
-    int quantAps;
-    int quantClientes;
-    int x,y;
+    Grafo *grafo = new Grafo(ordem);
 
-    arquivo_entrada >> quantAps >> quantClientes;
-    Grafo* grafo = new Grafo(quantAps,quantClientes);
+    //Leitura do arquivo
+    float pesoAresta;
 
-    //Inserindo aps
-    for (int id = 0; id < quantAps; id++) {
-        arquivo_entrada >> x >> y;
-        grafo->inserirNo(id,x,y);
-    }
-    //Inserindo clientes
-    for (int id = 0; id < quantClientes; id++) {
-        arquivo_entrada >> x >> y;
-        grafo->inserirCliente(id,x,y);
-    }
-    //Definindo potencia de cada ap
-    grafo->definePotencia();
-
-    //Criar grafo de conflito
-    grafo->criarGrafoConflito();
+    while (arquivo_entrada >> idNoOrigem >> idNoDestino >> pesoAresta)
+        grafo->inserirAresta(idNoOrigem, idNoDestino, pesoAresta);
 
     return grafo;
-
 }
 
-int main(int argc, char* argv[]) {
-    srand(time(NULL));
-    //Verificação se todos os parâmetros do programa foram encontrados
-    if (argc != 3) {
+/**
+ * função principal, que gerencia todas as funcionalidades do código
+ * @param argc tamanho do vetor argv
+ * @param argv parâmetros a serem passados pelo terminal ao executar o programa.
+ * argv[0]: nome do executável;
+ * argv[1]: nome do arquivo de entrada;
+ * argv[2]: nome do arquivo de saida.
+ */
+int main(int argc, char *argv[])
+{
 
+    srand(time(NULL));
+    cout << "Carregando... " << endl;
+
+    //Verificação se todos os parâmetros do programa foram encontrados
+    if (argc != 3)
+    {
         cout << "ERRO: Esperado: ./<nome_programa> <arquivo_entrada> <arquivo_saida>" << endl;
         return 1;
-
     }
 
     //Abrindo arquivo de entrada
@@ -195,22 +351,24 @@ int main(int argc, char* argv[]) {
     arquivo_entrada.open(argv[1], ios::in);
     arquivo_saida.open(argv[2], ios::out | ios::trunc);
 
-	Grafo* grafo = new Grafo();
+    Grafo *grafo = new Grafo();
 
-    if(arquivo_entrada.is_open() )
+    if (arquivo_entrada.is_open())
         grafo = leitura(arquivo_entrada);
-    else{
+    else
         cout << "Nao foi possivel abrir o arquivo " << argv[1] << endl;
-        return 0;
-    }
 
+    cout << "Carregamento Concluido!" << endl;
 
+    grafo->gerarResultadosGrafo(arquivo_saida);
 
-    int selecao = menu();
-
-    while (selecao!=0){
-        selecionar(selecao,grafo,arquivo_saida);
-        selecao = menu();
+    arquivo_saida << endl
+                  << "------------------------------" << endl
+                  << "        FUNCIONALIDADES" << endl
+                  << "------------------------------" << endl;
+    for (int selecao = menu(); selecao != 0; selecao = menu())
+    {
+        selecionar(selecao, grafo, arquivo_saida);
     }
 
     //Fechando arquivo de entrada
@@ -219,5 +377,6 @@ int main(int argc, char* argv[]) {
     //Fechando arquivo de saída
     arquivo_saida.close();
 
+    delete grafo;
     return 0;
 }

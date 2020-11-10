@@ -1,625 +1,1347 @@
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 #include <fstream>
-#include <ctime>
-#include "Grafo.h"
-#include "No.h"
-#include <math.h>
+#include <cstring>
+#include <string.h>
+#include <chrono>
+#include <limits>
+#include "header/Grafo.h"
+#include "header/FilaEncadeada.h"
+#include "header/ListaEncadeada.h"
+#include "header/ListaAdjacenteEncadeada.h"
+
+#define INFINITO std::numeric_limits<int>::max()
 
 using namespace std;
 
-//Construtor
-Grafo::Grafo(int ordem, int quantClientes){
+/**
+ * Construtor
+ * @param ordem do grafo
+ */
+Grafo::Grafo(int ordem)
+{
     this->ordem = ordem;
-    this->primeiro_no = this->ultimo_no = nullptr;
     this->quant_aresta = 0;
-    this->quantClientes = quantClientes;
-    this->interferenciaTotal = 0;
-    tabelaInterferencia[0][0] = 1;
-    tabelaInterferencia[0][1] = 0.77;
-    tabelaInterferencia[0][2] = 0.54;
-    tabelaInterferencia[0][3] = 0.31;
-    tabelaInterferencia[0][4] = 0.09;
-    tabelaInterferencia[0][5] = 0;
-    tabelaInterferencia[0][6] = 0;
-    tabelaInterferencia[0][7] = 0;
-    tabelaInterferencia[0][8] = 0;
-    tabelaInterferencia[0][9] = 0;
-    tabelaInterferencia[0][10] = 0;
-
-    tabelaInterferencia[1][0] = 0.77;
-    tabelaInterferencia[1][1] = 1;
-    tabelaInterferencia[1][2] = 0.77;
-    tabelaInterferencia[1][3] = 0.54;
-    tabelaInterferencia[1][4] = 0.31;
-    tabelaInterferencia[1][5] = 0.09;
-    tabelaInterferencia[1][6] = 0;
-    tabelaInterferencia[1][7] = 0;
-    tabelaInterferencia[1][8] = 0;
-    tabelaInterferencia[1][9] = 0;
-    tabelaInterferencia[1][10] = 0;
-
-    tabelaInterferencia[2][0] = 0.54;
-    tabelaInterferencia[2][1] = 0.77;
-    tabelaInterferencia[2][2] = 1;
-    tabelaInterferencia[2][3] = 0.77;
-    tabelaInterferencia[2][4] = 0.54;
-    tabelaInterferencia[2][5] = 0.31;
-    tabelaInterferencia[2][6] = 0.09;
-    tabelaInterferencia[2][7] = 0;
-    tabelaInterferencia[2][8] = 0;
-    tabelaInterferencia[2][9] = 0;
-    tabelaInterferencia[2][10] = 0;
-
-    tabelaInterferencia[3][0] = 0.31;
-    tabelaInterferencia[3][1] = 0.54;
-    tabelaInterferencia[3][2] = 0.77;
-    tabelaInterferencia[3][3] = 1;
-    tabelaInterferencia[3][4] = 0.77;
-    tabelaInterferencia[3][5] = 0.54;
-    tabelaInterferencia[3][6] = 0.31;
-    tabelaInterferencia[3][7] = 0.09;
-    tabelaInterferencia[3][8] = 0;
-    tabelaInterferencia[3][9] = 0;
-    tabelaInterferencia[3][10] = 0;
-
-    tabelaInterferencia[4][0] = 0.09;
-    tabelaInterferencia[4][1] = 0.31;
-    tabelaInterferencia[4][2] = 0.54;
-    tabelaInterferencia[4][3] = 0.77;
-    tabelaInterferencia[4][4] = 1;
-    tabelaInterferencia[4][5] = 0.77;
-    tabelaInterferencia[4][6] = 0.54;
-    tabelaInterferencia[4][7] = 0.31;
-    tabelaInterferencia[4][8] = 0.09;
-    tabelaInterferencia[4][9] = 0;
-    tabelaInterferencia[4][10] = 0;
-
-    tabelaInterferencia[5][0] = 0;
-    tabelaInterferencia[5][1] = 0.09;
-    tabelaInterferencia[5][2] = 0.31;
-    tabelaInterferencia[5][3] = 0.54;
-    tabelaInterferencia[5][4] = 0.77;
-    tabelaInterferencia[5][5] = 1;
-    tabelaInterferencia[5][6] = 0.77;
-    tabelaInterferencia[5][7] = 0.54;
-    tabelaInterferencia[5][8] = 0.31;
-    tabelaInterferencia[5][9] = 0.09;
-    tabelaInterferencia[5][10] = 0;
-
-    tabelaInterferencia[6][0] = 0;
-    tabelaInterferencia[6][1] = 0;
-    tabelaInterferencia[6][2] = 0.09;
-    tabelaInterferencia[6][3] = 0.31;
-    tabelaInterferencia[6][4] = 0.54;
-    tabelaInterferencia[6][5] = 0.77;
-    tabelaInterferencia[6][6] = 1;
-    tabelaInterferencia[6][7] = 0.77;
-    tabelaInterferencia[6][8] = 0.54;
-    tabelaInterferencia[6][9] = 0.31;
-    tabelaInterferencia[6][10] = 0.09;
-
-    tabelaInterferencia[7][0] = 0;
-    tabelaInterferencia[7][1] = 0;
-    tabelaInterferencia[7][2] = 0;
-    tabelaInterferencia[7][3] = 0.09;
-    tabelaInterferencia[7][4] = 0.31;
-    tabelaInterferencia[7][5] = 0.54;
-    tabelaInterferencia[7][6] = 0.77;
-    tabelaInterferencia[7][7] = 1;
-    tabelaInterferencia[7][8] = 0.77;
-    tabelaInterferencia[7][9] = 0.54;
-    tabelaInterferencia[7][10] = 0.31;
-
-    tabelaInterferencia[8][0] = 0;
-    tabelaInterferencia[8][1] = 0;
-    tabelaInterferencia[8][2] = 0;
-    tabelaInterferencia[8][3] = 0;
-    tabelaInterferencia[8][4] = 0.09;
-    tabelaInterferencia[8][5] = 0.31;
-    tabelaInterferencia[8][6] = 0.54;
-    tabelaInterferencia[8][7] = 0.77;
-    tabelaInterferencia[8][8] = 1;
-    tabelaInterferencia[8][9] = 0.77;
-    tabelaInterferencia[8][10] = 0.54;
-
-    tabelaInterferencia[9][0] = 0;
-    tabelaInterferencia[9][1] = 0;
-    tabelaInterferencia[9][2] = 0;
-    tabelaInterferencia[9][3] = 0;
-    tabelaInterferencia[9][4] = 0;
-    tabelaInterferencia[9][5] = 0.09;
-    tabelaInterferencia[9][6] = 0.31;
-    tabelaInterferencia[9][7] = 0.54;
-    tabelaInterferencia[9][8] = 0.77;
-    tabelaInterferencia[9][9] = 1;
-    tabelaInterferencia[9][10] = 0.77;
-
-    tabelaInterferencia[10][0] = 0;
-    tabelaInterferencia[10][1] = 0;
-    tabelaInterferencia[10][2] = 0;
-    tabelaInterferencia[10][3] = 0;
-    tabelaInterferencia[10][4] = 0;
-    tabelaInterferencia[10][5] = 0;
-    tabelaInterferencia[10][6] = 1;
-    tabelaInterferencia[10][7] = 0.77;
-    tabelaInterferencia[10][8] = 0.54;
-    tabelaInterferencia[10][9] = 0.31;
-    tabelaInterferencia[10][10] = 0.09;
-
+    this->listaAdj = new No[ordem];
+    this->comecaZero = true;
 }
 
-Grafo::Grafo(){
-
+/**
+ * Construtor
+ */
+Grafo::Grafo()
+{
+    this->comecaZero = true;
 }
 
-// Destrutor
+/**
+ * Destrutor
+ */
 Grafo::~Grafo()
 {
-    No *proximo_no = this->primeiro_no;
+    this->listaAdj = nullptr;
+    delete[] this->listaAdj;
+}
 
-    while (proximo_no != nullptr)
+/**
+ * @return ordem do grafo
+ */
+int Grafo::getOrdem()
+{
+    return this->ordem;
+}
+
+/**
+ * @return quantidade de arestas do grafo
+ */
+int Grafo::getQuantAresta()
+{
+    return this->quant_aresta;
+}
+/**
+ * @return se o grafo começa com zero
+ */
+bool Grafo::isComecaZero()
+{
+    return this->comecaZero;
+}
+
+/**
+ * @param val incrementa a quantidade de arestas do grafo
+ */
+void Grafo::setQuantAresta(int val)
+{
+    this->quant_aresta++;
+}
+
+/**
+ * função auxiliar para inserir arestas no grafo
+ * @param id id do nó de origem
+ * @param id_destino id do nó de destino
+ * @return true se conseguiu enatualrar o id do nó de destino false caso não tenha conseguido
+ */
+bool Grafo::auxInserirAresta(int id, int id_destino)
+{
+    //não permite self-loops
+    if (id == id_destino)
     {
-        proximo_no->removerTodasArestas();
-        No *aux_no = proximo_no->getProximoNo();
-        delete proximo_no;
-        proximo_no = aux_no;
+        return true;
     }
-}
-
-//Getters
-int Grafo::getOrdem(){return this->ordem;}
-int Grafo::getQuantAresta(){return this->quant_aresta;}
-No *Grafo::getPrimeiroNo(){return this->primeiro_no;}
-No *Grafo::getUltimoNo(){return this->ultimo_no;}
-
-float Grafo::interferencia(int canal1, int canal2) {
-    return this->tabelaInterferencia[canal1-1][canal2-1];
-}
-
-//Retorna um No com o determinado id, caso negativo retorna null
-No *Grafo::getNo(int id){
-    if(this->primeiro_no != nullptr){
-        for(No* aux = primeiro_no; aux != nullptr; aux = aux->getProximoNo())
-            if(aux->getId() == id)
-                return aux;
-    }
-
-    return nullptr;
-}
-
-//Outros metodos
-
-void Grafo::inserirNo(int id, int x, int y){
-    //Verifica se existe pelo menos um No, caso negativo, o primeiro No sera setado
-    if(this->primeiro_no != nullptr){
-        No* no = new No(id,x,y);
-        this->ultimo_no -> setProximoNo(no);
-        this->ultimo_no = no;
-    }
-    else{
-        this->primeiro_no = new No(id,x,y);
-        this->ultimo_no = this->primeiro_no;
-    }
-}
-
-//Add o cliente no ap que possui a menor distancia até ele
-void Grafo::inserirCliente(int id, int x, int y){
-    int idMenor=0,x1=x,y1=y,x2,y2;
-    float menorDistancia;
-
-    No* ap = primeiro_no;
-    x2 = ap->getX();
-    y2 = ap->getY();
-
-    menorDistancia = distanciaEuclidiana(x1,y1,x2,y2);
-
-    for(ap = ap->getProximoNo(); ap != nullptr; ap = ap->getProximoNo()) {
-        x2 = ap->getX();
-        y2 = ap->getY();
-        if (distanciaEuclidiana(x1, y1, x2, y2) < menorDistancia) {
-            menorDistancia = distanciaEuclidiana(x1, y1, x2, y2);
-            idMenor = ap->getId();
+    for (No *a = &listaAdj[id]; a != nullptr; a = a->getProximoNo())
+    {
+        //verifica se o id nó de destino existente no grafo é igual o id do nó de destino a ser inserido
+        if (a->getNoDestino() == id_destino)
+        {
+            return true;
         }
     }
-    getNo(idMenor)->inserirCliente(id, x, y, menorDistancia);
-}
-
-float Grafo::distanciaEuclidiana(int x1,int y1,int x2, int y2){
-    return sqrt( (float) (pow(x1-x2,2) + pow(y1-y2,2)) );
-}
-
-//Verifica qual cliente possui a maior distancia para cada ap essa distancia ira definir a potencia do ap
-void Grafo::definePotencia(){
-    for(No* ap = primeiro_no; ap != nullptr; ap = ap->getProximoNo())
-        ap->atribuirPotenciaTransmissao();
-}
-
-
-
-void Grafo::criarGrafoConflito(){
-    float distancia, somaRaio;
-
-    for(No* ap = primeiro_no; ap != nullptr; ap = ap->getProximoNo()) {
-
-        for(No* ap2 = ap->getProximoNo(); ap2 != nullptr; ap2 = ap2->getProximoNo()) {
-            distancia = distanciaEuclidiana(ap->getX(),ap->getY(),ap2->getX(),ap2->getY());
-            somaRaio = ap->getPotencia()+ap2->getPotencia();
-
-            if(somaRaio >= distancia){
-
-                if(possuiClientesNaInterseccao(ap,ap2)){
-                    ap->inserirAresta(ap2->getId());
-                    ap2->inserirAresta(ap->getId());
-                    this->quant_aresta++;
-                }
-
-            }
-
-        }
-
-    }
-
-}
-//Retorna verdadeiro caso possua clientes na interseccao do raio de dois aps
-bool Grafo::possuiClientesNaInterseccao(No *ap,No *ap2){
-
-    //Pecorrendo todos os clientes do ap
-    for (No* cliente = ap->getPrimeiroCliente(); cliente != nullptr; cliente = cliente->getProximoNo()) {
-        if(estaNaInterseccao(cliente,ap,ap2)) return true;
-    }
-
-    //Pecorrendo todos os clientes do ap2
-    for (No* cliente = ap2->getPrimeiroCliente(); cliente != nullptr; cliente = cliente->getProximoNo()) {
-        if(estaNaInterseccao(cliente,ap,ap2)) return true;
-    }
-
     return false;
 }
 
+/**
+ * insere as arestas no grafo
+ * @param id id do nó de origem
+ * @param id_destino id do nó de destino
+ * @param peso peso da aresta entre os nós
+ */
+void Grafo::inserirAresta(int id, int id_destino, float peso)
+{
+    //caso a aresta entre os nó não exista
+    if (!auxInserirAresta(id, id_destino))
+    {
+        //tratamento para grafo que começa com vértice igual a 1
+        if (id == this->getOrdem())
+        {
+            this->comecaZero = false;
+            id = 0;
+        }
+        if (id_destino == this->getOrdem())
+        {
+            this->comecaZero = false;
+            id_destino = 0;
+        }
+        //insere a aresta no nó de origem;
+        //caso a primeira posição esteja vazia
+        if (this->listaAdj[id].getPeso() == -1)
+        {
+            this->listaAdj[id].setPeso(peso);
+            this->listaAdj[id].setNoDestino(id_destino);
+        }
+        else
+        {
+            No *aux = &this->listaAdj[id];
+            while (aux->getProximoNo() != nullptr)
+            {
+                aux = aux->getProximoNo();
+            }
+            aux->setProximoNo(new No(peso, id_destino));
+        }
+        //insere a aresta no nó de destino
+        //caso a primeira posição esteja vazia
+        if (this->listaAdj[id_destino].getPeso() == -1)
+        {
+            this->listaAdj[id_destino].setPeso(peso);
+            this->listaAdj[id_destino].setNoDestino(id);
+        }
+        else
+        {
+            No *aux = &this->listaAdj[id_destino];
+            while (aux->getProximoNo() != nullptr)
+            {
+                aux = aux->getProximoNo();
+            }
+            aux->setProximoNo(new No(peso, id));
+        }
+        this->quant_aresta++;
+    }
+}
 
-
-
-void Grafo::mostrarGrafo(ofstream& arquivo_saida) {
-    arquivo_saida<<"-----------GRAFO------------"<<endl;
-    for(No* no = primeiro_no; no != nullptr; no = no->getProximoNo()){
-        arquivo_saida << no->getId() << ".";
-        for(Aresta* aresta = no->getPrimeiraAresta(); aresta != nullptr; aresta = aresta->getProximaAresta()){
-            No* aux = getNo(aresta->getId());
-            if(aresta == no->getPrimeiraAresta() )
-                arquivo_saida << aux->getId();
+/**
+ * mostra os nós e seus vizinhos de forma ordenada
+ * @param arquivo_saida arquivo de saída de dados
+ */
+void Grafo::mostrarGrafo(ofstream &arquivo_saida)
+{
+    arquivo_saida << "------------GRAFO-------------" << endl;
+    arquivo_saida << "  No  |  No(s) Vizinho(s) " << endl;
+    arquivo_saida << "------------------------------" << endl;
+    int atual = 0;
+    //acertar a posição dos elementos a serem imprimidos
+    for (int i = 0; i < getOrdem(); i++)
+    {
+        if (!comecaZero && i == 0)
+        {
+            arquivo_saida << this->getOrdem();
+        }
+        else
+        {
+            arquivo_saida << i;
+        }
+        if ((i / 100000) > 0)
+        {
+            arquivo_saida << "| ";
+        }
+        else if ((i / 10000) > 0)
+        {
+            arquivo_saida << " | ";
+        }
+        else if ((i / 1000) > 0)
+        {
+            arquivo_saida << "  | ";
+        }
+        else if ((i / 100) > 0)
+        {
+            arquivo_saida << "   | ";
+        }
+        else if ((i / 10) > 0)
+        {
+            arquivo_saida << "    | ";
+        }
+        else if ((i / 1) > 0)
+        {
+            arquivo_saida << "     | ";
+        }
+        else if (i == 0)
+        {
+            arquivo_saida << "     | ";
+        }
+        //percorre o nó imprimindo todas as arestas
+        for (No *a = &listaAdj[i]; a != nullptr; a = a->getProximoNo())
+        {
+            if (!comecaZero && a->getNoDestino() == 0)
+            {
+                if (a->getProximoNo() != nullptr)
+                    arquivo_saida << this->getOrdem() << ", ";
+                else
+                    arquivo_saida << this->getOrdem();
+            }
             else
-                arquivo_saida << "," << aux->getId();
+            {
+                if (a->getProximoNo() != nullptr)
+                    arquivo_saida << a->getNoDestino() << ", ";
+                else
+                    arquivo_saida << a->getNoDestino();
+            }
         }
-        arquivo_saida<<" Canal: "<<no->getCanal();
-        arquivo_saida<<" Interferencia: "<<no->getInterferencia()<<endl;
-    }
-    arquivo_saida<<" Interferencia Total do Grafo: "<<this->interferenciaTotal<<endl;
-    arquivo_saida<<endl<<endl;
-}
-
-void Grafo::mostrarNos(ofstream& arquivo_saida) {
-    for(No* no = primeiro_no; no != nullptr; no = no->getProximoNo()){
-        arquivo_saida<<"-----------AP------------"<<endl;
-        arquivo_saida<<"ID. X - Y / Potencia de Transmissao"<<endl;
-        arquivo_saida << no->getId() << ". ";
-        arquivo_saida << no->getX() << " - ";
-        arquivo_saida << no->getY() << " / ";
-        arquivo_saida << no->getPotencia();
         arquivo_saida << endl;
-        no->mostrarClientes(arquivo_saida);
     }
-    arquivo_saida<<endl<<endl;
+    arquivo_saida << "--------------------------------------------------------------------------------------------------------" << endl
+                  << endl;
 }
 
-//Define todos os aps possiveis com os canais 1,6 e 11 ao final
-//retorna um vetor de ids dos aps sem um canal definido
-int* Grafo::baseCanais1611(){
-    //zerar todas os canais do grafo
-    for (No *ap = primeiro_no; ap != nullptr; ap = ap->getProximoNo())
-        ap->setCanal(0);
-
-    int vetorDeCanais[ordem],cont=0,contId=0;
-    int* vetorIdsSemCanais = new int[ordem];
-    bool canal1,canal6,canal11;
-
-    for(No* ap = primeiro_no; ap != nullptr; ap = ap->getProximoNo()) {
-        canal1=false;canal6=false,canal11=false;
-        cont=0;
-        for(Aresta* aresta = ap->getPrimeiraAresta(); aresta != nullptr; aresta = aresta->getProximaAresta()) {
-            No *ap2 = getNo(aresta->getId());
-            vetorDeCanais[cont] = ap2->getCanal();
-            cont++;
+/**
+ * Mostra os nós e seus pesos de forma ordenada
+ * @param arquivo_saida arquivo de saida de dados
+ */
+void Grafo::mostrarNos(ofstream &arquivo_saida)
+{
+    arquivo_saida << "-------------NOS--------------" << endl;
+    arquivo_saida << "  No  |   Grau " << endl;
+    arquivo_saida << "------------------------------" << endl;
+    int atual = 0;
+    //acertar a posição dos elementos a serem imprimidos
+    for (int i = 0; i < getOrdem(); i++)
+    {
+        if (!comecaZero && i == 0)
+        {
+            arquivo_saida << this->getOrdem();
         }
-
-        for (int i = 0; i < cont; i++) {
-            if(vetorDeCanais[i]==1){
-                canal1=true;
-                break;
-            }
+        else
+        {
+            arquivo_saida << i;
         }
-
-        for (int i = 0; i < cont; i++) {
-            if(vetorDeCanais[i]==6){
-                canal6=true;
-                break;
-            }
+        if ((i / 100000) > 0)
+        {
+            arquivo_saida << "| ";
         }
-
-        for (int i = 0; i < cont; i++) {
-            if(vetorDeCanais[i]==11){
-                canal11=true;
-                break;
-            }
+        else if ((i / 10000) > 0)
+        {
+            arquivo_saida << " | ";
         }
-        if(!canal1) ap->setCanal(1);
-        else if(!canal6) ap->setCanal(6);
-        else if(!canal11) ap->setCanal(11);
-        else{
-            vetorIdsSemCanais[contId] = ap->getId();
-            contId++;
+        else if ((i / 1000) > 0)
+        {
+            arquivo_saida << "  | ";
         }
+        else if ((i / 100) > 0)
+        {
+            arquivo_saida << "   | ";
+        }
+        else if ((i / 10) > 0)
+        {
+            arquivo_saida << "    | ";
+        }
+        else if ((i / 1) > 0)
+        {
+            arquivo_saida << "     | ";
+        }
+        else if (i == 0)
+        {
+            arquivo_saida << "     | ";
+        }
+        //percorre o grafo, imprimindo as arestas
+        for (No *a = &listaAdj[i]; a != nullptr; a = a->getProximoNo())
+        {
+            atual++;
+        }
+        arquivo_saida << atual << endl;
+        atual = 0;
     }
-    vetorIdsSemCanais[contId]=-1;
-    return vetorIdsSemCanais;
+    arquivo_saida << "--------------------------------------------------------------------------------------------------------" << endl
+                  << endl;
 }
 
-//Define o valor de interferencia para cada ap  do grafo
-void Grafo::defineInterferencias(int idsNosInteferencia[]) {
-    No* ap;
-    No* ap2;
-    float somaTotalInteferencias = 0;
+/**
+ * Mostra as arestas entre os nós e seus pesos
+ * @param arquivo_saida arquivo de saida de dados
+ */
+void Grafo::mostrarArestas(ofstream &arquivo_saida)
+{
+    arquivo_saida << "-----------ARESTAS------------" << endl;
+    arquivo_saida << "  No -- No |   Peso " << endl;
+    arquivo_saida << "------------------------------" << endl;
+    //percorre o grafo imprimindo as arestas de cada nó de forma ordenada
+    for (int i = 0; i < getOrdem(); i++)
+    {
+        for (No *a = &listaAdj[i]; a != nullptr; a = a->getProximoNo())
+        {
+            if (!comecaZero && i == 0)
+            {
+                arquivo_saida << this->getOrdem() << " -- " << a->getNoDestino() << " | " << a->getPeso() << endl;
+            }
+            else
+            {
+                if (!comecaZero && a->getNoDestino() == 0)
+                {
+                    arquivo_saida << i << " -- " << this->getOrdem() << " | " << a->getPeso() << endl;
+                }
+                else
+                {
+                    arquivo_saida << i << " -- " << a->getNoDestino() << " | " << a->getPeso() << endl;
+                }
+            }
+        }
+    }
+    arquivo_saida << "--------------------------------------------------------------------------------------------------------" << endl
+                  << endl;
+}
 
-    //zerar todas as interferencias do grafo
-    for (No *ap = primeiro_no; ap != nullptr; ap = ap->getProximoNo())
-        ap->setInterferencia(0);
+void Grafo::gerarResultadosGrafo(ofstream &arquivo_saida)
+{
+    arquivo_saida << this->getOrdem() << endl;
+    arquivo_saida << this->getQuantAresta() << endl;
+    double media = 0;
+    int *grau = new int[this->getOrdem()];
+    for (int i = 0; i < this->getOrdem(); i++)
+    {
+        grau[i] = 0;
+        for (No *no = &listaAdj[i]; no != nullptr; no = no->getProximoNo())
+        {
+            grau[i] = grau[i] + 1;
+        }
+        media = media + grau[i];
+    }
+    media = media / this->getOrdem();
+    arquivo_saida << media << endl;
+    for (int i = 0; i < this->getOrdem(); i++)
+    {
+        int atual = 0;
+        for (int j = 0; j < this->getOrdem(); j++)
+        {
+            if (grau[j] != 0 && grau[j] == i)
+                atual++;
+        }
+        if (atual != 0)
+            arquivo_saida << "Grau " << i << ": " << (double(atual) / this->getOrdem()) << endl;
+    }
+    delete[] grau;
+}
 
+/**
+ * mapeia as arestas de retorno para os algoritmos de busca
+ * @param mapa mapa das arestas
+ * @param id id do nó
+ * @return -1 caso não seja um retorno e i caso seja retorno
+ */
+int Grafo::mapeamento(int *mapa, int id)
+{
+    for (int i = 0; i < this->getOrdem(); i++)
+    {
+        if (mapa[i] == id)
+            return i;
+    }
+    return -1;
+}
 
-    for (int i = 0; ;i++) {
-        if (idsNosInteferencia[i] == -1) break;
-        ap = getNo(idsNosInteferencia[i]);
-
-        //Definindo interferencia dos Aps com canais diferentes de 1,6,11
-        for (No *cliente = ap->getPrimeiroCliente(); cliente != nullptr; cliente = cliente->getProximoNo()) {
-
-            for(Aresta* aresta = ap->getPrimeiraAresta(); aresta != nullptr; aresta = aresta->getProximaAresta()) {
-                ap2 = getNo(aresta->getId());
-
-                //verifica se o canal do ap tem interferencia com o canal do ap2
-                if(interferencia(ap->getCanal(),ap2->getCanal())!=0){
-
-                    //verifica se o cliente esta na interseccao entre o ap e ap2
-                    if(estaNaInterseccao(cliente,ap,ap2)){
-                        ap->setInterferencia( ap->getInterferencia() + interferencia(ap->getCanal(),ap2->getCanal()) );
-                        somaTotalInteferencias += interferencia(ap->getCanal(),ap2->getCanal());
+/**
+ * caminhamento em largura a partir de um nó digitado pelo usuário
+ * @param id_no id do nó digitado pelo usuário
+ * @param arquivo_saida arquivo de saida de dados
+ */
+void Grafo::caminhamentoLargura(int id_no, ofstream &arquivo_saida)
+{
+    int *mapa = new int[this->getOrdem()];
+    int atual = 0;
+    //preenche o mapa com -1
+    for (int i = 0; i < this->ordem; i++)
+    {
+        mapa[i] = -1;
+    }
+    FilaEncadeada *fila = new FilaEncadeada();
+    mapa[id_no] = atual++;
+    fila->enfileira(id_no);
+    arquivo_saida << "-----------CAMINHAMENTO EM LARGURA------------" << endl;
+    arquivo_saida << "  [NoU - NoV]  | É retorno?" << endl;
+    arquivo_saida << "----------------------------------------------" << endl;
+    //enquanto a fila não estiver vazia
+    while (!fila->vazia())
+    {
+        int vertice = fila->desenfileira();
+        //percorre todas as arestas do primeiro vértice da fila
+        for (No *a = &listaAdj[vertice]; a != nullptr; a = a->getProximoNo())
+        {
+            //caso o valor desta aresta seja igual a -1 no mapa a aresta não é um retorno
+            if (mapa[a->getNoDestino()] == -1)
+            {
+                if (this->comecaZero)
+                {
+                    arquivo_saida << "[" << vertice << "," << a->getNoDestino() << "] | nao é uma aresta de retorno" << endl;
+                }
+                else
+                {
+                    if (vertice == 0)
+                    {
+                        arquivo_saida << "[" << this->getOrdem() << "," << a->getNoDestino() << "] | nao é uma aresta de retorno" << endl;
                     }
-
-
-                }
-            }
-        }
-
-        //Definindo interferencia para cada Ap adjacentes
-        Aresta *aresta = ap->getPrimeiraAresta();
-        No *ap2 = getNo(aresta->getId());
-        while(aresta != nullptr){
-
-            for (No *cliente = ap2->getPrimeiroCliente(); cliente != nullptr; cliente = cliente->getProximoNo()) {
-
-                //verifica se o canal do ap tem interferencia com o canal do ap2
-                if(interferencia(ap->getCanal(),ap2->getCanal())!=0) {
-                    //verifica se o cliente esta na na interseccao entre o ap e ap2
-                    if (estaNaInterseccao(cliente, ap, ap2)) {
-                        ap2->setInterferencia(ap2->getInterferencia() + interferencia(ap->getCanal(), ap2->getCanal()));
-                        somaTotalInteferencias += interferencia(ap->getCanal(), ap2->getCanal());
+                    else if (a->getNoDestino() == 0)
+                    {
+                        arquivo_saida << "[" << vertice << "," << this->getOrdem() << "] | nao é uma aresta de retorno" << endl;
                     }
-                }
-
-            }
-            aresta = aresta->getProximaAresta();
-            if(aresta != nullptr) ap2 = getNo(aresta->getId());
-        }
-    }
-
-    interferenciaTotal=(somaTotalInteferencias/quantClientes);
-}
-
-//Retorna verdadeiro caso o cliente esteja na interseccao do raio de dois aps
-bool Grafo::estaNaInterseccao(No *cliente, No *ap, No*ap2){
-    bool contemAP1=false,contemAP2=false;
-    if(distanciaEuclidiana(cliente->getX(),cliente->getY(),ap->getX(),ap->getY()) <= ap->getPotencia()) contemAP1=true;
-    if(distanciaEuclidiana(cliente->getX(),cliente->getY(),ap2->getX(),ap2->getY()) <= ap2->getPotencia()) contemAP2=true;
-
-    if(contemAP1 && contemAP2) return true;
-    else return false;
-
-}
-
-float Grafo::guloso() {
-    int *vetorIdsSemCanais = baseCanais1611();
-    int vetorCanais[8]={3,8,4,9,2,5,7,10};
-    bool atribui;
-
-    for (int i = 0; ;i++) {
-        if(vetorIdsSemCanais[i]==-1) break;
-        No* ap = getNo(vetorIdsSemCanais[i]);
-        for (int canal = 0; canal < 8; canal++) {
-            atribui=true;
-            for(Aresta* aresta = ap->getPrimeiraAresta(); aresta != nullptr; aresta = aresta->getProximaAresta()) {
-                No *ap2 = getNo(aresta->getId());
-                if(ap2->getCanal()==vetorCanais[canal]) {
-                    atribui=false;
-                    break;
-                }
-            }
-            if(atribui){
-                ap->setCanal(vetorCanais[canal]);
-                break;
-            }
-        }
-    }
-
-    defineInterferencias(vetorIdsSemCanais);
-
-
-   return interferenciaTotal;
-
-}
-
-int* Grafo::randomizaVetor(float alfa){
-
-    int vetorCanais[8] = {3,8,4,9,2,5,7,10};
-    int posic;
-    int tamanho = 8;
-    int *aux = new int[8];
-    for(int i = 0; i < 8; i++){
-        posic = rand()%(int)ceil(tamanho*alfa);
-        if (vetorCanais[posic] != -1) {
-            aux[i] = vetorCanais[posic];
-            vetorCanais[posic] = -1;
-        }else{
-            for (int j = 0; j < 8; j++) {
-                if (vetorCanais[posic] == -1){
-                    posic++;
-                }else{
-                    break;
-                }
-            }
-            aux[i] = vetorCanais[posic];
-            vetorCanais[posic] = -1;
-        }
-        tamanho--;
-    }
-    return aux;
-}
-
-
-float Grafo::gulosoRandomizado(float alfa, int quantInteracoes) {
-    int *vetorIdsSemCanais = baseCanais1611();
-    int *vetorCanais = randomizaVetor(alfa);
-    bool atribui;
-    float melhorResultado = 99999, resultado;
-
-    for (int i = 0; i < quantInteracoes; i++) {
-        for (int i = 0; ;i++) {
-            if(vetorIdsSemCanais[i]==-1) break;
-            No* ap = getNo(vetorIdsSemCanais[i]);
-            for (int canal = 0; canal < 8; canal++) {
-                atribui=true;
-                for(Aresta* aresta = ap->getPrimeiraAresta(); aresta != nullptr; aresta = aresta->getProximaAresta()) {
-                    No *ap2 = getNo(aresta->getId());
-                    if(ap2->getCanal()==vetorCanais[canal]) {
-                        atribui=false;
-                        break;
+                    else
+                    {
+                        arquivo_saida << "[" << vertice << "," << a->getNoDestino() << "] | nao é uma aresta de retorno" << endl;
                     }
                 }
-                if(atribui){
-                    ap->setCanal(vetorCanais[canal]);
-                    break;
+                mapa[a->getNoDestino()] = atual++;
+                fila->enfileira(a->getNoDestino());
+            }
+            else
+            {
+                if (this->comecaZero)
+                {
+                    arquivo_saida << "[" << vertice << "," << a->getNoDestino() << "]  | é  uma aresta de retorno" << endl;
+                }
+                else
+                {
+                    if (vertice == 0)
+                    {
+                        arquivo_saida << "[" << this->getOrdem() << "," << a->getNoDestino() << "]  | é  uma aresta de retorno" << endl;
+                    }
+                    else if (a->getNoDestino() == 0)
+                    {
+                        arquivo_saida << "[" << vertice << "," << this->getOrdem() << "]  | é  uma aresta de retorno" << endl;
+                    }
+                    else
+                    {
+                        arquivo_saida << "[" << vertice << "," << a->getNoDestino() << "]  | é  uma aresta de retorno" << endl;
+                    }
+                }
+            }
+        }
+    }
+    arquivo_saida << "--------------------------------------------------------------------------------------------------------" << endl
+                  << endl;
+}
+
+/**
+ * função auxiliar para a busca em profundidade
+ * @param id_no id do nó de origem
+ * @param mapa mapa
+ * @param atual atualador
+ * @param arquivo_saida arquivo de saida de dados
+ */
+void Grafo::auxBuscaEmProfundidade(int id_no, int *mapa, int atual, ofstream &arquivo_saida)
+{
+    mapa[id_no] = atual++;
+    //percorre todos os nós do grafo
+    for (No *a = &listaAdj[id_no]; a != nullptr; a = a->getProximoNo())
+    {
+        int vertice = a->getNoDestino();
+        //caso o valor da posição no mapa seja -1, não é uma aresta de retorno
+        if (this->comecaZero)
+        {
+            if (mapa[a->getNoDestino()] == -1)
+            {
+                arquivo_saida << "[" << id_no << "," << vertice << "] | nao é uma aresta de retorno" << endl;
+                auxBuscaEmProfundidade(vertice, mapa, atual, arquivo_saida);
+            }
+            else
+            {
+                arquivo_saida << "[" << id_no << "," << vertice << "] | é uma aresta de retorno" << endl;
+            }
+        }
+        else
+        {
+            if (mapa[a->getNoDestino()] == -1)
+            {
+                if (vertice == 0)
+                {
+                    arquivo_saida << "[" << id_no << "," << this->getOrdem() << "] | nao é uma aresta de retorno" << endl;
+                }
+                else if (id_no == 0)
+                {
+                    arquivo_saida << "[" << this->getOrdem() << "," << vertice << "] | nao é uma aresta de retorno" << endl;
+                }
+                else
+                {
+                    arquivo_saida << "[" << id_no << "," << vertice << "] | nao é uma aresta de retorno" << endl;
+                }
+                auxBuscaEmProfundidade(vertice, mapa, atual, arquivo_saida);
+            }
+            else
+            {
+                if (vertice == 0)
+                {
+                    arquivo_saida << "[" << id_no << "," << this->getOrdem() << "] | é uma aresta de retorno" << endl;
+                }
+                else if (id_no == 0)
+                {
+                    arquivo_saida << "[" << this->getOrdem() << "," << vertice << "] | é uma aresta de retorno" << endl;
+                }
+                else
+                {
+                    arquivo_saida << "[" << id_no << "," << vertice << "] | é uma aresta de retorno" << endl;
+                }
+            }
+        }
+    }
+}
+
+/**
+ * função para efetuar o caminhamento em profundidade a partir de um nó digitado pelo usuário
+ * @param id_no id do nó de origem
+ * @param arquivo_saida arquivo de saida de dados
+ */
+void Grafo::caminhamentoProfundidade(int id_no, ofstream &arquivo_saida)
+{
+    arquivo_saida << "-----------CAMINHAMENTO EM PROFUNDIDADE------------" << endl;
+    arquivo_saida << "  [NoU - NoV] | É uma aresta de retorno?" << endl;
+    arquivo_saida << "---------------------------------------------------" << endl;
+    int atual = 0;
+    int *mapa = new int[this->getOrdem()];
+    //preenche o mapa com o valor -1
+    for (int i = 0; i < this->ordem; i++)
+    {
+        mapa[i] = -1;
+    }
+
+    //percorre o mapa verificando se a posição atual é igual a -1
+    for (int i = 0; i < this->getOrdem(); i++)
+    {
+        if (mapa[i] == -1)
+        {
+            auxBuscaEmProfundidade(id_no, mapa, atual, arquivo_saida); // começa nova etapa
+        }
+    }
+    arquivo_saida << "--------------------------------------------------------------------------------------------------------" << endl
+                  << endl;
+}
+
+/**
+ * Árvore geradora mínima gerada pelo algoritmo de Dijkstra
+ * @param idOrigem id do nó de origem
+ * @param idDestino id do nó de destino
+ * @param arquivo_saida arquivo de saida de dados
+ */
+void Grafo::dijkstra(int idOrigem, int idDestino, ofstream &arquivo_saida)
+{
+    float *distancia = new float[this->getOrdem()];
+    int *mapa = new int[this->getOrdem()];
+    int *aPercorrer = new int[this->getOrdem()];
+    int *noAnterior = new int[this->getOrdem()];
+
+    //preenche os vetores mapa, a distancia e aPercorrer com os valores 0, 1 ou -1
+    for (int i = 0; i < this->getOrdem(); i++)
+    {
+        mapa[i] = i;
+        if (i == idOrigem)
+        {
+            distancia[i] = 0;
+            aPercorrer[i] = 0;
+        }
+        else
+        {
+            distancia[i] = -1;
+            aPercorrer[i] = 1;
+        }
+        noAnterior[i] = -1;
+    }
+
+    auxDijkstra(distancia, aPercorrer, noAnterior, mapa, idOrigem);
+
+    arquivo_saida << "---------DIJKSTRA---------" << endl;
+    if (this->comecaZero)
+    {
+        arquivo_saida << "[Caminho minimo entre os nos " << idOrigem << " e " << idDestino << " ]"
+                      << " - custo do caminho minimo" << endl;
+    }
+    else
+    {
+        if (idOrigem == 0)
+        {
+            arquivo_saida << "[Caminho minimo entre os nos " << this->getOrdem() << " e " << idDestino << " ]"
+                          << " - custo do caminho minimo" << endl;
+        }
+        else if (idDestino == 0)
+        {
+            arquivo_saida << "[Caminho minimo entre os nos " << idOrigem << " e " << this->getOrdem() << " ]"
+                          << " - custo do caminho minimo" << endl;
+        }
+        else
+        {
+            arquivo_saida << "[Caminho minimo entre os nos " << idOrigem << " e " << idDestino << " ]"
+                          << " - custo do caminho minimo" << endl;
+        }
+    }
+    arquivo_saida << "--------------------------" << endl;
+    if (distancia[mapeamento(mapa, idDestino)] != -1)
+    {
+        if (comecaZero)
+        {
+            arquivo_saida << "[" << idDestino;
+        }
+        else
+        {
+            if (idDestino == 0)
+            {
+                arquivo_saida << "[" << this->getOrdem();
+            }
+            else
+            {
+                arquivo_saida << "[" << idDestino;
+            }
+        }
+
+        int caminho = noAnterior[mapeamento(mapa, idDestino)];
+        //percorre o vetor de nós a percorrer até que enatualre uma posição igual a -1
+        while (caminho != -1)
+        {
+            if (this->comecaZero)
+            {
+                arquivo_saida << ", " << caminho;
+            }
+            else
+            {
+                if (caminho == 0)
+                {
+                    arquivo_saida << ", " << this->getOrdem();
+                }
+                else
+                {
+                    arquivo_saida << ", " << caminho;
+                }
+            }
+            caminho = noAnterior[mapeamento(mapa, caminho)];
+        }
+        arquivo_saida << "] - " << distancia[mapeamento(mapa, idDestino)] << endl;
+    }
+    else
+    {
+        if (this->comecaZero)
+        {
+            arquivo_saida << "[" << idOrigem << ", " << idDestino << "] - -1";
+        }
+        else
+        {
+            if (idOrigem == 0)
+            {
+                arquivo_saida << "[" << this->getOrdem() << ", " << idDestino << "] - -1";
+            }
+            else if (idDestino == 0)
+            {
+                arquivo_saida << "[" << idOrigem << ", " << this->getOrdem() << "] - -1";
+            }
+            else
+            {
+                arquivo_saida << "[" << idOrigem << ", " << idDestino << "] - -1";
+            }
+        }
+    }
+    arquivo_saida << "--------------------------------------------------------------------------------------------------------" << endl
+                  << endl;
+    delete[] aPercorrer;
+    delete[] noAnterior;
+    delete[] distancia;
+    delete[] mapa;
+}
+
+/**
+ * auxiliar para o algoritmo de Dijkstra
+ * @param distancia somatório dos pesos do caminho entre dois nós
+ * @param aPercorrer nós a percorres
+ * @param noAnterior nó anterior
+ * @param mapa mapa de arestas
+ * @param atual nó atual
+ */
+void Grafo::auxDijkstra(float *distancia, int *aPercorrer, int *noAnterior, int *mapa, int atual)
+{
+
+    No *aresta = &listaAdj[atual];
+    int indiceAtual = mapeamento(mapa, atual);
+    int indiceAresta;
+    //enquanto a aresta não é nula preenche os vetores de distância e noAnterior
+    while (aresta != nullptr)
+    {
+        indiceAresta = mapeamento(mapa, aresta->getNoDestino());
+        //caso o indicie atual da aresta não seja -1
+        if (distancia[indiceAresta] != -1)
+        {
+            if (distancia[indiceAresta] > distancia[indiceAtual] + aresta->getPeso())
+            {
+                distancia[indiceAresta] = distancia[indiceAtual] + aresta->getPeso();
+                noAnterior[indiceAresta] = atual;
+            }
+        }
+        else
+        {
+            distancia[indiceAresta] = distancia[indiceAtual] + aresta->getPeso();
+            noAnterior[indiceAresta] = atual;
+        }
+        aresta = aresta->getProximoNo();
+    }
+    int menor = -1;
+    //percorre o vetor de nós aPercorrer
+    for (int i = 0; i < this->getOrdem() && menor == -1; i++)
+    {
+        if (aPercorrer[i])
+        {
+            if (distancia[i] != -1)
+            {
+                menor = distancia[i];
+                atual = mapa[i];
+            }
+        }
+    }
+    if (menor != -1)
+    {
+        for (int i = 0; i < this->getOrdem(); i++)
+        {
+            if (aPercorrer[i])
+                if (distancia[i] != -1)
+                    if (distancia[i] < menor)
+                    {
+                        menor = distancia[i];
+                        atual = mapa[i];
+                    }
+        }
+        aPercorrer[indiceAtual] = 0;
+        auxDijkstra(distancia, aPercorrer, noAnterior, mapa, atual);
+    }
+    delete aresta;
+}
+
+/**
+ * caminho mínimo entre dois vértices pelo algoritmo de Floyd
+ * @param idOrigem id do nó de origem
+ * @param idDestino id do nó de destino
+ * @param arquivo_saida arquivo de saida de dados
+ */
+void Grafo::floyd(int idOrigem, int idDestino, ofstream &arquivo_saida)
+{ //
+    // custo[] e matrizAdjacencias[] armazenam o menor caminho
+    int **custo, **caminho;
+    int **matrizAdjacencias;
+    caminho = new int *[this->getOrdem()];
+    custo = new int *[this->getOrdem()];
+    matrizAdjacencias = new int *[this->getOrdem()];
+
+    //inicializa as matrizes
+    for (int i = 0; i < this->getOrdem(); i++)
+    {
+        caminho[i] = new int[this->getOrdem()];
+        custo[i] = new int[this->getOrdem()];
+        matrizAdjacencias[i] = new int[this->getOrdem()];
+        for (int j = 0; j < this->getOrdem(); j++)
+        {
+            matrizAdjacencias[i][j] = INFINITO;
+            if (i == j)
+            {
+                matrizAdjacencias[i][j] = 0;
+            }
+        }
+    }
+
+    //preenche a matriz de adjacência com o peso das arestas
+    for (int i = 0; i < this->getOrdem(); i++)
+    {
+        for (No *a = &listaAdj[i]; a != nullptr; a = a->getProximoNo())
+        {
+            matrizAdjacencias[i][a->getNoDestino()] = a->getPeso();
+            matrizAdjacencias[a->getNoDestino()][i] = a->getPeso();
+        }
+    }
+
+    // inicializa custo[] e matrizAdjacencias[]
+    for (int v = 0; v < this->getOrdem(); v++)
+    {
+        for (int u = 0; u < this->getOrdem(); u++)
+        {
+            // inicialmente o custo será igual ao peso da aresta
+            custo[v][u] = matrizAdjacencias[v][u];
+            if (v == u)
+                caminho[v][u] = 0;
+            else if (custo[v][u] != INFINITO)
+                caminho[v][u] = v;
+            else
+                caminho[v][u] = -1;
+        }
+    }
+
+    //algoritmo de Floyd
+    //como a complexidade deste algoritmo é O(n^3), para instâncias muito grandes ele demora a executar
+    for (int k = 0; k < this->getOrdem(); k++)
+    {
+        for (int v = 0; v < this->getOrdem(); v++)
+        {
+            for (int u = 0; u < this->getOrdem(); u++)
+            {
+                // caso o vertice k esteja no menor caminho de v para u, então o valor da posição custo[v][u] é atualizado
+                if (custo[v][k] != INFINITO && custo[k][u] != INFINITO && custo[v][k] + custo[k][u] < custo[v][u])
+                {
+                    custo[v][u] = custo[v][k] + custo[k][u];
+                    caminho[v][u] = caminho[k][u];
                 }
             }
 
+            // se os elementos da diagonal se tornam negativos, o grafo atual um ciclo de peso negativo
+            if (custo[v][v] < 0)
+            {
+                arquivo_saida << "ciclo de peso negativo enatualrado!!";
+                return;
+            }
         }
-        defineInterferencias(vetorIdsSemCanais);
-        resultado = interferenciaTotal;
-        if(resultado < melhorResultado) melhorResultado = resultado;
-
-        vetorCanais = randomizaVetor(alfa);
-        vetorIdsSemCanais = baseCanais1611();
     }
 
-    return melhorResultado;
+    arquivo_saida << "---------FLOYD---------" << endl;
+    arquivo_saida << "[Caminho minimo entre os nos " << idOrigem << " e " << idDestino << " ]"
+                  << " - custo do caminho minimo" << endl;
+    arquivo_saida << "-----------------------" << endl;
+    arquivo_saida << "[" << idOrigem << ", ";
+    imprimeCaminhoFloyd(caminho, idOrigem, idDestino, arquivo_saida);
+    arquivo_saida << idDestino << "] - " << custo[idOrigem][idDestino] << endl;
 
+    for (int i = 0; i < this->getOrdem(); i++)
+    {
+        delete[] caminho[i];
+        delete[] custo[i];
+        delete[] matrizAdjacencias[i];
+    }
+    delete[] caminho;
+    delete[] custo;
+    delete[] matrizAdjacencias;
+    arquivo_saida << "--------------------------------------------------------------------------------------------------------" << endl
+                  << endl;
 }
-float Grafo::randomizaAlfa (float *vetorAlfas, double *probabilidades, double *medias, double melhorSolucao){
-    double  aux, acm = 0, q[10] = {0,0,0,0,0,0,0,0,0,0};
-    // calcula q
-    for (int i = 0; i < 10; ++i) {
-        if(medias[i] != 0){
-            q[i] = pow(melhorSolucao/medias[i],10);
-            acm += q[i];
+
+/**
+ * função para imprimir o caminho gerado pelo algoritmo de floyd
+ * @param caminho matriz do caminho entre nós
+ * @param idOrigem id do nó de origem
+ * @param idDestino id do nó de destino
+ * @param arquivo_saida arquivo de saida de dados
+ */
+void Grafo::imprimeCaminhoFloyd(int **caminho, int idOrigem, int idDestino, ofstream &arquivo_saida)
+{
+    if (caminho[idOrigem][idDestino] == idOrigem)
+        return;
+
+    imprimeCaminhoFloyd(caminho, idOrigem, caminho[idOrigem][idDestino], arquivo_saida);
+    arquivo_saida << caminho[idOrigem][idDestino] << ", ";
+}
+
+/**
+ * árvore geradora mínima gerada pelo algoritmo de Prim
+ * @param arquivo_saida
+ */
+void Grafo::AGMPrim(ofstream &arquivo_saida)
+{
+    arquivo_saida << "---------AGM Prim---------" << endl;
+    arquivo_saida << "No -- No  |  Peso" << endl;
+    arquivo_saida << "--------------------------" << endl;
+    int **matrizDeAdjacencias;
+    int *menoresCustos = new int[this->getOrdem()];
+    int *maisProximo = new int[this->getOrdem()];
+    bool *visitados = new bool[this->getOrdem()];
+
+    matrizDeAdjacencias = new int *[this->getOrdem()];
+
+    //preenche a matriz de adjacências com o valor infinito
+    for (int i = 0; i < this->getOrdem(); i++)
+    {
+        matrizDeAdjacencias[i] = new int[this->getOrdem()];
+        for (int j = 0; j < this->getOrdem(); j++)
+        {
+            matrizDeAdjacencias[i][j] = INFINITO;
         }
     }
-    // altera a probabilidade de cada alfa ser escolhido com base no q. A soma de todas as posições do vetor é sempre 1.
-    for (int i = 0; i < 10; ++i) {
-        if(q[i] != 0) probabilidades[i] = q[i]/acm;
+
+    //preenche a matriz de adjacências com o peso
+    for (int i = 0; i < getOrdem(); i++)
+    {
+        for (No *a = &listaAdj[i]; a != nullptr; a = a->getProximoNo())
+        {
+            matrizDeAdjacencias[i][a->getNoDestino()] = a->getPeso();
+            matrizDeAdjacencias[a->getNoDestino()][i] = a->getPeso();
+        }
     }
-    acm = 0;
-    // aux recebe um número aleatório entre 0 e 100
-    aux = rand()%101;
-    //define, de acordo com o vetor de probabilidades e com o valor selecionado, qual será o alfa retornado
-    for (int i = 0; i < 10; ++i) {
-        acm += probabilidades[i]*100;
-        if(aux <= acm) {
-            acm = i;
+
+    visitados[0] = true;
+    //preenche o vetor de menores custos com os menores custos da matriz de adjacências
+    for (int i = 1; i < this->getOrdem(); i++)
+    {
+        menoresCustos[i] = matrizDeAdjacencias[0][i];
+        maisProximo[i] = 0;
+        visitados[i] = false;
+    }
+
+    int peso = 0;
+    int atualArestas = 0;
+    int verticeAnterior = 0;
+
+    //para o tamanho do grafo
+    for (int i = 0; i < this->getOrdem(); i++)
+    {
+        int min = INFINITO;
+        int indice = 1;
+
+        // percorre o vetor de menores custos atualizando-o de acordo com os nós já visitados
+        for (int j = 0; j < this->getOrdem(); j++)
+        {
+            if (menoresCustos[j] < min && !visitados[j])
+            {
+                min = menoresCustos[j];
+                indice = j;
+            }
+        }
+
+        //caso o indice seja 1 e o minimo sejá infinito, break
+        if (indice == 1 && min == INFINITO)
+        {
             break;
         }
+        else
+        {
+            peso += min;
+        }
+
+        if (comecaZero)
+        {
+            arquivo_saida << verticeAnterior << " -- " << indice << " | " << min << endl;
+        }
+        else
+        {
+            if (verticeAnterior == 0)
+            {
+                arquivo_saida << this->getOrdem() << " -- " << indice << " | " << min << endl;
+            }
+            else if (indice == 0)
+            {
+                arquivo_saida << verticeAnterior << " -- " << this->getOrdem() << " | " << min << endl;
+            }
+            else
+            {
+                arquivo_saida << verticeAnterior << " -- " << indice << " | " << min << endl;
+            }
+        }
+
+        verticeAnterior = indice;
+        visitados[indice] = true;
+        atualArestas++;
+        for (int j = 1; j < this->getOrdem(); j++)
+        {
+            // Como o novo ponto j é adicionado, é possível enatualrar o peso do ponto j recém-adicionado para o ponto K não em S.
+            if ((matrizDeAdjacencias[indice][j] < menoresCustos[j]) && (!visitados[j]))
+            {
+                //menoresCustos representa o peso minimo requerido para ir de um ponto a outro em uma árvore
+                menoresCustos[j] = matrizDeAdjacencias[indice][j];
+                maisProximo[j] = indice;
+            }
+        }
     }
-    return  vetorAlfas[(int)acm];
+
+    arquivo_saida << "Somatorio dos Pesos: " << peso << endl;
+    arquivo_saida << "Quantidade de arestas: " << atualArestas << endl;
+    arquivo_saida << "--------------------------------------------------------------------------------------------------------" << endl
+                  << endl;
+    for (int i = 0; i < this->getOrdem(); i++)
+    {
+        delete[] matrizDeAdjacencias[i];
+    }
+    delete[] matrizDeAdjacencias;
 }
 
-float Grafo::gulosoRandomizadoReativo(int quantInteracoes, float* vetorAlfas)  {
-    int *vetorIdsSemCanais = baseCanais1611(),contador[10] = {0,0,0,0,0,0,0,0,0,0};
-    double custos[10] = {0,0,0,0,0,0,0,0,0,0}, medias[10] = {0,0,0,0,0,0,0,0,0,0}, probabilidades[10] = {0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1};
-    double melhorResultado = 99999, resultado = 0, melhorAlfa = 0,  alfa = vetorAlfas[rand()%10];
-    int *vetorCanais = randomizaVetor(alfa);
-    bool atribui;
+/**
+ * Classe que define uma aresta simples auxiliar ao algoritmo de Kruskal
+ */
+class ArestaSimples
+{
+public:
+    int origem;
+    int destino;
+    int peso;
+};
 
-    for (int i = 0, k = 0; i < quantInteracoes; i++, k++) {
+/**
+ * verifica se o No já está no vetor de visitados, portando não será necessário colocar a aresta
+ * @param nosJaVisitados nós já visitados do grafo
+ * @param id_no id do nó de origem
+ * @param id_destino id do nó de destino
+ * @param tam tamanho da lista de arestas até o momento
+ * @return
+ */
+bool verificaId(ArestaSimples nosJaVisitados[], int id_no, int id_destino, int tam)
+{
+    for (int i = 0; i < tam; i++)
+    {
+        if (nosJaVisitados[i].origem == id_destino && nosJaVisitados[i].destino == id_no)
+        {
+            return true;
+        }
+    }
+    return false;
+}
 
-        for (int i = 0; ;i++) {
-            if(vetorIdsSemCanais[i]==-1) break;
-            No* ap = getNo(vetorIdsSemCanais[i]);
-            for (int canal = 0; canal < 8; canal++) {
-                atribui=true;
-                for(Aresta* aresta = ap->getPrimeiraAresta(); aresta != nullptr; aresta = aresta->getProximaAresta()) {
-                    No *ap2 = getNo(aresta->getId());
-                    if(ap2->getCanal()==vetorCanais[canal]) {
-                        atribui=false;
-                        break;
+/**
+ * árvore geradora mínima gerado pelo algoritmo de Kruskal
+ * @param arquivo_saida de saida de dados
+ */
+void Grafo::AGMKruskal(ofstream &arquivo_saida)
+{
+    int i = 0, quantNos = 0;
+
+    ArestaSimples *listaAresta = new ArestaSimples[quant_aresta];
+
+    //percorre a lista de adjacências preenchendo as informações da aresta simples
+    for (int j = 0; j < getOrdem(); j++)
+    {
+        for (No *a = &listaAdj[j]; a != nullptr; a = a->getProximoNo())
+        {
+            if (!verificaId(listaAresta, j, a->getNoDestino(), i))
+            {
+                listaAresta[i].origem = j;
+                listaAresta[i].destino = a->getNoDestino();
+                listaAresta[i].peso = a->getPeso();
+                i++;
+            }
+        }
+    }
+
+    //ordena a lista de aresta por peso em ordem crescente
+    ArestaSimples aux;
+    for (int j = 0; j < quant_aresta; j++)
+    {
+        for (int k = j + 1; k < quant_aresta; k++)
+        {
+            if (listaAresta[j].peso > listaAresta[k].peso)
+            {
+                aux = listaAresta[j];
+                listaAresta[j] = listaAresta[k];
+                listaAresta[k] = aux;
+            }
+        }
+    }
+
+    ArestaSimples *listaArestasSolucao = new ArestaSimples[quant_aresta];
+
+    //pecorre toda a lista de arestas colocando cada uma no grafo para verificação de ciclos
+    //caso o grafo possua ciclo, a aresta é removida e não será colocada na solução
+    int quantArestasSolucao = 0;
+    int atual = 0;
+    int arvore[quant_aresta];
+
+    //inicia o vetor arvore
+    for (int i = 0; i < quant_aresta; i++)
+    {
+        arvore[i] = i;
+    }
+
+    //percorre as arestas adicionando-as no vetor arvore e na solução
+    for (int i = 0; i < quant_aresta; i++)
+    {
+        if (arvore[listaAresta[i].origem] != arvore[listaAresta[i].destino])
+        {
+            listaArestasSolucao[atual] = listaAresta[i];
+            atual++;
+            quantArestasSolucao++;
+            int verticeAntigo = arvore[listaAresta[i].origem];
+            int novoVertice = arvore[listaAresta[i].destino];
+            for (int j = 0; j < quant_aresta; j++)
+            {
+                if (arvore[j] == verticeAntigo)
+                    arvore[j] = novoVertice;
+            }
+        }
+    }
+
+    //Imprime Solução
+    unsigned long long int somatorioPesos = 0;
+    arquivo_saida << "---------AGM KRUSKAL---------" << endl;
+    arquivo_saida << "[No_Origem -- No_Destino] - Peso" << endl;
+    arquivo_saida << "-----------------------------" << endl;
+    for (int l = 0; l < quantArestasSolucao; l++)
+    {
+        if (comecaZero)
+        {
+            arquivo_saida << "[" << listaArestasSolucao[l].origem << " -> " << listaArestasSolucao[l].destino << "] - " << listaArestasSolucao[l].peso << endl;
+        }
+        else
+        {
+            if (listaArestasSolucao[l].origem == 0)
+            {
+                arquivo_saida << "[" << this->getOrdem() << " -> " << listaArestasSolucao[l].destino << "] - " << listaArestasSolucao[l].peso << endl;
+            }
+            else if (listaArestasSolucao[l].destino == 0)
+            {
+                arquivo_saida << "[" << listaArestasSolucao[l].origem << " -> " << this->getOrdem() << "] - " << listaArestasSolucao[l].peso << endl;
+            }
+            else
+            {
+                arquivo_saida << "[" << listaArestasSolucao[l].origem << " -> " << listaArestasSolucao[l].destino << "] - " << listaArestasSolucao[l].peso << endl;
+            }
+        }
+        somatorioPesos += listaArestasSolucao[l].peso;
+    }
+    arquivo_saida << "Somatorio dos Pesos: " << somatorioPesos << endl;
+    arquivo_saida << "Quantidade de arestas: " << quantArestasSolucao << endl;
+    arquivo_saida << "--------------------------------------------------------------------------------------------------------" << endl
+                  << endl;
+    delete[] listaAresta;
+    delete[] listaArestasSolucao;
+}
+
+int Grafo::encontraMaiorGrau(ListaAdjacenteEncadeada *lista)
+{
+    int max = 0;
+    for (NoListaAdj *aux = lista->getPos(0); aux != nullptr; aux = aux->getProx())
+    {
+        if (aux->getGrau() > max)
+            max = aux->getGrau();
+    }
+    for (NoListaAdj *aux = lista->getPos(0); aux != nullptr; aux = aux->getProx())
+    {
+        if (aux->getGrau() == max)
+            return aux->getId();
+    }
+    return -1;
+}
+int Grafo::encontraMaiorGrauRandomizado(ListaAdjacenteEncadeada *lista)
+{
+    int max = 0;
+    ListaEncadeada listaEncadeada;
+    int maiorVertice = -1;
+    for (NoListaAdj *aux = lista->getPos(0); aux != nullptr; aux = aux->getProx())
+    {
+        if (aux->getGrau() > max)
+            max = aux->getGrau();
+    }
+    for (NoListaAdj *aux = lista->getPos(0); aux != nullptr; aux = aux->getProx())
+    {
+        if (aux->getGrau() == max)
+        {
+            listaEncadeada.adicionaEspecial(aux->getId());
+            maiorVertice = aux->getId();
+        }
+        if (listaEncadeada.getTamanho() > 1)
+        {
+            maiorVertice = listaEncadeada.getPosicao(rand() % listaEncadeada.getTamanho())->getInfo();
+        }
+    }
+    return maiorVertice;
+}
+
+void deletaVizinhos(int no, ListaAdjacenteEncadeada *lista)
+{
+    NoListaAdj *vertice = lista->getNo(no);
+    FilaEncadeada vizinhos;
+    for (No *aux = vertice->getVizinhos(); aux != nullptr; aux = aux->getProximoNo())
+    {
+        vizinhos.enfileira(aux->getNoDestino());
+    }
+    while (!vizinhos.vazia())
+    {
+        lista->deletaNo(vizinhos.desenfileira());
+    }
+}
+
+int Grafo::guloso(ofstream &arquivo_saida)
+{
+    ListaAdjacenteEncadeada *lista = new ListaAdjacenteEncadeada();
+    int verticeAtual;
+    ListaEncadeada *dominanteMinimo = new ListaEncadeada();
+
+    for (int i = 0; i < this->getOrdem(); i++)
+    {
+        //preenche lista de adjacencias
+        for (No *aux = &listaAdj[i]; aux != nullptr; aux = aux->getProximoNo())
+        {
+            lista->adiciona(i, aux->getNoDestino());
+        }
+    }
+
+    while (lista->getTamanho() > 0)
+    {
+        verticeAtual = encontraMaiorGrau(lista);
+
+        dominanteMinimo->adiciona(verticeAtual);
+
+        if (lista->getNo(verticeAtual)->getGrau() == 0)
+        {
+            break;
+        }
+
+        deletaVizinhos(verticeAtual, lista);
+        lista->deletaNo(verticeAtual);
+
+        if (lista->getTamanho() == 0)
+        {
+            break;
+        }
+        //#caso o vetor de vértices tenha tamanho 1 ou 2, um vértice aleatório é incluido e finaliza a solução
+        if (lista->getTamanho() == 1)
+        {
+            dominanteMinimo->adicionaEspecial(lista->getPos(0)->getId());
+            break;
+        }
+        else if (lista->getTamanho() == 2)
+        {
+            int aleatorio = rand() % 2;
+            dominanteMinimo->adicionaEspecial(lista->getPos(aleatorio)->getId());
+            break;
+        }
+        //define o no com maior grau como o próximo no inicial
+    }
+    ListaEncadeada *valores = new ListaEncadeada();
+
+    for (NoLista *aux = dominanteMinimo->getPosicao(0); aux != nullptr; aux = aux->getProx())
+    {
+        if (valores->getTamanho() == 0)
+        {
+            valores->adiciona(aux->getInfo());
+        }
+        else
+        {
+            bool verifica = false;
+            for (NoLista *aux1 = valores->getPosicao(0); aux1 != nullptr; aux1 = aux1->getProx())
+            {
+                if (aux->getInfo() == aux1->getInfo())
+                {
+                    verifica = true;
+                }
+            }
+            if (!verifica)
+            {
+                valores->adiciona(aux->getInfo());
+            }
+        }
+    }
+    int atual = 0;
+    for (NoLista *aux = valores->getPosicao(0); aux != nullptr; aux = aux->getProx())
+    {
+        atual++;
+    }
+    delete lista;
+    delete valores;
+    delete dominanteMinimo;
+    return atual;
+}
+
+int Grafo::gulosoRandomizado(float alfa)
+{
+    int melhorResultado = this->getOrdem();
+    for (int i = 0, semMelhora = 0; i < 500 && semMelhora < 200; i++, semMelhora++)
+    {
+        ListaAdjacenteEncadeada *lista = new ListaAdjacenteEncadeada();
+        //srand(alfa);
+        int verticeAtual = rand() % this->getOrdem(), atual = 0;
+        ListaEncadeada *dominanteMinimo = new ListaEncadeada();
+        ListaEncadeada *valores = new ListaEncadeada();
+        for (int i = 0; i < this->getOrdem(); i++)
+        {
+            //preenche lista de adjacencias
+            for (No *aux = &listaAdj[i]; aux != nullptr; aux = aux->getProximoNo())
+            {
+                lista->adiciona(i, aux->getNoDestino());
+            }
+        }
+
+        while (lista->getTamanho() > 0)
+        {
+            dominanteMinimo->adiciona(verticeAtual);
+
+            if (lista->getNo(verticeAtual)->getGrau() == 0)
+            {
+                break;
+            }
+
+            deletaVizinhos(verticeAtual, lista);
+            lista->deletaNo(verticeAtual);
+
+            if (lista->getTamanho() == 0)
+            {
+                break;
+            }
+            //caso o vetor de vértices tenha tamanho 1 ou 2, um vértice aleatório é incluido e finaliza a solução
+            if (lista->getTamanho() == 1)
+            {
+                dominanteMinimo->adicionaEspecial(lista->getPos(0)->getId());
+                break;
+            }
+            else if (lista->getTamanho() == 2)
+            {
+                int aleatorio = rand() % 2;
+                dominanteMinimo->adicionaEspecial(lista->getPos(aleatorio)->getId());
+                break;
+            }
+            //define o no com maior grau como o próximo no inicial
+            verticeAtual = encontraMaiorGrauRandomizado(lista);
+        }
+
+        for (NoLista *aux = dominanteMinimo->getPosicao(0); aux != nullptr; aux = aux->getProx())
+        {
+            if (valores->getTamanho() == 0)
+            {
+                valores->adiciona(aux->getInfo());
+            }
+            else
+            {
+                bool verifica = false;
+                for (NoLista *aux1 = valores->getPosicao(0); aux1 != nullptr; aux1 = aux1->getProx())
+                {
+                    if (aux->getInfo() == aux1->getInfo())
+                    {
+                        verifica = true;
                     }
                 }
-                if(atribui){
-                    ap->setCanal(vetorCanais[canal]);
-                    break;
+                if (!verifica)
+                {
+                    valores->adiciona(aux->getInfo());
                 }
             }
         }
-        defineInterferencias(vetorIdsSemCanais);
-        resultado = interferenciaTotal;
-
-
-        float posicao = 10 * alfa - 1;
-        custos[(int)posicao] += resultado;
-        contador[(int)posicao] += 1;
-        //atualiza melhores resultado e alfa
-        if(resultado < melhorResultado) {
-            melhorResultado = resultado;
-            melhorAlfa = alfa;
+        atual = 0;
+        for (NoLista *aux = valores->getPosicao(0); aux != nullptr; aux = aux->getProx())
+        {
+            atual++;
         }
-        //atualiza vetor de médias
-        for (int j = 0; j < 10; ++j) {
-            if(contador[j] > 0){
-                medias[j] = custos[j]/contador[j];
-            }
+        if (atual < melhorResultado)
+        {
+            melhorResultado = atual;
+            semMelhora = 0;
         }
-        //as x primeiras interações são feitas com um alfa aleatório para que o vetor de médias esteja
-        // completo ao ser passado como parâmetro para a função randomizaAlfa.
-        if(i < (int)ceil(quantInteracoes*0.1) ){ //Caso i for menor que 10% da quantidade de iterações
-            alfa = vetorAlfas[rand()%10];
-        }
-        //quando k == 10% da quantidade de interações que deve ser feitas, o alfa é randomizado
-        if( k == (int)ceil(quantInteracoes*0.1) ){
-            alfa = randomizaAlfa(vetorAlfas, probabilidades, medias, melhorResultado);
-            k=0;
-        }
-        //atualiza vetor de canais de acordo com o alfa passado
-        vetorCanais = randomizaVetor(alfa);
-        vetorIdsSemCanais = baseCanais1611();
+        delete lista;
+        delete valores;
+        delete dominanteMinimo;
     }
 
     return melhorResultado;
 }
-
-
-
-
