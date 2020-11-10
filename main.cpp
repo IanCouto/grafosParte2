@@ -87,7 +87,7 @@ void selecionar(int selecao, Grafo *grafo, ofstream &arquivo_saida)
 
         auto duration = duration_cast<microseconds>(stop - start);
         double tempoEmSegundos = duration.count() / 1000000.0;
-        arquivo_saida << resultado << " / " << tempoEmSegundos << endl
+        arquivo_saida << resultado << " / " << tempoEmSegundos << "s" << endl
                       << endl;
         break;
     }
@@ -120,7 +120,7 @@ void selecionar(int selecao, Grafo *grafo, ofstream &arquivo_saida)
 
                 auto duration = duration_cast<microseconds>(stop - start);
                 double tempoEmSegundos = duration.count() / 1000000.0;
-                arquivo_saida << resultado << " / " << tempoEmSegundos << endl
+                arquivo_saida << resultado << " / " << tempoEmSegundos << "s" << endl
                               << endl;
             }
         }
@@ -168,7 +168,7 @@ Grafo *leitura(ifstream &arquivo_entrada)
     arquivo_entrada >> leitura;
     for (int i = 0; i < ordem; i++)
     {
-        for (int j = 0; j < ordem; j++, arquivo_entrada >> leitura)
+        for (int j = 0; j<ordem; j++, arquivo_entrada> > leitura)
         {
             if (leitura == 1 && i != j)
             {
@@ -176,7 +176,6 @@ Grafo *leitura(ifstream &arquivo_entrada)
                 grafo->inserirAresta(i, j);
             }
         }
-        
     }
 
     return grafo;
