@@ -8,9 +8,17 @@ ListaAdjacenteEncadeada::ListaAdjacenteEncadeada() {
     this->noFim = nullptr; // ponteiro para No do fim
     this->tamanho = 0;
 }
-ListaAdjacenteEncadeada::~ListaAdjacenteEncadeada() {
 
+ListaAdjacenteEncadeada::~ListaAdjacenteEncadeada() {
+    NoListaAdj *p = noInicio;
+    while(p != NULL)
+    {
+        NoListaAdj *t = p->getProx();
+        delete p;
+        p = t;
+    }
 }
+
 int ListaAdjacenteEncadeada::getTamanho() {
     return this->tamanho;
 }

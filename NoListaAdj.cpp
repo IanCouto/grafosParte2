@@ -28,7 +28,13 @@ using namespace std;
         this->grau=0;
     }
     NoListaAdj::~NoListaAdj(){
-
+        No *p = vizinhos;
+        while(p != NULL)
+        {
+            No *t = p->getProximoNo();
+            delete p;
+            p = t;
+        }
     }
 
     //Getters
