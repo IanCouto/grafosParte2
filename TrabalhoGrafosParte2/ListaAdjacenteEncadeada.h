@@ -3,11 +3,10 @@
 
 #include "NoListaAdj.h"
 
-class ListaAdjacenteEncadeada
-{
+class ListaAdjacenteEncadeada {
 private:
-    NoListaAdj *noInicio; // ponteiro para No do comeco
-    NoListaAdj *noFim;    // ponteiro para No do fim
+    NoListaAdj* noInicio; // ponteiro para No do comeco
+    NoListaAdj* noFim; // ponteiro para No do fim
     int tamanho;
 
 public:
@@ -17,10 +16,9 @@ public:
     void adiciona(int no, int noDestino);
     void deletaNo(int no);
     //void deletaVizinhos(int no);
-    NoListaAdj *getNo(int no);
-    NoListaAdj *getPos(int index);
-    void imprimeLista(bool opcao);
-    void ordena(float alfa);
+    NoListaAdj* getNo(int no);
+    NoListaAdj* getPos(int index);
+    void imprimeLista();
 };
 
 #endif // LISTAADJACENTEENCADEADA_H

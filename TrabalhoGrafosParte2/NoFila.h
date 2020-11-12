@@ -9,11 +9,11 @@ public:
     int getInfo();
     NoFila* getProx();
     void setInfo(int val);
-    void setProx(NoFila *p);
+    void setProx(NoFila* p);
 
 private:
     int info; // informacao
-    NoFila *proximo; // ponteiro para o proximo
+    NoFila* proximo; // ponteiro para o proximo
 };
 
 #endif // NOFILA_H_INCLUDED

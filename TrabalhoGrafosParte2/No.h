@@ -1,7 +1,7 @@
 #ifndef TEORIADOSGRAFOS_NO_H
 #define TEORIADOSGRAFOS_NO_H
 
-class No{
+class No {
 private:
     int peso;
     int noDestino;

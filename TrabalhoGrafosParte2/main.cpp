@@ -1,16 +1,16 @@
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>
-#include <unistd.h>
+
 #include <chrono>
 #include <time.h>
-#include "header/Grafo.h"
+#include "Grafo.h"
 
 using namespace std::chrono;
 using namespace std;
 /**
  * Trabalho de grafos do GRUPO 9
- * 
+ *
  * @author ANTÔNIO HENRIQUE PASSAMAI PENIZOLLO
  * @author IAN COUTO DE PAULA
  * @author LEONARDO AZALIM DE OLIVEIRA
@@ -18,10 +18,10 @@ using namespace std;
  * @author RAÍH CÉSAR SILVA DE LIMA
  */
 
-/**
- * Função utilizada para imprimir o menu e computar a funcionalidade escolhida pelo usuário
- * @return int escolha do usuário
- */
+ /**
+  * Função utilizada para imprimir o menu e computar a funcionalidade escolhida pelo usuário
+  * @return int escolha do usuário
+  */
 int menu()
 {
 
@@ -50,7 +50,7 @@ int menu()
  * @param grafo grafo
  * @param arquivo_saida arquivo de saída de dados
  */
-void selecionar(int selecao, Grafo *grafo, ofstream &arquivo_saida)
+void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
 {
 
     switch (selecao)
@@ -62,13 +62,13 @@ void selecionar(int selecao, Grafo *grafo, ofstream &arquivo_saida)
         grafo->mostrarGrafo(arquivo_saida);
         break;
     }
-        //mostrar nos
+    //mostrar nos
     case 2:
     {
         grafo->mostrarNos(arquivo_saida);
         break;
     }
-        //mostrar arestas
+    //mostrar arestas
     case 3:
     {
         grafo->mostrarArestas(arquivo_saida);
@@ -88,22 +88,22 @@ void selecionar(int selecao, Grafo *grafo, ofstream &arquivo_saida)
         auto duration = duration_cast<microseconds>(stop - start);
         double tempoEmSegundos = duration.count() / 1000000.0;
         arquivo_saida << resultado << " / " << tempoEmSegundos << "s" << endl
-                      << endl;
+            << endl;
         break;
     }
     //Guloso randomizado
     case 5:
     {
         int melhorResultado = grafo->getOrdem(), piorResultado = 0;
-        float alfas[5] = {0.1, 0.2, 0.3, 0.5, 0.7};
+        float alfas[5] = { 0.1, 0.2, 0.3, 0.5, 0.7 };
         for (int j = 0; j < 5; j++)
         {
             for (int i = 0; i < 10; i++)
             {
                 arquivo_saida << endl
-                              << "=================================================================" << endl
-                              << "Execucao: " << i + 1 << " Alfa: " << alfas[j] << endl
-                              << "=================================================================" << endl;
+                    << "=================================================================" << endl
+                    << "Execucao: " << i + 1 << " Alfa: " << alfas[j] << endl
+                    << "=================================================================" << endl;
 
                 arquivo_saida << "-----------GULOSO RANDOMIZADO------------" << endl;
                 arquivo_saida << "Tamanho / Tempo de Execução(segundos)" << endl;
@@ -121,7 +121,7 @@ void selecionar(int selecao, Grafo *grafo, ofstream &arquivo_saida)
                 auto duration = duration_cast<microseconds>(stop - start);
                 double tempoEmSegundos = duration.count() / 1000000.0;
                 arquivo_saida << resultado << " / " << tempoEmSegundos << "s" << endl
-                              << endl;
+                    << endl;
             }
         }
         arquivo_saida << "Melhor resultado: " << melhorResultado << endl;
@@ -142,7 +142,7 @@ void selecionar(int selecao, Grafo *grafo, ofstream &arquivo_saida)
  * @param arquivo_entrada arquivo de entrada de dados
  * @return Grafo*
  */
-Grafo *leitura(ifstream &arquivo_entrada)
+Grafo* leitura(ifstream& arquivo_entrada)
 {
     int ordem;
     string aux = "";
@@ -150,7 +150,7 @@ Grafo *leitura(ifstream &arquivo_entrada)
     arquivo_entrada >> aux;
     arquivo_entrada >> ordem;
 
-    Grafo *grafo = new Grafo(ordem);
+    Grafo* grafo = new Grafo(ordem);
 
     //Leitura do arquivo
     arquivo_entrada >> aux;
@@ -168,7 +168,7 @@ Grafo *leitura(ifstream &arquivo_entrada)
     arquivo_entrada >> leitura;
     for (int i = 0; i < ordem; i++)
     {
-        for (int j = 0; j<ordem; j++, arquivo_entrada >> leitura)
+        for (int j = 0; j < ordem; j++, arquivo_entrada >> leitura)
         {
             if (leitura == 1 && i != j)
             {
@@ -189,27 +189,29 @@ Grafo *leitura(ifstream &arquivo_entrada)
  * argv[1]: nome do arquivo de entrada;
  * argv[2]: nome do arquivo de saida.
  */
-/*
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
 
     srand(time(NULL));
     cout << "Carregando... " << endl;
 
     //Verificação se todos os parâmetros do programa foram encontrados
+    /*
     if (argc != 3)
     {
         cout << "ERRO: Esperado: ./<nome_programa> <arquivo_entrada> <arquivo_saida>" << endl;
         return 1;
-    }
+    }*/
 
     //Abrindo arquivo de entrada
     ifstream arquivo_entrada;
     ofstream arquivo_saida;
-    arquivo_entrada.open(argv[1], ios::in);
-    arquivo_saida.open(argv[2], ios::out | ios::trunc);
+    arquivo_entrada.open("instancias/Problem.dat_800_5000_0", ios::in);
+    arquivo_saida.open("resultado.txt", ios::out | ios::trunc);
+    //arquivo_entrada.open(argv[1], ios::in);
+    //arquivo_saida.open(argv[2], ios::out | ios::trunc);
 
-    Grafo *grafo = new Grafo();
+    Grafo* grafo = new Grafo();
 
     if (arquivo_entrada.is_open())
         grafo = leitura(arquivo_entrada);
@@ -221,9 +223,9 @@ int main(int argc, char *argv[])
     //grafo->gerarResultadosGrafo(arquivo_saida);
 
     arquivo_saida << endl
-                  << "------------------------------" << endl
-                  << "        FUNCIONALIDADES" << endl
-                  << "------------------------------" << endl;
+        << "------------------------------" << endl
+        << "        FUNCIONALIDADES" << endl
+        << "------------------------------" << endl;
     for (int selecao = menu(); selecao != 0; selecao = menu())
     {
         selecionar(selecao, grafo, arquivo_saida);
@@ -237,22 +239,4 @@ int main(int argc, char *argv[])
 
     delete grafo;
     return 0;
-}*/
-
-int main(int argc, char *argv[])
-{
-    ListaAdjacenteEncadeada *lista = new ListaAdjacenteEncadeada();
-    lista->adiciona(0, 1);
-    lista->adiciona(0, 2);
-    lista->adiciona(0, 3);
-    lista->adiciona(0, 4);
-    lista->adiciona(1, 0);
-    lista->adiciona(1, 3);
-    lista->adiciona(2, 0);
-    lista->adiciona(3, 0);
-    lista->adiciona(3, 1);
-    lista->adiciona(4, 0);
-    lista->imprimeLista(false);
-    lista->ordena(0);
-    lista->imprimeLista(false);
 }

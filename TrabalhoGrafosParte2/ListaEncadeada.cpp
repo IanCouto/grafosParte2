@@ -1,5 +1,5 @@
 #include <iostream>
-#include "header/ListaEncadeada.h"
+#include "ListaEncadeada.h"
 
 using namespace std;
 
@@ -17,7 +17,15 @@ ListaEncadeada::ListaEncadeada()
  */
 ListaEncadeada::~ListaEncadeada()
 {
-    NoLista *p = noInicio;
+    NoLista* p = noInicio;
+    while (p != nullptr)
+    {
+        NoLista* t = p->getProx();
+        delete p;
+        p = t;
+    }
+    /*
+    NoLista* p = noInicio;
     while (p != nullptr)
     {
         if (p->getProx() != nullptr)
@@ -26,28 +34,28 @@ ListaEncadeada::~ListaEncadeada()
             p = nullptr;
         delete noInicio;
         noInicio = p;
-    }
+    }*/
 }
 /**
- * funÃ§Ã£o que retorna o No inicial
+ * função que retorna o No inicial
  */
-/*
-int ListaEncadeada::getInicio(){
-   if(!vazia())
-       return noInicio->getInfo();
-   else{
-       cout<<"Lista vazia\n";
-       exit(1);
-   }
-}*/
+ /*
+ int ListaEncadeada::getInicio(){
+    if(!vazia())
+        return noInicio->getInfo();
+    else{
+        cout<<"Lista vazia\n";
+        exit(1);
+    }
+ }*/
 
-/**
- * funÃ§Ã£o que insere um No no fim
- * @param val valor do No
- */
+ /**
+  * função que insere um No no fim
+  * @param val valor do No
+  */
 void ListaEncadeada::adiciona(int val)
 {
-    NoLista *p = new NoLista();
+    NoLista* p = new NoLista();
     p->setInfo(val);
     p->setProx(nullptr);
     p->setAnt(noFim);
@@ -64,7 +72,7 @@ void ListaEncadeada::adiciona(int val)
     this->tamanho++;
 }
 /**
- * funÃ§Ã£o que insere um No no fim
+ * função que insere um No no fim
  * @param val valor do No
  */
 void ListaEncadeada::adicionaEspecial(int val)
@@ -72,7 +80,7 @@ void ListaEncadeada::adicionaEspecial(int val)
     bool existe = false;
     if (tamanho > 1)
     {
-        for (NoLista *aux = noInicio; aux != nullptr; aux = aux->getProx())
+        for (NoLista* aux = noInicio; aux != nullptr; aux = aux->getProx())
         {
             if (aux->getInfo() == val)
             {
@@ -84,7 +92,7 @@ void ListaEncadeada::adicionaEspecial(int val)
 
     if (!existe)
     {
-        NoLista *p = new NoLista();
+        NoLista* p = new NoLista();
         p->setInfo(val);
         p->setProx(nullptr);
         p->setAnt(noFim);
@@ -103,12 +111,12 @@ void ListaEncadeada::adicionaEspecial(int val)
 }
 
 /**
- * funÃ§Ã£o que insere um No no fim
+ * função que insere um No no fim
  * @param val valor do No
  */
 void ListaEncadeada::adiciona(int val, int info2)
 {
-    NoLista *p = new NoLista();
+    NoLista* p = new NoLista();
     p->setInfo(val);
     p->setProx(nullptr);
     p->setAnt(noFim);
@@ -127,12 +135,12 @@ void ListaEncadeada::adiciona(int val, int info2)
 }
 
 /**
- * funÃ§Ã£o que elimina o val encontrado
+ * função que elimina o val encontrado
  */
 void ListaEncadeada::removeValor(int val)
 {
     int cont = 0;
-    for (NoLista *aux = noInicio; aux != nullptr; aux = aux->getProx(), cont++)
+    for (NoLista* aux = noInicio; aux != nullptr; aux = aux->getProx(), cont++)
     {
         if (aux->getInfo() == val || aux->getInfo2() == val)
         {
@@ -144,12 +152,12 @@ void ListaEncadeada::removeValor(int val)
             if (noInicio == aux)
                 noInicio = aux->getProx();
 
-            /* Change next only if node to be 
+            /* Change next only if node to be
             auxeted is NOT the last node */
             if (aux->getProx() != NULL)
                 aux->getProx()->setAnt(aux->getAnt());
 
-            /* Change getAnt() only if node to be 
+            /* Change getAnt() only if node to be
             auxeted is NOT the first node */
             if (aux->getAnt() != NULL)
                 aux->getAnt()->setProx(aux->getProx());
@@ -172,7 +180,7 @@ void ListaEncadeada::removeValor(int val)
 }
 
 /**
- * funÃ§Ã£o que verifica se a lista estÃ¡ vazia
+ * função que verifica se a lista está vazia
  */
 bool ListaEncadeada::isVazio()
 {
@@ -183,7 +191,7 @@ bool ListaEncadeada::isVazio()
 }
 
 /**
- * funÃ§Ã£o que retorna o nÃºmero de Nos
+ * função que retorna o número de Nos
  */
 int ListaEncadeada::getTamanho()
 {
@@ -193,7 +201,7 @@ int ListaEncadeada::getTamanho()
 void ListaEncadeada::imprimeLista()
 {
     int i = 0;
-    for (NoLista *a = this->noInicio; a != nullptr; a = a->getProx())
+    for (NoLista* a = this->noInicio; a != nullptr; a = a->getProx())
     {
         if (i > 0)
         {
@@ -205,7 +213,7 @@ void ListaEncadeada::imprimeLista()
     cout << endl;
 }
 
-NoLista *ListaEncadeada::getPosicao(int pos)
+NoLista* ListaEncadeada::getPosicao(int pos)
 {
     if (pos < 0 || pos >= this->tamanho)
     {
@@ -215,7 +223,7 @@ NoLista *ListaEncadeada::getPosicao(int pos)
     else
     {
         int cont = 0;
-        for (NoLista *a = this->noInicio; a != nullptr; a = a->getProx())
+        for (NoLista* a = this->noInicio; a != nullptr; a = a->getProx())
         {
             if (cont == pos)
             {
@@ -237,7 +245,7 @@ void ListaEncadeada::alteraValor(int pos, int val)
     else
     {
         int cont = 0;
-        for (NoLista *a = this->noInicio; a != nullptr; a = a->getProx())
+        for (NoLista* a = this->noInicio; a != nullptr; a = a->getProx())
         {
             if (cont == pos)
             {
@@ -251,7 +259,7 @@ void ListaEncadeada::alteraValor(int pos, int val)
 
 bool ListaEncadeada::verificaElemento(int val)
 {
-    for (NoLista *a = this->noInicio; a != nullptr; a = a->getProx())
+    for (NoLista* a = this->noInicio; a != nullptr; a = a->getProx())
     {
         if (a->getInfo() == val)
         {

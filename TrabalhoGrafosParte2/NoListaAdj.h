@@ -2,7 +2,7 @@
 #define NOLISTAADJ_H
 #include "No.h"
 
-class NoListaAdj{
+class NoListaAdj {
 private:
     int id;
     int grau;
@@ -29,7 +29,7 @@ public:
     void setProx(NoListaAdj* val);
     void setAnt(NoListaAdj* val);
 
-    //Outras funÃ§Ãµes
+    //Outras funções
     void deletaVizinho(int val);
     void adicionaVizinho(int val);
 };

@@ -1,4 +1,4 @@
-#include "header/No.h"
+#include "No.h"
 
 using namespace std;
 
@@ -15,40 +15,41 @@ No::No() {
 
 // Destrutor
 No::~No() {
+    this->proximoNo = nullptr;
 }
 
 //Getters
 
 /**
- * FunÃ§Ã£o que retorna o no destino da aresta
+ * Função que retorna o no destino da aresta
  * @return noDestino
  */
-int No::getNoDestino(){
+int No::getNoDestino() {
     return this->noDestino;
 }
 
 /**
- * FunÃ§Ã£o que retorna o proximo No
+ * Função que retorna o proximo No
  * @return proximoNo
  */
-No* No::getProximoNo(){
+No* No::getProximoNo() {
     return this->proximoNo;
 }
 
 //Setters
 
 /**
- * FunÃ§Ã£o que altera o no destino da aresta
+ * Função que altera o no destino da aresta
  * @param noDestino
  */
-void No::setNoDestino(int noDestino ){
+void No::setNoDestino(int noDestino) {
     this->noDestino = noDestino;
 }
 
 /**
- * FunÃ§Ã£o que altera o proximo no
+ * Função que altera o proximo no
  * @param proximoNo
  */
-void No::setProximoNo(No* proximoNo){
+void No::setProximoNo(No* proximoNo) {
     this->proximoNo = proximoNo;
 }

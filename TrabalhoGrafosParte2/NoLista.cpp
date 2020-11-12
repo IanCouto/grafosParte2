@@ -1,8 +1,8 @@
-#include"header/NoLista.h"
+#include"NoLista.h"
 /**
  * Contrutor
  */
-NoLista::NoLista() { 
+NoLista::NoLista() {
     proximo = nullptr;
     anterior = nullptr;
     info = -1;
@@ -12,22 +12,23 @@ NoLista::NoLista() {
 /**
  * Destrutor
  */
-NoLista::~NoLista() { 
+NoLista::~NoLista() {
+
 }
 /**
- * Retorna a informaÃ§Ã£o
+ * Retorna a informação
  * @return info
  */
 int NoLista::getInfo() {
-    return info;    
+    return info;
 }
 
 /**
- * Retorna a informaÃ§Ã£o
+ * Retorna a informação
  * @return vizinho
  */
 int NoLista::getInfo2() {
-    return this->info2;    
+    return this->info2;
 }
 
 /**
@@ -42,7 +43,7 @@ NoLista* NoLista::getAnt() {
     return anterior;
 }
 /**
- * Altera o valor da informaÃ§Ã£o
+ * Altera o valor da informação
  * @param val
  */
 void NoLista::setInfo(int val) {
@@ -58,13 +59,13 @@ void NoLista::setInfo2(int val) {
 }
 
 /**
- * Altera o valor do proximo nÃ³
- * @param p 
+ * Altera o valor do proximo nó
+ * @param p
  */
-void NoLista::setProx(NoLista *p) {
+void NoLista::setProx(NoLista* p) {
     proximo = p;
 }
 
-void NoLista::setAnt(NoLista *p) {
+void NoLista::setAnt(NoLista* p) {
     anterior = p;
 }

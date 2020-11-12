@@ -1,21 +1,21 @@
-#include"header/NoFila.h"
+#include"NoFila.h"
 
 /**
  * Contrutor
  */
-NoFila::NoFila() { 
+NoFila::NoFila() {
 }
 /**
  * Destrutor
  */
-NoFila::~NoFila() { 
+NoFila::~NoFila() {
 }
 /**
- * Retorna a informaÃ§Ã£o
+ * Retorna a informação
  * @return info
  */
 int NoFila::getInfo() {
-    return info;    
+    return info;
 }
 /**
  * Retorna o proximo No da fila
@@ -25,16 +25,16 @@ NoFila* NoFila::getProx() {
     return proximo;
 }
 /**
- * Altera o valor da informaÃ§Ã£o
+ * Altera o valor da informação
  * @param val
  */
 void NoFila::setInfo(int val) {
     info = val;
 }
 /**
- * Altera o valor do proximo nÃ³
- * @param p 
+ * Altera o valor do proximo nó
+ * @param p
  */
-void NoFila::setProx(NoFila *p) {
+void NoFila::setProx(NoFila* p) {
     proximo = p;
 }
