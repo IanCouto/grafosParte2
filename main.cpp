@@ -189,6 +189,7 @@ Grafo *leitura(ifstream &arquivo_entrada)
  * argv[1]: nome do arquivo de entrada;
  * argv[2]: nome do arquivo de saida.
  */
+/*
 int main(int argc, char *argv[])
 {
 
@@ -236,4 +237,22 @@ int main(int argc, char *argv[])
 
     delete grafo;
     return 0;
+}*/
+
+int main(int argc, char *argv[])
+{
+    ListaAdjacenteEncadeada *lista = new ListaAdjacenteEncadeada();
+    lista->adiciona(0, 1);
+    lista->adiciona(0, 2);
+    lista->adiciona(0, 3);
+    lista->adiciona(0, 4);
+    lista->adiciona(1, 0);
+    lista->adiciona(1, 3);
+    lista->adiciona(2, 0);
+    lista->adiciona(3, 0);
+    lista->adiciona(3, 1);
+    lista->adiciona(4, 0);
+    lista->imprimeLista(false);
+    lista->ordena(0);
+    lista->imprimeLista(false);
 }
