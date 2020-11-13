@@ -1,0 +1,2 @@
+g++ *.c* -o exec.exe
+exec.exe instancias/grafo_800_5000_0.txt resultados/resultado.txt

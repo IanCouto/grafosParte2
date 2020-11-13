@@ -43,6 +43,7 @@ void ListaAdjacenteEncadeada::adiciona(int no, int noDestino) {
         }
     }
 }
+
 void ListaAdjacenteEncadeada::deletaNo(int no) {
     if (this->getTamanho() > 0) {
         NoListaAdj* p = new NoListaAdj();

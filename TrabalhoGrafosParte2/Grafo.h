@@ -23,7 +23,7 @@ private:
     bool ehVizinho(No* noU, No* noV);
     void imprimeCaminhoFloyd(int** caminho, int vertice1, int vertice2, ofstream& arquivo_saida);
     int encontraMaiorGrau(ListaAdjacenteEncadeada* lista);
-    int encontraMaiorGrauRandomizado(ListaAdjacenteEncadeada* lista);
+    int encontraMaiorGrauRandomizado(ListaAdjacenteEncadeada* lista, float alfa);
 
 public:
     //Contrutor e Destrutor
@@ -39,7 +39,7 @@ public:
     //Setters
     void setQuantAresta(int val);
 
-    //Outros métodos
+    //Outros mï¿½todos
     void inserirAresta(int id, int id_destino);
     void mostrarGrafo(ofstream& arquivo_saida);
     void mostrarArestas(ofstream& arquivo_saida);

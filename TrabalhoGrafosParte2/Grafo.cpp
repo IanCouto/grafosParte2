@@ -61,7 +61,7 @@ int Grafo::getQuantAresta()
 	return this->quant_aresta;
 }
 /**
- * @return se o grafo começa com zero
+ * @return se o grafo comeï¿½a com zero
  */
 bool Grafo::isComecaZero()
 {
@@ -77,21 +77,21 @@ void Grafo::setQuantAresta(int val)
 }
 
 /**
- * função auxiliar para inserir arestas no grafo
- * @param id id do nó de origem
- * @param id_destino id do nó de destino
- * @return true se conseguiu enatualrar o id do nó de destino false caso não tenha conseguido
+ * funï¿½ï¿½o auxiliar para inserir arestas no grafo
+ * @param id id do nï¿½ de origem
+ * @param id_destino id do nï¿½ de destino
+ * @return true se conseguiu enatualrar o id do nï¿½ de destino false caso nï¿½o tenha conseguido
  */
 bool Grafo::auxInserirAresta(int id, int id_destino)
 {
-	//não permite self-loops
+	//nï¿½o permite self-loops
 	if (id == id_destino)
 	{
 		return true;
 	}
 	for (No* a = &listaAdj[id]; a != nullptr; a = a->getProximoNo())
 	{
-		//verifica se o id nó de destino existente no grafo é igual o id do nó de destino a ser inserido
+		//verifica se o id nï¿½ de destino existente no grafo ï¿½ igual o id do nï¿½ de destino a ser inserido
 		if (a->getNoDestino() == id_destino)
 		{
 			return true;
@@ -102,16 +102,16 @@ bool Grafo::auxInserirAresta(int id, int id_destino)
 
 /**
  * insere as arestas no grafo
- * @param id id do nó de origem
- * @param id_destino id do nó de destino
- * @param peso peso da aresta entre os nós
+ * @param id id do nï¿½ de origem
+ * @param id_destino id do nï¿½ de destino
+ * @param peso peso da aresta entre os nï¿½s
  */
 void Grafo::inserirAresta(int id, int id_destino)
 {
-	//caso a aresta entre os nó não exista
+	//caso a aresta entre os nï¿½ nï¿½o exista
 	if (!auxInserirAresta(id, id_destino))
 	{
-		//tratamento para grafo que começa com vértice igual a 1
+		//tratamento para grafo que comeï¿½a com vï¿½rtice igual a 1
 		if (id == this->getOrdem())
 		{
 			this->comecaZero = false;
@@ -122,8 +122,8 @@ void Grafo::inserirAresta(int id, int id_destino)
 			this->comecaZero = false;
 			id_destino = 0;
 		}
-		//insere a aresta no nó de origem;
-		//caso a primeira posição esteja vazia
+		//insere a aresta no nï¿½ de origem;
+		//caso a primeira posiï¿½ï¿½o esteja vazia
 		if (this->listaAdj[id].getNoDestino() == -1)
 		{
 			this->listaAdj[id].setNoDestino(id_destino);
@@ -137,8 +137,8 @@ void Grafo::inserirAresta(int id, int id_destino)
 			}
 			aux->setProximoNo(new No(id_destino));
 		}
-		//insere a aresta no nó de destino
-		//caso a primeira posição esteja vazia
+		//insere a aresta no nï¿½ de destino
+		//caso a primeira posiï¿½ï¿½o esteja vazia
 		if (this->listaAdj[id_destino].getNoDestino() == -1)
 		{
 			this->listaAdj[id_destino].setNoDestino(id);
@@ -157,8 +157,8 @@ void Grafo::inserirAresta(int id, int id_destino)
 }
 
 /**
- * mostra os nós e seus vizinhos de forma ordenada
- * @param arquivo_saida arquivo de saída de dados
+ * mostra os nï¿½s e seus vizinhos de forma ordenada
+ * @param arquivo_saida arquivo de saï¿½da de dados
  */
 void Grafo::mostrarGrafo(ofstream& arquivo_saida)
 {
@@ -166,7 +166,7 @@ void Grafo::mostrarGrafo(ofstream& arquivo_saida)
 	arquivo_saida << "  No  |  No(s) Vizinho(s) " << endl;
 	arquivo_saida << "------------------------------" << endl;
 	int atual = 0;
-	//acertar a posição dos elementos a serem imprimidos
+	//acertar a posiï¿½ï¿½o dos elementos a serem imprimidos
 	for (int i = 0; i < getOrdem(); i++)
 	{
 		if (!comecaZero && i == 0)
@@ -205,7 +205,7 @@ void Grafo::mostrarGrafo(ofstream& arquivo_saida)
 		{
 			arquivo_saida << "     | ";
 		}
-		//percorre o nó imprimindo todas as arestas
+		//percorre o nï¿½ imprimindo todas as arestas
 		for (No* a = &listaAdj[i]; a != nullptr; a = a->getProximoNo())
 		{
 			if (!comecaZero && a->getNoDestino() == 0)
@@ -230,7 +230,7 @@ void Grafo::mostrarGrafo(ofstream& arquivo_saida)
 }
 
 /**
- * Mostra os nós e seus pesos de forma ordenada
+ * Mostra os nï¿½s e seus pesos de forma ordenada
  * @param arquivo_saida arquivo de saida de dados
  */
 void Grafo::mostrarNos(ofstream& arquivo_saida)
@@ -239,7 +239,7 @@ void Grafo::mostrarNos(ofstream& arquivo_saida)
 	arquivo_saida << "  No  |   Grau " << endl;
 	arquivo_saida << "------------------------------" << endl;
 	int atual = 0;
-	//acertar a posição dos elementos a serem imprimidos
+	//acertar a posiï¿½ï¿½o dos elementos a serem imprimidos
 	for (int i = 0; i < getOrdem(); i++)
 	{
 		if (!comecaZero && i == 0)
@@ -291,7 +291,7 @@ void Grafo::mostrarNos(ofstream& arquivo_saida)
 }
 
 /**
- * Mostra as arestas entre os nós e seus pesos
+ * Mostra as arestas entre os nï¿½s e seus pesos
  * @param arquivo_saida arquivo de saida de dados
  */
 void Grafo::mostrarArestas(ofstream& arquivo_saida)
@@ -299,7 +299,7 @@ void Grafo::mostrarArestas(ofstream& arquivo_saida)
 	arquivo_saida << "-----------ARESTAS------------" << endl;
 	arquivo_saida << "  No -- No " << endl;
 	arquivo_saida << "------------------------------" << endl;
-	//percorre o grafo imprimindo as arestas de cada nó de forma ordenada
+	//percorre o grafo imprimindo as arestas de cada nï¿½ de forma ordenada
 	for (int i = 0; i < getOrdem(); i++)
 	{
 		for (No* a = &listaAdj[i]; a != nullptr; a = a->getProximoNo())
@@ -339,32 +339,6 @@ int Grafo::encontraMaiorGrau(ListaAdjacenteEncadeada* lista)
 			return aux->getId();
 	}
 	return -1;
-}
-
-int Grafo::encontraMaiorGrauRandomizado(ListaAdjacenteEncadeada* lista)
-{
-	int max = 0;
-	ListaEncadeada* listaEncadeada = new ListaEncadeada();
-	int maiorVertice = -1;
-	for (NoListaAdj* aux = lista->getPos(0); aux != nullptr; aux = aux->getProx())
-	{
-		if (aux->getGrau() > max)
-			max = aux->getGrau();
-	}
-	for (NoListaAdj* aux = lista->getPos(0); aux != nullptr; aux = aux->getProx())
-	{
-		if (aux->getGrau() == max)
-		{
-			listaEncadeada->adicionaEspecial(aux->getId());
-			maiorVertice = aux->getId();
-		}
-		if (listaEncadeada->getTamanho() > 1)
-		{
-			maiorVertice = listaEncadeada->getPosicao(rand() % listaEncadeada->getTamanho())->getInfo();
-		}
-	}
-	delete listaEncadeada;
-	return maiorVertice;
 }
 
 void deletaVizinhos(int no, ListaAdjacenteEncadeada* lista)
@@ -414,7 +388,7 @@ int Grafo::guloso(ofstream& arquivo_saida)
 		{
 			break;
 		}
-		//#caso o vetor de vértices tenha tamanho 1 ou 2, um vértice aleatório é incluido e finaliza a solução
+		//#caso o vetor de vï¿½rtices tenha tamanho 1 ou 2, um vï¿½rtice aleatï¿½rio ï¿½ incluido e finaliza a soluï¿½ï¿½o
 		if (lista->getTamanho() == 1)
 		{
 			dominanteMinimo->adicionaEspecial(lista->getPos(0)->getId());
@@ -426,7 +400,7 @@ int Grafo::guloso(ofstream& arquivo_saida)
 			dominanteMinimo->adicionaEspecial(lista->getPos(aleatorio)->getId());
 			break;
 		}
-		//define o no com maior grau como o próximo no inicial
+		//define o no com maior grau como o prï¿½ximo no inicial
 	}
 	ListaEncadeada* valores = new ListaEncadeada();
 
@@ -520,7 +494,7 @@ void quickSort(Vertice arr[], int low, int high)
 }
 
 int* geraVetorOrdenado(ListaAdjacenteEncadeada* lista, float alfa) {
-	int tamanho = round((float)(lista->getTamanho()) / (alfa*100));
+	int tamanho = lista->getTamanho() * alfa;
 	Vertice * vetor = new Vertice[lista->getTamanho()];
 	int cont=0;
 	int a = -1;
@@ -533,16 +507,26 @@ int* geraVetorOrdenado(ListaAdjacenteEncadeada* lista, float alfa) {
 
 	int* melhoresNos = new int[tamanho];
 	for (int i = 0; i < tamanho; i++) {
-		melhoresNos[i] = vetor[lista->getTamanho() - 1 - i].id;
+		if(lista->getTamanho() - 1 - i > 0)
+			melhoresNos[i] = vetor[lista->getTamanho() - 1 - i].id;
 	}
 
 	delete[] vetor;
 	return melhoresNos;
 }
 
+int Grafo::encontraMaiorGrauRandomizado(ListaAdjacenteEncadeada* lista, float alfa)
+{
+	int* melhoresNos = geraVetorOrdenado(lista, alfa);
+	int i = (lista->getTamanho()- 1) * alfa;
+	int escolhido = melhoresNos[rand() % i];
+	delete []melhoresNos;
+	return escolhido;
+}
+
 int Grafo::gulosoRandomizado(float alfa)
 {
-	int melhorResultado = this->getOrdem();
+	int melhorResultado = this->getOrdem(), atual = 0;
 	for (int i = 0, semMelhora = 0; i < 500 && semMelhora < 200; i++, semMelhora++)
 	{
 		ListaAdjacenteEncadeada* lista = new ListaAdjacenteEncadeada();
@@ -554,10 +538,8 @@ int Grafo::gulosoRandomizado(float alfa)
 				lista->adiciona(i, aux->getNoDestino());
 			}
 		}
-		int* melhoresNos = geraVetorOrdenado(lista, alfa);
 		
-		//srand(alfa);
-		int verticeAtual = rand() % this->getOrdem(), atual = 0;
+		int verticeAtual = encontraMaiorGrauRandomizado(lista, alfa);
 		ListaEncadeada* dominanteMinimo = new ListaEncadeada();
 		ListaEncadeada* valores = new ListaEncadeada();
 
@@ -578,7 +560,7 @@ int Grafo::gulosoRandomizado(float alfa)
 			{
 				break;
 			}
-			//caso o vetor de vértices tenha tamanho 1 ou 2, um vértice aleatório é incluido e finaliza a solução
+			//caso o vetor de vï¿½rtices tenha tamanho 1 ou 2, um vï¿½rtice aleatï¿½rio ï¿½ incluido e finaliza a soluï¿½ï¿½o
 			if (lista->getTamanho() == 1)
 			{
 				dominanteMinimo->adicionaEspecial(lista->getPos(0)->getId());
@@ -590,8 +572,8 @@ int Grafo::gulosoRandomizado(float alfa)
 				dominanteMinimo->adicionaEspecial(lista->getPos(aleatorio)->getId());
 				break;
 			}
-			//define o no com maior grau como o próximo no inicial
-			verticeAtual = encontraMaiorGrauRandomizado(lista);
+			//define o no com maior grau como o prï¿½ximo no inicial
+			verticeAtual = encontraMaiorGrauRandomizado(lista, alfa);
 		}
 
 		for (NoLista* aux = dominanteMinimo->getPosicao(0); aux != nullptr; aux = aux->getProx())
@@ -629,7 +611,6 @@ int Grafo::gulosoRandomizado(float alfa)
 		delete lista;
 		delete valores;
 		delete dominanteMinimo;
-		delete[] melhoresNos;
 	}
 
 	return melhorResultado;
