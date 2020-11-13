@@ -72,7 +72,7 @@ void NoListaAdj::deletaVizinho(int val) {
         if (vizinhos->getNoDestino() == val) {
             No* p = vizinhos;
             vizinhos = vizinhos->getProximoNo();
-            p->setProximoNo(nullptr);
+            //p->setProximoNo(nullptr);
             delete p;
             grau--;
         }
@@ -82,7 +82,7 @@ void NoListaAdj::deletaVizinho(int val) {
                     if (aux->getProximoNo()->getNoDestino() == val) {
                         No* p = aux->getProximoNo();
                         aux->setProximoNo(p->getProximoNo());
-                        p->setProximoNo(nullptr);
+                        //p->setProximoNo(nullptr);
                         delete p;
                         grau--;
                         break;

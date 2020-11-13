@@ -343,9 +343,9 @@ int Grafo::encontraMaiorGrau(ListaAdjacenteEncadeada* lista)
 
 void deletaVizinhos(int no, ListaAdjacenteEncadeada* lista)
 {
-	NoListaAdj* vertice = lista->getNo(no);
+	//NoListaAdj* vertice = lista->getNo(no);
 	FilaEncadeada* vizinhos = new FilaEncadeada();
-	for (No* aux = vertice->getVizinhos(); aux != nullptr; aux = aux->getProximoNo())
+	for (No* aux = lista->getNo(no)->getVizinhos(); aux != nullptr; aux = aux->getProximoNo())
 	{
 		vizinhos->enfileira(aux->getNoDestino());
 	}
@@ -443,53 +443,41 @@ struct Vertice {
 		int grau;
 };
 
-// A utility function to swap two elements  
-void swap(Vertice* a, Vertice* b)
+void troca(Vertice* a, Vertice* b)
 {
 	Vertice t = *a;
 	*a = *b;
 	*b = t;
 }
 
-/* This function takes last element as pivot, places
-the pivot element at its correct position in sorted
-array, and places all smaller (smaller than pivot)
-to left of pivot and all greater elements to right
-of pivot */
-int partition(Vertice arr[], int low, int high)
-{
-	int pivot = arr[high].grau; // pivot  
-	int i = (low - 1); // Index of smaller element  
 
-	for (int j = low; j <= high - 1; j++)
+int particao(Vertice vertices[], int menor, int maior)
+{
+	int pivo = vertices[maior].grau; // pivo  
+	int i = (menor - 1); // Index of smaller element  
+
+	for (int j = menor; j <= maior - 1; j++)
 	{
-		// If current element is smaller than the pivot  
-		if (arr[j].grau < pivot)
+		// If current element is smaller than the pivo  
+		if (vertices[j].grau < pivo)
 		{
 			i++; // increment index of smaller element  
-			swap(&arr[i], &arr[j]);
+			troca(&vertices[i], &vertices[j]);
 		}
 	}
-	swap(&arr[i + 1], &arr[high]);
+	troca(&vertices[i + 1], &vertices[maior]);
 	return (i + 1);
 }
 
-/* The main function that implements QuickSort
-arr[] --> Array to be sorted,
-low --> Starting index,
-high --> Ending index */
-void quickSort(Vertice arr[], int low, int high)
-{
-	if (low < high)
-	{
-		/* pi is partitioning index, arr[p] is now
-		at right place */
-		int pi = partition(arr, low, high);
 
-		// Separately sort elements before  
-		// partition and after partition  
-		quickSort(arr, low, pi - 1);
-		quickSort(arr, pi + 1, high);
+void quickSort(Vertice vertices[], int menor, int maior)
+{
+	if (menor < maior)
+	{
+		int pi = particao(vertices, menor, maior);
+
+		quickSort(vertices, menor, pi - 1);
+		quickSort(vertices, pi + 1, maior);
 	}
 }
 
@@ -526,6 +514,37 @@ int Grafo::encontraMaiorGrauRandomizado(ListaAdjacenteEncadeada* lista, float al
 
 int Grafo::gulosoRandomizado(float alfa)
 {
+	/*
+	for (int i = 0, semMelhora = 0; i < 500 && semMelhora < 200; i++, semMelhora++)
+	{
+		ListaAdjacenteEncadeada* lista = new ListaAdjacenteEncadeada();
+		ListaEncadeada* dominanteMinimo = new ListaEncadeada();
+		NoListaAdj* vetorNo = new NoListaAdj();
+		//lista->adiciona(1,1);
+		for (int i = 0; i < this->getOrdem(); i++)
+		{
+			//preenche lista de adjacencias
+			for (No* aux = &listaAdj[i]; aux != nullptr; aux = aux->getProximoNo())
+			{
+				lista->adiciona(i, aux->getNoDestino());
+				if(!dominanteMinimo->verificaElemento(i))
+					dominanteMinimo->adiciona(i);
+				vetorNo->adicionaVizinho(aux->getNoDestino());
+				dominanteMinimo->adicionaEspecial(i);
+			}
+		}
+		for (int i = 0; i < this->getOrdem(); i++) {
+			deletaVizinhos(i, lista);
+			//lista->deletaNo(i);
+			//vetorNo->deletaVizinho(i);
+		}
+		delete vetorNo;
+		delete dominanteMinimo;
+		delete lista;
+	}
+
+	return -1;
+	*/
 	int melhorResultado = this->getOrdem(), atual = 0;
 	for (int i = 0, semMelhora = 0; i < 500 && semMelhora < 200; i++, semMelhora++)
 	{
@@ -612,6 +631,6 @@ int Grafo::gulosoRandomizado(float alfa)
 		delete valores;
 		delete dominanteMinimo;
 	}
-
 	return melhorResultado;
+	
 }
