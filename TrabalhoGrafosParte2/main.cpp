@@ -208,25 +208,24 @@ Grafo *leitura(ifstream &arquivo_entrada)
  */
 int main(int argc, char *argv[])
 {
-
     srand(time(NULL));
     cout << "Carregando... " << endl;
 
     //Verificação se todos os parâmetros do programa foram encontrados
-    /*
+    
     if (argc != 3)
     {
         cout << "ERRO: Esperado: ./<nome_programa> <arquivo_entrada> <arquivo_saida>" << endl;
         return 1;
-    }*/
+    }
 
     //Abrindo arquivo de entrada
     ifstream arquivo_entrada;
     ofstream arquivo_saida;
-    arquivo_entrada.open("instancias/Problem.dat_50_50_0", ios::in);
-    arquivo_saida.open("resultado.txt", ios::out | ios::trunc);
-    //arquivo_entrada.open(argv[1], ios::in);
-    //arquivo_saida.open(argv[2], ios::out | ios::trunc);
+    //arquivo_entrada.open("instancias/Problem.dat_50_50_0", ios::in);
+    //arquivo_saida.open("resultado.txt", ios::out | ios::trunc);
+    arquivo_entrada.open(argv[1], ios::in);
+    arquivo_saida.open(argv[2], ios::out | ios::trunc);
 
     Grafo *grafo = new Grafo();
 

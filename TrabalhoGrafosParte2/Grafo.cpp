@@ -438,9 +438,9 @@ int Grafo::guloso(ofstream& arquivo_saida)
 }
 
 struct Vertice {
-	public:
-		int id;
-		int grau;
+public:
+	int id;
+	int grau;
 };
 
 void troca(Vertice* a, Vertice* b)
@@ -483,19 +483,22 @@ void quickSort(Vertice vertices[], int menor, int maior)
 
 int* geraVetorOrdenado(ListaAdjacenteEncadeada* lista, float alfa) {
 	int tamanho = lista->getTamanho() * alfa;
-	Vertice * vetor = new Vertice[lista->getTamanho()];
-	int cont=0;
+	if (tamanho == 0) {
+		tamanho = 1;
+	}
+	Vertice* vetor = new Vertice[lista->getTamanho()];
+	int cont = 0;
 	int a = -1;
 	for (NoListaAdj* aux = lista->getPos(0); aux != nullptr; aux = aux->getProx()) {
 		vetor[cont].id = aux->getId();
 		vetor[cont].grau = aux->getGrau();
 		cont++;
 	}
-	quickSort(vetor, 0, lista->getTamanho()-1);
+	quickSort(vetor, 0, lista->getTamanho() - 1);
 
 	int* melhoresNos = new int[tamanho];
 	for (int i = 0; i < tamanho; i++) {
-		if(lista->getTamanho() - 1 - i > 0)
+		if (lista->getTamanho() - 1 - i > 0)
 			melhoresNos[i] = vetor[lista->getTamanho() - 1 - i].id;
 	}
 
@@ -506,13 +509,13 @@ int* geraVetorOrdenado(ListaAdjacenteEncadeada* lista, float alfa) {
 int Grafo::encontraMaiorGrauRandomizado(ListaAdjacenteEncadeada* lista, float alfa)
 {
 	int* melhoresNos = geraVetorOrdenado(lista, alfa);
-	int i = (lista->getTamanho()- 1) * alfa;
+	int i = (lista->getTamanho() - 1) * alfa;
 	int escolhido;
 	if (i != 0)
 		escolhido = melhoresNos[rand() % i];
 	else
-		escolhido = -1;
-	delete []melhoresNos;
+		escolhido = melhoresNos[0];
+	delete[]melhoresNos;
 	return escolhido;
 }
 
@@ -550,7 +553,7 @@ int* Grafo::gulosoRandomizado(float alfa)
 	return -1;
 	*/
 	int melhorResultado = this->getOrdem(), atual = 0;
-	int *resultados = new int[2];
+	int* resultados = new int[2];
 	for (int i = 0, semMelhora = 0; i < 500 && semMelhora < 200; i++, semMelhora++)
 	{
 		ListaAdjacenteEncadeada* lista = new ListaAdjacenteEncadeada();
@@ -562,11 +565,10 @@ int* Grafo::gulosoRandomizado(float alfa)
 				lista->adiciona(i, aux->getNoDestino());
 			}
 		}
-		
+
 		int verticeAtual = encontraMaiorGrauRandomizado(lista, alfa);
 		ListaEncadeada* dominanteMinimo = new ListaEncadeada();
 		ListaEncadeada* valores = new ListaEncadeada();
-
 
 		while (lista->getTamanho() > 0)
 		{
@@ -638,9 +640,8 @@ int* Grafo::gulosoRandomizado(float alfa)
 		delete lista;
 		delete valores;
 		delete dominanteMinimo;
-		resultados [1] = i; 
+		resultados[1] = semMelhora;
 	}
 	resultados[0] = melhorResultado;
 	return resultados;
-	
 }
