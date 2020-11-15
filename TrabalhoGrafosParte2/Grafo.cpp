@@ -507,7 +507,11 @@ int Grafo::encontraMaiorGrauRandomizado(ListaAdjacenteEncadeada* lista, float al
 {
 	int* melhoresNos = geraVetorOrdenado(lista, alfa);
 	int i = (lista->getTamanho()- 1) * alfa;
-	int escolhido = melhoresNos[rand() % i];
+	int escolhido;
+	if (i != 0)
+		escolhido = melhoresNos[rand() % i];
+	else
+		escolhido = -1;
 	delete []melhoresNos;
 	return escolhido;
 }
@@ -566,6 +570,9 @@ int* Grafo::gulosoRandomizado(float alfa)
 
 		while (lista->getTamanho() > 0)
 		{
+			if (verticeAtual == -1) {
+				break;
+			}
 			dominanteMinimo->adiciona(verticeAtual);
 
 			if (lista->getNo(verticeAtual)->getGrau() == 0)

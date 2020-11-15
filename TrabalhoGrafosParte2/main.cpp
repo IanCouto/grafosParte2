@@ -221,7 +221,7 @@ int main(int argc, char *argv[])
     //Abrindo arquivo de entrada
     ifstream arquivo_entrada;
     ofstream arquivo_saida;
-    arquivo_entrada.open("instancias/Problem.dat_300_300_0", ios::in);
+    arquivo_entrada.open("instancias/Problem.dat_50_50_0", ios::in);
     arquivo_saida.open("resultado.txt", ios::out | ios::trunc);
     //arquivo_entrada.open(argv[1], ios::in);
     //arquivo_saida.open(argv[2], ios::out | ios::trunc);
