@@ -101,7 +101,7 @@ void selecionar(int selecao, Grafo *grafo, ofstream &arquivo_saida)
         arquivo_saida << "-----------GULOSO RANDOMIZADO------------" << endl;
         arquivo_saida << "Execução i: Tamanho / Tempo de Execução(segundos)" << endl;
 
-        for (int j = 0; j < 5; j++)
+        for (int j = 0; j < 5; j++, mediaResultado = 0, mediaTempo = 0, mediaIteracoesFeitas = 0)
         {
             arquivo_saida << endl
                           << "=================================================================" << endl
@@ -131,11 +131,13 @@ void selecionar(int selecao, Grafo *grafo, ofstream &arquivo_saida)
                 arquivo_saida << resultados[i] << " / " << tempoEmSegundos << "s"
                               << endl;
             }
-            float desvioPadrao = 0;
+            double desvioPadrao = 0;
             for (int i = 0; i < 10; i++)
-                desvioPadrao += pow(resultados[i] - mediaResultado, 2);
+                desvioPadrao += pow(resultados[i] - mediaResultado/10, 2);
+
             desvioPadrao /= 10;
-            arquivo_saida << "Melhor resultado: " << melhorResultado << endl;
+            desvioPadrao = sqrt(desvioPadrao);
+            arquivo_saida << endl << "Melhor resultado: " << melhorResultado << endl;
             arquivo_saida << "Pior resultado: " << piorResultado << endl;
             arquivo_saida << "Desvio padrao dos resultados: " << desvioPadrao << endl;
             arquivo_saida << "Media dos resultados: " << mediaResultado / 10 << endl;

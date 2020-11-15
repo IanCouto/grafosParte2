@@ -8,9 +8,104 @@ Execução i: Tamanho / Tempo de Execução(segundos)
 =================================================================
  Alfa: 0.1
 =================================================================
-Execucao 0: 92 / 0.773931s
-Execucao 1: 92 / 1.78632s
-Execucao 2: 92 / 0.839915s
-Execucao 3: 93 / 0.800067s
-Execucao 4: 89 / 1.84095s
-Execucao 5: 92 / 1.37603s
+Execucao 0: 13 / 0.015952s
+Execucao 1: 13 / 0.015032s
+Execucao 2: 13 / 0.014956s
+Execucao 3: 13 / 0.01593s
+Execucao 4: 13 / 0.01399s
+Execucao 5: 13 / 0.014965s
+Execucao 6: 13 / 0.013958s
+Execucao 7: 13 / 0.014961s
+Execucao 8: 13 / 0.014997s
+Execucao 9: 13 / 0.014686s
+
+Melhor resultado: 13
+Pior resultado: 13
+Desvio padrao dos resultados: 0
+Media dos resultados: 13
+Media dos tempos: 0.0149427
+Media da iteracao em que a solocao foi obtida: 199
+
+=================================================================
+ Alfa: 0.2
+=================================================================
+Execucao 0: 15 / 0.015957s
+Execucao 1: 14 / 0.029886s
+Execucao 2: 15 / 0.015958s
+Execucao 3: 15 / 0.016987s
+Execucao 4: 15 / 0.019947s
+Execucao 5: 15 / 0.016956s
+Execucao 6: 14 / 0.017918s
+Execucao 7: 15 / 0.015991s
+Execucao 8: 15 / 0.016953s
+Execucao 9: 15 / 0.015926s
+
+Melhor resultado: 13
+Pior resultado: 15
+Desvio padrao dos resultados: 0.4
+Media dos resultados: 14.8
+Media dos tempos: 0.0182479
+Media da iteracao em que a solocao foi obtida: 199
+
+=================================================================
+ Alfa: 0.3
+=================================================================
+Execucao 0: 14 / 0.025969s
+Execucao 1: 14 / 0.027885s
+Execucao 2: 15 / 0.016986s
+Execucao 3: 15 / 0.016955s
+Execucao 4: 14 / 0.017338s
+Execucao 5: 15 / 0.015952s
+Execucao 6: 15 / 0.016073s
+Execucao 7: 14 / 0.031994s
+Execucao 8: 15 / 0.017946s
+Execucao 9: 15 / 0.019998s
+
+Melhor resultado: 13
+Pior resultado: 15
+Desvio padrao dos resultados: 0.489898
+Media dos resultados: 14.6
+Media dos tempos: 0.0207096
+Media da iteracao em que a solocao foi obtida: 199
+
+=================================================================
+ Alfa: 0.5
+=================================================================
+Execucao 0: 15 / 0.016115s
+Execucao 1: 14 / 0.027893s
+Execucao 2: 15 / 0.018947s
+Execucao 3: 15 / 0.017954s
+Execucao 4: 14 / 0.016953s
+Execucao 5: 14 / 0.030265s
+Execucao 6: 14 / 0.015929s
+Execucao 7: 14 / 0.023046s
+Execucao 8: 14 / 0.016921s
+Execucao 9: 14 / 0.019029s
+
+Melhor resultado: 13
+Pior resultado: 15
+Desvio padrao dos resultados: 0.458258
+Media dos resultados: 14.3
+Media dos tempos: 0.0203052
+Media da iteracao em que a solocao foi obtida: 199
+
+=================================================================
+ Alfa: 0.7
+=================================================================
+Execucao 0: 13 / 0.021043s
+Execucao 1: 13 / 0.017954s
+Execucao 2: 13 / 0.023889s
+Execucao 3: 12 / 0.016954s
+Execucao 4: 13 / 0.021942s
+Execucao 5: 13 / 0.018308s
+Execucao 6: 12 / 0.035856s
+Execucao 7: 12 / 0.039893s
+Execucao 8: 13 / 0.021321s
+Execucao 9: 14 / 0.017959s
+
+Melhor resultado: 12
+Pior resultado: 15
+Desvio padrao dos resultados: 0.6
+Media dos resultados: 12.8
+Media dos tempos: 0.0235119
+Media da iteracao em que a solocao foi obtida: 197.1
