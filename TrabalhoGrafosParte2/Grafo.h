@@ -46,6 +46,6 @@ public:
     void mostrarNos(ofstream& arquivo_saida);
     void gerarResultadosGrafo(ofstream& arquivo_saida);
     int guloso(ofstream& arquivo_saida);
-    int gulosoRandomizado(float alfa);
+    int* gulosoRandomizado(float alfa);
 };
 #endif //TEORIADOSGRAFOS_GRAFO_H

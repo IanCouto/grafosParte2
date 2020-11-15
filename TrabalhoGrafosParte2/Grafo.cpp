@@ -512,7 +512,7 @@ int Grafo::encontraMaiorGrauRandomizado(ListaAdjacenteEncadeada* lista, float al
 	return escolhido;
 }
 
-int Grafo::gulosoRandomizado(float alfa)
+int* Grafo::gulosoRandomizado(float alfa)
 {
 	/*
 	for (int i = 0, semMelhora = 0; i < 500 && semMelhora < 200; i++, semMelhora++)
@@ -546,6 +546,7 @@ int Grafo::gulosoRandomizado(float alfa)
 	return -1;
 	*/
 	int melhorResultado = this->getOrdem(), atual = 0;
+	int *resultados = new int[2];
 	for (int i = 0, semMelhora = 0; i < 500 && semMelhora < 200; i++, semMelhora++)
 	{
 		ListaAdjacenteEncadeada* lista = new ListaAdjacenteEncadeada();
@@ -630,7 +631,9 @@ int Grafo::gulosoRandomizado(float alfa)
 		delete lista;
 		delete valores;
 		delete dominanteMinimo;
+		resultados [1] = semMelhora; 
 	}
-	return melhorResultado;
+	resultados[0] = melhorResultado;
+	return resultados;
 	
 }
