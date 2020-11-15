@@ -16,8 +16,7 @@ public:
     void enfileira(int val); // insere No no fim
     int desenfileira(); // elimina No do inicio
     bool vazia(); // verifica se esta vazia
-    int numeroNos();
-    bool verificaElemento(int tamanho);
+    int numeroNos();//retorna o tamanho
 };
 
 #endif // TEORIADOSGRAFOS_FILAENCADEADA_H

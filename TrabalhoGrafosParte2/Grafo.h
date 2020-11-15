@@ -17,11 +17,6 @@ private:
     bool comecaZero;
     No* listaAdj;
     bool auxInserirAresta(int id, int id_destino);
-    int mapeamento(int* mapa, int id);
-    void auxDijkstra(float* distancia, int* aPercorrer, int* Nonterior, int* mapa, int atual);
-    void auxBuscaEmProfundidade(int id_no, int* mapa, int cont, ofstream& arquivo_saida);
-    bool ehVizinho(No* noU, No* noV);
-    void imprimeCaminhoFloyd(int** caminho, int vertice1, int vertice2, ofstream& arquivo_saida);
     int encontraMaiorGrau(ListaAdjacenteEncadeada* lista);
     int encontraMaiorGrauRandomizado(ListaAdjacenteEncadeada* lista, float alfa);
 
@@ -44,7 +39,6 @@ public:
     void mostrarGrafo(ofstream& arquivo_saida);
     void mostrarArestas(ofstream& arquivo_saida);
     void mostrarNos(ofstream& arquivo_saida);
-    void gerarResultadosGrafo(ofstream& arquivo_saida);
     int guloso(ofstream& arquivo_saida);
     int* gulosoRandomizado(float alfa);
 };

@@ -39,6 +39,10 @@ NoLista* NoLista::getProx() {
     return proximo;
 }
 
+/**
+* Retorna o nó anterior
+* @return anterior
+**/
 NoLista* NoLista::getAnt() {
     return anterior;
 }
@@ -66,6 +70,10 @@ void NoLista::setProx(NoLista* p) {
     proximo = p;
 }
 
+/**
+ * Altera o valor do nó anterior
+ * @param p
+ */
 void NoLista::setAnt(NoLista* p) {
     anterior = p;
 }

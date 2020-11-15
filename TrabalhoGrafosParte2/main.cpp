@@ -25,7 +25,6 @@ using namespace std;
   */
 int menu()
 {
-
     int selecao;
     cout << "----------------------------------" << endl;
     cout << "   Subconjunto dominante minimo" << endl;
@@ -57,101 +56,101 @@ void selecionar(int selecao, Grafo *grafo, ofstream &arquivo_saida)
     switch (selecao)
     {
 
-        //mostrar grafo
-    case 1:
-    {
-        grafo->mostrarGrafo(arquivo_saida);
-        break;
-    }
-    //mostrar nos
-    case 2:
-    {
-        grafo->mostrarNos(arquivo_saida);
-        break;
-    }
-    //mostrar arestas
-    case 3:
-    {
-        grafo->mostrarArestas(arquivo_saida);
-        break;
-    }
-    //Guloso
-    case 4:
-    {
-        arquivo_saida << "-----------GULOSO------------" << endl;
-        arquivo_saida << "Tamanho / Tempo de Execução(segundos)" << endl;
-
-        auto start = high_resolution_clock::now();
-        int resultado = grafo->guloso(arquivo_saida);
-
-        auto stop = high_resolution_clock::now();
-
-        auto duration = duration_cast<microseconds>(stop - start);
-        double tempoEmSegundos = duration.count() / 1000000.0;
-        arquivo_saida << resultado << " / " << tempoEmSegundos << "s" << endl
-                      << endl;
-        break;
-    }
-    //Guloso randomizado
-    case 5:
-    {
-        int melhorResultado = grafo->getOrdem(), piorResultado = 0, resultados[10];
-        float alfas[5] = {0.1, 0.2, 0.3, 0.5, 0.7}, mediaResultado = 0, mediaIteracoesFeitas = 0;
-        double mediaTempo = 0;
-        arquivo_saida << "-----------GULOSO RANDOMIZADO------------" << endl;
-        arquivo_saida << "Execução i: Tamanho / Tempo de Execução(segundos)" << endl;
-
-        for (int j = 0; j < 5; j++, mediaResultado = 0, mediaTempo = 0, mediaIteracoesFeitas = 0)
+            //mostrar grafo
+        case 1:
         {
-            arquivo_saida << endl
-                          << "=================================================================" << endl
-                          << " Alfa: " << alfas[j] << endl
-                          << "=================================================================" << endl;
-
-            for (int i = 0; i < 10; i++)
-            {
-                arquivo_saida << "Execucao " << i << ": ";
-
-                auto start = high_resolution_clock::now();
-                int *retorno = grafo->gulosoRandomizado(alfas[j]);
-                resultados[i] = retorno[0];
-                mediaIteracoesFeitas += retorno[1];
-
-                if (resultados[i] < melhorResultado)
-                    melhorResultado = resultados[i];
-                if (resultados[i] > piorResultado)
-                    piorResultado = resultados[i];
-
-                auto stop = high_resolution_clock::now();
-
-                auto duration = duration_cast<microseconds>(stop - start);
-                double tempoEmSegundos = duration.count() / 1000000.0;
-                mediaTempo += tempoEmSegundos;
-                mediaResultado += resultados[i];
-                arquivo_saida << resultados[i] << " / " << tempoEmSegundos << "s"
-                              << endl;
-            }
-            double desvioPadrao = 0;
-            for (int i = 0; i < 10; i++)
-                desvioPadrao += pow(resultados[i] - mediaResultado/10, 2);
-
-            desvioPadrao /= 10;
-            desvioPadrao = sqrt(desvioPadrao);
-            arquivo_saida << endl << "Melhor resultado: " << melhorResultado << endl;
-            arquivo_saida << "Pior resultado: " << piorResultado << endl;
-            arquivo_saida << "Desvio padrao dos resultados: " << desvioPadrao << endl;
-            arquivo_saida << "Media dos resultados: " << mediaResultado / 10 << endl;
-            arquivo_saida << "Media dos tempos: " << mediaTempo / 10 << endl;
-            arquivo_saida << "Media da iteracao em que a solocao foi obtida: " << mediaIteracoesFeitas / 10 << endl;
+            grafo->mostrarGrafo(arquivo_saida);
+            break;
         }
-        break;
-    }
-    //opção inválida
-    default:
-    {
-        cout << "Opcao invalida" << endl;
-        break;
-    }
+        //mostrar nos
+        case 2:
+        {
+            grafo->mostrarNos(arquivo_saida);
+            break;
+        }
+        //mostrar arestas
+        case 3:
+        {
+            grafo->mostrarArestas(arquivo_saida);
+            break;
+        }
+        //Guloso
+        case 4:
+        {
+            arquivo_saida << "-----------GULOSO------------" << endl;
+            arquivo_saida << "Tamanho / Tempo de Execução(segundos)" << endl;
+
+            auto start = high_resolution_clock::now();
+            int resultado = grafo->guloso(arquivo_saida);
+
+            auto stop = high_resolution_clock::now();
+
+            auto duration = duration_cast<microseconds>(stop - start);
+            double tempoEmSegundos = duration.count() / 1000000.0;
+            arquivo_saida << resultado << " / " << tempoEmSegundos << "s" << endl
+                          << endl;
+            break;
+        }
+        //Guloso randomizado
+        case 5:
+        {
+            int melhorResultado = grafo->getOrdem(), piorResultado = 0, resultados[10];
+            float alfas[5] = {0.1, 0.2, 0.3, 0.5, 0.7}, mediaResultado = 0, mediaIteracoesFeitas = 0;
+            double mediaTempo = 0;
+            arquivo_saida << "-----------GULOSO RANDOMIZADO------------" << endl;
+            arquivo_saida << "Execução i: Tamanho / Tempo de Execução(segundos)" << endl;
+
+            for (int j = 0; j < 5; j++, mediaResultado = 0, mediaTempo = 0, mediaIteracoesFeitas = 0)
+            {
+                arquivo_saida << endl
+                              << "=================================================================" << endl
+                              << " Alfa: " << alfas[j] << endl
+                              << "=================================================================" << endl;
+
+                for (int i = 0; i < 10; i++)
+                {
+                    arquivo_saida << "Execucao " << i << ": ";
+
+                    auto start = high_resolution_clock::now();
+                    int *retorno = grafo->gulosoRandomizado(alfas[j]);
+                    resultados[i] = retorno[0];
+                    mediaIteracoesFeitas += retorno[1];
+
+                    if (resultados[i] < melhorResultado)
+                        melhorResultado = resultados[i];
+                    if (resultados[i] > piorResultado)
+                        piorResultado = resultados[i];
+
+                    auto stop = high_resolution_clock::now();
+
+                    auto duration = duration_cast<microseconds>(stop - start);
+                    double tempoEmSegundos = duration.count() / 1000000.0;
+                    mediaTempo += tempoEmSegundos;
+                    mediaResultado += resultados[i];
+                    arquivo_saida << resultados[i] << " / " << tempoEmSegundos << "s"
+                                  << endl;
+                }
+                double desvioPadrao = 0;
+                for (int i = 0; i < 10; i++)
+                    desvioPadrao += pow(resultados[i] - mediaResultado/10, 2);
+
+                desvioPadrao /= 10;
+                desvioPadrao = sqrt(desvioPadrao);
+                arquivo_saida << endl << "Melhor resultado: " << melhorResultado << endl;
+                arquivo_saida << "Pior resultado: " << piorResultado << endl;
+                arquivo_saida << "Desvio padrao dos resultados: " << desvioPadrao << endl;
+                arquivo_saida << "Media dos resultados: " << mediaResultado / 10 << endl;
+                arquivo_saida << "Media dos tempos: " << mediaTempo / 10 <<"s"<< endl;
+                arquivo_saida << "Media da iteracao em que a solocao foi obtida: " << mediaIteracoesFeitas / 10 << endl;
+            }
+            break;
+        }
+        //opção inválida
+        default:
+        {
+            cout << "Opcao invalida" << endl;
+            break;
+        }
     }
 }
 

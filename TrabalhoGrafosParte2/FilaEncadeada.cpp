@@ -18,16 +18,6 @@ FilaEncadeada::~FilaEncadeada() {
         delete p;
         p = t;
     }
-    /*
-    NoFila* p = NoInicio;
-    while (p != nullptr) {
-        if (p->getProx() != nullptr)
-            p = p->getProx();
-        else
-            p = nullptr;
-        delete NoInicio;
-        NoInicio = p;
-    }*/
 }
 /**
  * função que retorna o No inicial

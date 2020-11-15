@@ -44,7 +44,6 @@ void ListaAdjacenteEncadeada::adiciona(int no, int noDestino) {
 	}
 }
 
-
 void ListaAdjacenteEncadeada::deletaNo(int no) {
 	if (this->getTamanho() > 0) {
 		NoListaAdj* p=nullptr;
@@ -57,18 +56,10 @@ void ListaAdjacenteEncadeada::deletaNo(int no) {
 		else if (noInicio->getId() == no) {
 			p = noInicio;
 			noInicio = noInicio->getProx();
-			//noInicio->setAnt(nullptr);
-			/*
-			p->setProx(nullptr);
-			this->tamanho--;*/
 		}
 		else if (noFim->getId() == no) {
 			p = noFim;
 			noFim = noFim->getAnt();
-			//noFim->setProx(nullptr);
-			/*
-			p->setAnt(nullptr);
-			this->tamanho--;*/
 		}
 		else {
 			for (NoListaAdj* aux = noInicio; aux != nullptr; aux = aux->getProx()) {
@@ -84,8 +75,6 @@ void ListaAdjacenteEncadeada::deletaNo(int no) {
 					p->getAnt()->setProx(p->getProx());
 				if (p->getProx() != nullptr)
 					p->getProx()->setAnt(p->getAnt());
-				//p->setAnt(nullptr);
-				//p->setProx(nullptr);
 				this->tamanho--;
 				for (NoListaAdj* aux = noInicio; aux != nullptr; aux = aux->getProx()) {
 					aux->deletaVizinho(no);
@@ -95,11 +84,6 @@ void ListaAdjacenteEncadeada::deletaNo(int no) {
 		delete p;
 	}
 }
-
-/*
-void ListaAdjacenteEncadeada::deletaVizinhos(int no){
-
-}*/
 
 NoListaAdj* ListaAdjacenteEncadeada::getNo(int no) {
 	for (NoListaAdj* aux = noInicio; aux != nullptr; aux = aux->getProx()) {

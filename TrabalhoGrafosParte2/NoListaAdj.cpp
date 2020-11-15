@@ -3,7 +3,10 @@
 
 using namespace std;
 
-//Contrutor e Destrutor
+/*
+* Construtor
+* @param id Id do nó
+*/
 NoListaAdj::NoListaAdj(int id) {
     this->id = id;
     this->noAnterior = nullptr;
@@ -12,6 +15,11 @@ NoListaAdj::NoListaAdj(int id) {
     this->grau = 0;
 }
 
+/*
+* Construtor
+* @param id ID do nó
+* @param vizinho ID do vizinho
+*/
 NoListaAdj::NoListaAdj(int id, int vizinho) {
     this->id = id;
     this->noAnterior = nullptr;
@@ -20,6 +28,9 @@ NoListaAdj::NoListaAdj(int id, int vizinho) {
     this->grau = 1;
 }
 
+/*
+* Construtor
+*/
 NoListaAdj::NoListaAdj() {
     this->id = -1;
     this->noAnterior = nullptr;
@@ -28,6 +39,9 @@ NoListaAdj::NoListaAdj() {
     this->grau = 0;
 }
 
+/*
+* Destrutor
+*/
 NoListaAdj::~NoListaAdj() {
     No* p = vizinhos;
     while (p != nullptr)
@@ -39,34 +53,67 @@ NoListaAdj::~NoListaAdj() {
 }
 
 //Getters
+/*
+* @return ID do nó
+*/
 int NoListaAdj::getId() {
     return this->id;
 }
 
+/*
+* Retorna o grau do nó
+* @return grau
+*/
 int NoListaAdj::getGrau() {
     return this->grau;
 }
 
+/*
+* Retorna o proximo nó
+* @return proximoNo
+*/
 NoListaAdj* NoListaAdj::getProx() {
     return this->proximoNo;
 }
+
+/*
+* Retorna o nó anterior
+* @return noAnterior
+*/
 NoListaAdj* NoListaAdj::getAnt() {
     return this->noAnterior;
 }
 
 //Setters
+/*
+* Altera o ID do nó
+* @param val
+*/
 void NoListaAdj::setId(int val) {
     this->id = id;
 }
+
+/*
+* Altera o próximo nó
+* @param val
+*/
 void NoListaAdj::setProx(NoListaAdj* val) {
     this->proximoNo = val;
 }
 
+/*
+* Altera o nó anterior
+* @param val
+*/
 void NoListaAdj::setAnt(NoListaAdj* val) {
     this->noAnterior = val;
 }
 
 //Outras funções
+/*
+* Deleta o nó vizinho
+* @param val
+*/
 void NoListaAdj::deletaVizinho(int val) {
     if (grau > 0) {
         if (vizinhos->getNoDestino() == val) {
@@ -93,6 +140,10 @@ void NoListaAdj::deletaVizinho(int val) {
     }
 }
 
+/*
+* Adiciona um nó vizinho
+* @param val
+*/
 void NoListaAdj::adicionaVizinho(int val) {
     No* p = new No(val);
     if (vizinhos == nullptr) {
@@ -110,6 +161,10 @@ void NoListaAdj::adicionaVizinho(int val) {
     }
 }
 
+/*
+* Retorna os vizinhos
+* @param vizinhos
+*/
 No* NoListaAdj::getVizinhos() {
     return this->vizinhos;
 }

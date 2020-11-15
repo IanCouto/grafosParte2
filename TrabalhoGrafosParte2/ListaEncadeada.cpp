@@ -24,30 +24,8 @@ ListaEncadeada::~ListaEncadeada()
         delete p;
         p = t;
     }
-    /*
-    NoLista* p = noInicio;
-    while (p != nullptr)
-    {
-        if (p->getProx() != nullptr)
-            p = p->getProx();
-        else
-            p = nullptr;
-        delete noInicio;
-        noInicio = p;
-    }*/
+
 }
-/**
- * função que retorna o No inicial
- */
- /*
- int ListaEncadeada::getInicio(){
-    if(!vazia())
-        return noInicio->getInfo();
-    else{
-        cout<<"Lista vazia\n";
-        exit(1);
-    }
- }*/
 
  /**
   * função que insere um No no fim
@@ -164,18 +142,6 @@ void ListaEncadeada::removeValor(int val)
             this->tamanho--;
             free(aux);
         }
-        /*
-        if (aux->getInfo() == val || aux->getInfo2() == val)
-        {
-            NoLista *no = aux;
-            aux->getAnt()->setProx(aux->getProx());
-            aux->getProx()->setAnt(aux->getAnt());
-            aux->setAnt(nullptr);
-            aux->setProx(nullptr);
-            aux = aux->getAnt();
-            this->tamanho--;
-            delete no;
-        }*/
     }
 }
 

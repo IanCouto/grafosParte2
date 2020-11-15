@@ -325,6 +325,10 @@ void Grafo::mostrarArestas(ofstream& arquivo_saida)
 		<< endl;
 }
 
+/*
+ * Encontra o maior grau de uma lista de vértices
+ * @param lista
+ */
 int Grafo::encontraMaiorGrau(ListaAdjacenteEncadeada* lista)
 {
 	int max = 0;
@@ -341,6 +345,11 @@ int Grafo::encontraMaiorGrau(ListaAdjacenteEncadeada* lista)
 	return -1;
 }
 
+/*
+ * Deleta os vizinhos de um vértice
+ * @param no 
+ * @param lista
+ */
 void deletaVizinhos(int no, ListaAdjacenteEncadeada* lista)
 {
 	//NoListaAdj* vertice = lista->getNo(no);
@@ -356,6 +365,10 @@ void deletaVizinhos(int no, ListaAdjacenteEncadeada* lista)
 	delete vizinhos;
 }
 
+/*
+ * Algoritmo Guloso do Conjunto Dominante Mínimo
+ * @param arquivo_saida Arquivo de resultados
+ */
 int Grafo::guloso(ofstream& arquivo_saida)
 {
 	ListaAdjacenteEncadeada* lista = new ListaAdjacenteEncadeada();
@@ -437,12 +450,20 @@ int Grafo::guloso(ofstream& arquivo_saida)
 	return atual;
 }
 
+/*
+ * Estrutura auxiliar para ordenação no quick sort
+ */
 struct Vertice {
 public:
 	int id;
 	int grau;
 };
 
+/*
+ * Função para trocar de posição dois vértices
+ * @param *a Vertice a
+ * @param *b Vertice b
+ */
 void troca(Vertice* a, Vertice* b)
 {
 	Vertice t = *a;
@@ -450,18 +471,23 @@ void troca(Vertice* a, Vertice* b)
 	*b = t;
 }
 
-
+/*
+ * Função auxiliar do quick sort
+ * @param vertices[] vetor de vertices
+ * @param menor index do menor elemento
+ * @param maior index do maior elemento
+ */
 int particao(Vertice vertices[], int menor, int maior)
 {
 	int pivo = vertices[maior].grau; // pivo  
-	int i = (menor - 1); // Index of smaller element  
+	int i = (menor - 1); // Indice do menor elemento
 
 	for (int j = menor; j <= maior - 1; j++)
 	{
-		// If current element is smaller than the pivo  
+		// Se o elemento é menor que o pivô
 		if (vertices[j].grau < pivo)
 		{
-			i++; // increment index of smaller element  
+			i++; // incrementa o index do menor elemento
 			troca(&vertices[i], &vertices[j]);
 		}
 	}
@@ -469,7 +495,12 @@ int particao(Vertice vertices[], int menor, int maior)
 	return (i + 1);
 }
 
-
+/*
+ * Função quick sort para ordenar um vetor de vertices
+ * @param vertices[] vetor de vertices
+ * @param menor index do menor elemento
+ * @param maior index meior elemento
+ */
 void quickSort(Vertice vertices[], int menor, int maior)
 {
 	if (menor < maior)
@@ -481,6 +512,11 @@ void quickSort(Vertice vertices[], int menor, int maior)
 	}
 }
 
+/*
+ * Função que retorna uma lista de melhores resultados a partir de um alfa
+ * @param lista Lista de Adjacencias
+ * @param alfa Alfa
+ */
 int* geraVetorOrdenado(ListaAdjacenteEncadeada* lista, float alfa) {
 	int tamanho = lista->getTamanho() * alfa;
 	if (tamanho == 0) {
@@ -506,6 +542,11 @@ int* geraVetorOrdenado(ListaAdjacenteEncadeada* lista, float alfa) {
 	return melhoresNos;
 }
 
+/*
+ * Função que encontra um vértice a partir de uma lista
+ * @param lista Lista de Adjacencias
+ * @param alfa Alfa
+ */
 int Grafo::encontraMaiorGrauRandomizado(ListaAdjacenteEncadeada* lista, float alfa)
 {
 	int* melhoresNos = geraVetorOrdenado(lista, alfa);
@@ -519,39 +560,12 @@ int Grafo::encontraMaiorGrauRandomizado(ListaAdjacenteEncadeada* lista, float al
 	return escolhido;
 }
 
+/*
+ * Algoritmo Guloso Randomizado do Conjunto Dominante Mínimo
+ * @param alfa Alfa
+ */
 int* Grafo::gulosoRandomizado(float alfa)
 {
-	/*
-	for (int i = 0, semMelhora = 0; i < 500 && semMelhora < 200; i++, semMelhora++)
-	{
-		ListaAdjacenteEncadeada* lista = new ListaAdjacenteEncadeada();
-		ListaEncadeada* dominanteMinimo = new ListaEncadeada();
-		NoListaAdj* vetorNo = new NoListaAdj();
-		//lista->adiciona(1,1);
-		for (int i = 0; i < this->getOrdem(); i++)
-		{
-			//preenche lista de adjacencias
-			for (No* aux = &listaAdj[i]; aux != nullptr; aux = aux->getProximoNo())
-			{
-				lista->adiciona(i, aux->getNoDestino());
-				if(!dominanteMinimo->verificaElemento(i))
-					dominanteMinimo->adiciona(i);
-				vetorNo->adicionaVizinho(aux->getNoDestino());
-				dominanteMinimo->adicionaEspecial(i);
-			}
-		}
-		for (int i = 0; i < this->getOrdem(); i++) {
-			deletaVizinhos(i, lista);
-			//lista->deletaNo(i);
-			//vetorNo->deletaVizinho(i);
-		}
-		delete vetorNo;
-		delete dominanteMinimo;
-		delete lista;
-	}
-
-	return -1;
-	*/
 	int melhorResultado = this->getOrdem(), atual = 0;
 	int* resultados = new int[2];
 	for (int i = 0, semMelhora = 0; i < 500 && semMelhora < 200; i++, semMelhora++)
