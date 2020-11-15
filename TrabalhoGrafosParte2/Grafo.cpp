@@ -638,7 +638,7 @@ int* Grafo::gulosoRandomizado(float alfa)
 		delete lista;
 		delete valores;
 		delete dominanteMinimo;
-		resultados [1] = semMelhora; 
+		resultados [1] = i; 
 	}
 	resultados[0] = melhorResultado;
 	return resultados;
