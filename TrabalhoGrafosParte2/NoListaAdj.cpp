@@ -116,20 +116,20 @@ void NoListaAdj::setAnt(NoListaAdj* val) {
 */
 void NoListaAdj::deletaVizinho(int val) {
     if (grau > 0) {
+        //Se o primeiro vizinho é igual a val, ele é excluido e o proximo valor se torna o primeiro
         if (vizinhos->getNoDestino() == val) {
             No* p = vizinhos;
             vizinhos = vizinhos->getProximoNo();
-            //p->setProximoNo(nullptr);
             delete p;
             grau--;
         }
         else {
+            //Percorre a lista de vizinhos para encontrar val, se encontrar, val é removido
             for (No* aux = vizinhos; aux != nullptr; aux = aux->getProximoNo()) {
                 if (aux->getProximoNo() != nullptr) {
                     if (aux->getProximoNo()->getNoDestino() == val) {
                         No* p = aux->getProximoNo();
                         aux->setProximoNo(p->getProximoNo());
-                        //p->setProximoNo(nullptr);
                         delete p;
                         grau--;
                         break;
@@ -142,15 +142,17 @@ void NoListaAdj::deletaVizinho(int val) {
 
 /*
 * Adiciona um nó vizinho
-* @param val
+* @param val ID do vértice vizinho
 */
 void NoListaAdj::adicionaVizinho(int val) {
     No* p = new No(val);
+    //Se a lista de vizinhos for vazia, val é o primeiro vizinho
     if (vizinhos == nullptr) {
         vizinhos = p;
         grau++;
     }
     else {
+        //Percorre a lista de vizinhos para adicionar val na última posição
         for (No* aux = vizinhos; aux != nullptr; aux = aux->getProximoNo()) {
             if (aux->getProximoNo() == nullptr) {
                 aux->setProximoNo(p);
@@ -163,7 +165,7 @@ void NoListaAdj::adicionaVizinho(int val) {
 
 /*
 * Retorna os vizinhos
-* @param vizinhos
+* @return vizinhos Lista de vizinhos
 */
 No* NoListaAdj::getVizinhos() {
     return this->vizinhos;

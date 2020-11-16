@@ -91,6 +91,7 @@ void ListaEncadeada::adicionaEspecial(int val)
 /**
  * função que insere um No no fim
  * @param val valor do No
+ * @param info2 valor da segunda informação
  */
 void ListaEncadeada::adiciona(int val, int info2)
 {
@@ -114,6 +115,7 @@ void ListaEncadeada::adiciona(int val, int info2)
 
 /**
  * função que elimina o val encontrado
+ * @param val Valor a ser removido
  */
 void ListaEncadeada::removeValor(int val)
 {
@@ -122,21 +124,19 @@ void ListaEncadeada::removeValor(int val)
     {
         if (aux->getInfo() == val || aux->getInfo2() == val)
         {
-            /* base case */
+            //Caso base
             if (noInicio == NULL || aux == NULL)
                 return;
 
-            /* If node to be auxeted is head node */
+            //Se o nó aux é o noInicio
             if (noInicio == aux)
                 noInicio = aux->getProx();
 
-            /* Change next only if node to be
-            auxeted is NOT the last node */
+            //Muda o próximo nó se o aux não for o último
             if (aux->getProx() != NULL)
                 aux->getProx()->setAnt(aux->getAnt());
 
-            /* Change getAnt() only if node to be
-            auxeted is NOT the first node */
+            //Muda o nó anterior se o nó aux não é o primeiro nó
             if (aux->getAnt() != NULL)
                 aux->getAnt()->setProx(aux->getProx());
             this->tamanho--;
@@ -147,6 +147,7 @@ void ListaEncadeada::removeValor(int val)
 
 /**
  * função que verifica se a lista está vazia
+ * @return bool
  */
 bool ListaEncadeada::isVazio()
 {
@@ -158,12 +159,16 @@ bool ListaEncadeada::isVazio()
 
 /**
  * função que retorna o número de Nos
+ * @return tamanho 
  */
 int ListaEncadeada::getTamanho()
 {
     return this->tamanho;
 }
 
+/*
+* Função que imprime a lista
+*/
 void ListaEncadeada::imprimeLista()
 {
     int i = 0;
@@ -179,6 +184,11 @@ void ListaEncadeada::imprimeLista()
     cout << endl;
 }
 
+/*
+* Função que retorna uma posição da Lista Encadeada
+* @param pos Index da Lista
+* @return NoLista 
+*/
 NoLista* ListaEncadeada::getPosicao(int pos)
 {
     if (pos < 0 || pos >= this->tamanho)
@@ -189,6 +199,7 @@ NoLista* ListaEncadeada::getPosicao(int pos)
     else
     {
         int cont = 0;
+        //Percorre a lista até encontrar a posição
         for (NoLista* a = this->noInicio; a != nullptr; a = a->getProx())
         {
             if (cont == pos)
@@ -201,6 +212,11 @@ NoLista* ListaEncadeada::getPosicao(int pos)
     return nullptr;
 }
 
+/*
+* Função que altera o valor de uma determinada posição da lista
+* @param pos Index da posição
+* @param val novo valor da posição
+*/
 void ListaEncadeada::alteraValor(int pos, int val)
 {
     if (pos < 0 || pos >= this->tamanho)
@@ -211,6 +227,7 @@ void ListaEncadeada::alteraValor(int pos, int val)
     else
     {
         int cont = 0;
+        //Percorre a lista até o index da posição a ser alterada
         for (NoLista* a = this->noInicio; a != nullptr; a = a->getProx())
         {
             if (cont == pos)
@@ -223,8 +240,14 @@ void ListaEncadeada::alteraValor(int pos, int val)
     }
 }
 
+/*
+* Verifica se val existe na lista
+* @param val Valor a ser verificado
+* @return true se for encontrado e false se não foi
+*/
 bool ListaEncadeada::verificaElemento(int val)
 {
+    //Percorre a lista para ver se val é encontrado
     for (NoLista* a = this->noInicio; a != nullptr; a = a->getProx())
     {
         if (a->getInfo() == val)
