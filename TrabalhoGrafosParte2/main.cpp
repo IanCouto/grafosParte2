@@ -56,7 +56,7 @@ void selecionar(int selecao, Grafo *grafo, ofstream &arquivo_saida)
     switch (selecao)
     {
 
-            //mostrar grafo
+        //mostrar grafo
         case 1:
         {
             grafo->mostrarGrafo(arquivo_saida);
@@ -80,9 +80,9 @@ void selecionar(int selecao, Grafo *grafo, ofstream &arquivo_saida)
             arquivo_saida << "-----------GULOSO------------" << endl;
             arquivo_saida << "Tamanho / Tempo de Execução(segundos)" << endl;
 
+            //calcula o tempo gasto executar o algoritmo guloso randomizado
             auto start = high_resolution_clock::now();
             int resultado = grafo->guloso(arquivo_saida);
-
             auto stop = high_resolution_clock::now();
 
             auto duration = duration_cast<microseconds>(stop - start);
@@ -99,7 +99,7 @@ void selecionar(int selecao, Grafo *grafo, ofstream &arquivo_saida)
             double mediaTempo = 0;
             arquivo_saida << "-----------GULOSO RANDOMIZADO------------" << endl;
             arquivo_saida << "Execução i: Tamanho / Tempo de Execução(segundos)" << endl;
-
+            //executa o algoritmo guloso randomizado 10 vezes para cada alfa
             for (int j = 0; j < 5; j++, mediaResultado = 0, mediaTempo = 0, mediaIteracoesFeitas = 0)
             {
                 arquivo_saida << endl
@@ -110,7 +110,7 @@ void selecionar(int selecao, Grafo *grafo, ofstream &arquivo_saida)
                 for (int i = 0; i < 10; i++)
                 {
                     arquivo_saida << "Execucao " << i << ": ";
-
+                    //calcula as métricas exigidas para cada execução
                     auto start = high_resolution_clock::now();
                     int *retorno = grafo->gulosoRandomizado(alfas[j]);
                     resultados[i] = retorno[0];
@@ -136,6 +136,7 @@ void selecionar(int selecao, Grafo *grafo, ofstream &arquivo_saida)
 
                 desvioPadrao /= 10;
                 desvioPadrao = sqrt(desvioPadrao);
+                //salva as métricas em um arquivo de saida
                 arquivo_saida << endl << "Melhor resultado: " << melhorResultado << endl;
                 arquivo_saida << "Pior resultado: " << piorResultado << endl;
                 arquivo_saida << "Desvio padrao dos resultados: " << desvioPadrao << endl;
