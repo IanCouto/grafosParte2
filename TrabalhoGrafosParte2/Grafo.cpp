@@ -89,7 +89,7 @@ bool Grafo::auxInserirAresta(int id, int id_destino)
 	{
 		return true;
 	}
-	for (No* a = &listaAdj[id]; a != nullptr; a = a->getProximoNo())
+	for (No *a = &listaAdj[id]; a != nullptr; a = a->getProximoNo())
 	{
 		//verifica se o id n� de destino existente no grafo � igual o id do n� de destino a ser inserido
 		if (a->getNoDestino() == id_destino)
@@ -130,7 +130,7 @@ void Grafo::inserirAresta(int id, int id_destino)
 		}
 		else
 		{
-			No* aux = &this->listaAdj[id];
+			No *aux = &this->listaAdj[id];
 			while (aux->getProximoNo() != nullptr)
 			{
 				aux = aux->getProximoNo();
@@ -145,7 +145,7 @@ void Grafo::inserirAresta(int id, int id_destino)
 		}
 		else
 		{
-			No* aux = &this->listaAdj[id_destino];
+			No *aux = &this->listaAdj[id_destino];
 			while (aux->getProximoNo() != nullptr)
 			{
 				aux = aux->getProximoNo();
@@ -160,7 +160,7 @@ void Grafo::inserirAresta(int id, int id_destino)
  * mostra os n�s e seus vizinhos de forma ordenada
  * @param arquivo_saida arquivo de sa�da de dados
  */
-void Grafo::mostrarGrafo(ofstream& arquivo_saida)
+void Grafo::mostrarGrafo(ofstream &arquivo_saida)
 {
 	arquivo_saida << "------------GRAFO-------------" << endl;
 	arquivo_saida << "  No  |  No(s) Vizinho(s) " << endl;
@@ -206,7 +206,7 @@ void Grafo::mostrarGrafo(ofstream& arquivo_saida)
 			arquivo_saida << "     | ";
 		}
 		//percorre o n� imprimindo todas as arestas
-		for (No* a = &listaAdj[i]; a != nullptr; a = a->getProximoNo())
+		for (No *a = &listaAdj[i]; a != nullptr; a = a->getProximoNo())
 		{
 			if (!comecaZero && a->getNoDestino() == 0)
 			{
@@ -226,14 +226,14 @@ void Grafo::mostrarGrafo(ofstream& arquivo_saida)
 		arquivo_saida << endl;
 	}
 	arquivo_saida << "--------------------------------------------------------------------------------------------------------" << endl
-		<< endl;
+				  << endl;
 }
 
 /**
  * Mostra os n�s e seus pesos de forma ordenada
  * @param arquivo_saida arquivo de saida de dados
  */
-void Grafo::mostrarNos(ofstream& arquivo_saida)
+void Grafo::mostrarNos(ofstream &arquivo_saida)
 {
 	arquivo_saida << "-------------NOS--------------" << endl;
 	arquivo_saida << "  No  |   Grau " << endl;
@@ -279,7 +279,7 @@ void Grafo::mostrarNos(ofstream& arquivo_saida)
 			arquivo_saida << "     | ";
 		}
 		//percorre o grafo, imprimindo as arestas
-		for (No* a = &listaAdj[i]; a != nullptr; a = a->getProximoNo())
+		for (No *a = &listaAdj[i]; a != nullptr; a = a->getProximoNo())
 		{
 			atual++;
 		}
@@ -287,14 +287,14 @@ void Grafo::mostrarNos(ofstream& arquivo_saida)
 		atual = 0;
 	}
 	arquivo_saida << "--------------------------------------------------------------------------------------------------------" << endl
-		<< endl;
+				  << endl;
 }
 
 /**
  * Mostra as arestas entre os n�s e seus pesos
  * @param arquivo_saida arquivo de saida de dados
  */
-void Grafo::mostrarArestas(ofstream& arquivo_saida)
+void Grafo::mostrarArestas(ofstream &arquivo_saida)
 {
 	arquivo_saida << "-----------ARESTAS------------" << endl;
 	arquivo_saida << "  No -- No " << endl;
@@ -302,7 +302,7 @@ void Grafo::mostrarArestas(ofstream& arquivo_saida)
 	//percorre o grafo imprimindo as arestas de cada n� de forma ordenada
 	for (int i = 0; i < getOrdem(); i++)
 	{
-		for (No* a = &listaAdj[i]; a != nullptr; a = a->getProximoNo())
+		for (No *a = &listaAdj[i]; a != nullptr; a = a->getProximoNo())
 		{
 			if (!comecaZero && i == 0)
 			{
@@ -322,22 +322,22 @@ void Grafo::mostrarArestas(ofstream& arquivo_saida)
 		}
 	}
 	arquivo_saida << "--------------------------------------------------------------------------------------------------------" << endl
-		<< endl;
+				  << endl;
 }
 
 /*
  * Encontra o maior grau de uma lista de vértices
  * @param lista
  */
-int Grafo::encontraMaiorGrau(ListaAdjacenteEncadeada* lista)
+int Grafo::encontraMaiorGrau(ListaAdjacenteEncadeada *lista)
 {
 	int max = 0;
-	for (NoListaAdj* aux = lista->getPos(0); aux != nullptr; aux = aux->getProx())
+	for (NoListaAdj *aux = lista->getPos(0); aux != nullptr; aux = aux->getProx())
 	{
 		if (aux->getGrau() > max)
 			max = aux->getGrau();
 	}
-	for (NoListaAdj* aux = lista->getPos(0); aux != nullptr; aux = aux->getProx())
+	for (NoListaAdj *aux = lista->getPos(0); aux != nullptr; aux = aux->getProx())
 	{
 		if (aux->getGrau() == max)
 			return aux->getId();
@@ -350,11 +350,11 @@ int Grafo::encontraMaiorGrau(ListaAdjacenteEncadeada* lista)
  * @param no 
  * @param lista
  */
-void deletaVizinhos(int no, ListaAdjacenteEncadeada* lista)
+void deletaVizinhos(int no, ListaAdjacenteEncadeada *lista)
 {
 	//NoListaAdj* vertice = lista->getNo(no);
-	FilaEncadeada* vizinhos = new FilaEncadeada();
-	for (No* aux = lista->getNo(no)->getVizinhos(); aux != nullptr; aux = aux->getProximoNo())
+	FilaEncadeada *vizinhos = new FilaEncadeada();
+	for (No *aux = lista->getNo(no)->getVizinhos(); aux != nullptr; aux = aux->getProximoNo())
 	{
 		vizinhos->enfileira(aux->getNoDestino());
 	}
@@ -369,16 +369,16 @@ void deletaVizinhos(int no, ListaAdjacenteEncadeada* lista)
  * Algoritmo Guloso do Conjunto Dominante Mínimo
  * @param arquivo_saida Arquivo de resultados
  */
-int Grafo::guloso(ofstream& arquivo_saida)
+int Grafo::guloso(ofstream &arquivo_saida)
 {
-	ListaAdjacenteEncadeada* lista = new ListaAdjacenteEncadeada();
+	ListaAdjacenteEncadeada *lista = new ListaAdjacenteEncadeada();
 	int verticeAtual;
-	ListaEncadeada* dominanteMinimo = new ListaEncadeada();
+	ListaEncadeada *dominanteMinimo = new ListaEncadeada();
 
 	for (int i = 0; i < this->getOrdem(); i++)
 	{
 		//preenche lista de adjacencias
-		for (No* aux = &listaAdj[i]; aux != nullptr; aux = aux->getProximoNo())
+		for (No *aux = &listaAdj[i]; aux != nullptr; aux = aux->getProximoNo())
 		{
 			lista->adiciona(i, aux->getNoDestino());
 		}
@@ -386,22 +386,26 @@ int Grafo::guloso(ofstream& arquivo_saida)
 
 	while (lista->getTamanho() > 0)
 	{
+		//define o primeiro nó de maior grau encontrado como vértice escolhido e o adiciona na solução
 		verticeAtual = encontraMaiorGrau(lista);
 		dominanteMinimo->adiciona(verticeAtual);
 
+		//caso o vértice escolhido não tenha mais vizinhos, uma solução foi encontrada
 		if (lista->getNo(verticeAtual)->getGrau() == 0)
 		{
 			break;
 		}
 
+		//remove o vértice atual e os seus vizinhos da lista de candidatos
 		deletaVizinhos(verticeAtual, lista);
 		lista->deletaNo(verticeAtual);
 
+		//caso a lista esteja vazia, uma solução foi encontrada
 		if (lista->getTamanho() == 0)
 		{
 			break;
 		}
-		//#caso o vetor de v�rtices tenha tamanho 1 ou 2, um v�rtice aleat�rio � incluido e finaliza a solu��o
+		//caso o vetor de vértices tenha tamanho 1 ou 2, um vértices aleatório é incluido e finaliza a solução
 		if (lista->getTamanho() == 1)
 		{
 			dominanteMinimo->adicionaEspecial(lista->getPos(0)->getId());
@@ -413,11 +417,11 @@ int Grafo::guloso(ofstream& arquivo_saida)
 			dominanteMinimo->adicionaEspecial(lista->getPos(aleatorio)->getId());
 			break;
 		}
-		//define o no com maior grau como o pr�ximo no inicial
 	}
-	ListaEncadeada* valores = new ListaEncadeada();
+	ListaEncadeada *valores = new ListaEncadeada();
 
-	for (NoLista* aux = dominanteMinimo->getPosicao(0); aux != nullptr; aux = aux->getProx())
+	//verifica se a solução encontrada é uma solução válida
+	for (NoLista *aux = dominanteMinimo->getPosicao(0); aux != nullptr; aux = aux->getProx())
 	{
 		if (valores->getTamanho() == 0)
 		{
@@ -426,7 +430,7 @@ int Grafo::guloso(ofstream& arquivo_saida)
 		else
 		{
 			bool verifica = false;
-			for (NoLista* aux1 = valores->getPosicao(0); aux1 != nullptr; aux1 = aux1->getProx())
+			for (NoLista *aux1 = valores->getPosicao(0); aux1 != nullptr; aux1 = aux1->getProx())
 			{
 				if (aux->getInfo() == aux1->getInfo())
 				{
@@ -439,11 +443,8 @@ int Grafo::guloso(ofstream& arquivo_saida)
 			}
 		}
 	}
-	int atual = 0;
-	for (NoLista* aux = valores->getPosicao(0); aux != nullptr; aux = aux->getProx())
-	{
-		atual++;
-	}
+	//salva o tamanho da solução atual para poder deletar a lista verificada
+	int atual = valores->getTamanho();
 	delete lista;
 	delete valores;
 	delete dominanteMinimo;
@@ -453,7 +454,8 @@ int Grafo::guloso(ofstream& arquivo_saida)
 /*
  * Estrutura auxiliar para ordenação no quick sort
  */
-struct Vertice {
+struct Vertice
+{
 public:
 	int id;
 	int grau;
@@ -464,7 +466,7 @@ public:
  * @param *a Vertice a
  * @param *b Vertice b
  */
-void troca(Vertice* a, Vertice* b)
+void troca(Vertice *a, Vertice *b)
 {
 	Vertice t = *a;
 	*a = *b;
@@ -479,8 +481,8 @@ void troca(Vertice* a, Vertice* b)
  */
 int particao(Vertice vertices[], int menor, int maior)
 {
-	int pivo = vertices[maior].grau; // pivo  
-	int i = (menor - 1); // Indice do menor elemento
+	int pivo = vertices[maior].grau; // pivo
+	int i = (menor - 1);			 // Indice do menor elemento
 
 	for (int j = menor; j <= maior - 1; j++)
 	{
@@ -517,23 +519,30 @@ void quickSort(Vertice vertices[], int menor, int maior)
  * @param lista Lista de Adjacencias
  * @param alfa Alfa
  */
-int* geraVetorOrdenado(ListaAdjacenteEncadeada* lista, float alfa) {
+int *geraVetorOrdenado(ListaAdjacenteEncadeada *lista, float alfa)
+{
 	int tamanho = lista->getTamanho() * alfa;
-	if (tamanho == 0) {
+	if (tamanho == 0)
+	{
 		tamanho = 1;
 	}
-	Vertice* vetor = new Vertice[lista->getTamanho()];
+	//um vetor auxiliar é criado para ser ordenado
+	Vertice *vetor = new Vertice[lista->getTamanho()];
 	int cont = 0;
 	int a = -1;
-	for (NoListaAdj* aux = lista->getPos(0); aux != nullptr; aux = aux->getProx()) {
+	for (NoListaAdj *aux = lista->getPos(0); aux != nullptr; aux = aux->getProx())
+	{
 		vetor[cont].id = aux->getId();
 		vetor[cont].grau = aux->getGrau();
 		cont++;
 	}
+	//ordena o vetor auxiliar
 	quickSort(vetor, 0, lista->getTamanho() - 1);
 
-	int* melhoresNos = new int[tamanho];
-	for (int i = 0; i < tamanho; i++) {
+	//transfere os valores ordenados para a lista
+	int *melhoresNos = new int[tamanho];
+	for (int i = 0; i < tamanho; i++)
+	{
 		if (lista->getTamanho() - 1 - i > 0)
 			melhoresNos[i] = vetor[lista->getTamanho() - 1 - i].id;
 	}
@@ -547,16 +556,17 @@ int* geraVetorOrdenado(ListaAdjacenteEncadeada* lista, float alfa) {
  * @param lista Lista de Adjacencias
  * @param alfa Alfa
  */
-int Grafo::encontraMaiorGrauRandomizado(ListaAdjacenteEncadeada* lista, float alfa)
+int Grafo::encontraMaiorGrauRandomizado(ListaAdjacenteEncadeada *lista, float alfa)
 {
-	int* melhoresNos = geraVetorOrdenado(lista, alfa);
+	//alfa representa a porcentagem da lista ordenada que pode ser escolhida
+	int *melhoresNos = geraVetorOrdenado(lista, alfa);
 	int i = (lista->getTamanho() - 1) * alfa;
 	int escolhido;
 	if (i != 0)
 		escolhido = melhoresNos[rand() % i];
 	else
 		escolhido = melhoresNos[0];
-	delete[]melhoresNos;
+	delete[] melhoresNos;
 	return escolhido;
 }
 
@@ -564,46 +574,54 @@ int Grafo::encontraMaiorGrauRandomizado(ListaAdjacenteEncadeada* lista, float al
  * Algoritmo Guloso Randomizado do Conjunto Dominante Mínimo
  * @param alfa Alfa
  */
-int* Grafo::gulosoRandomizado(float alfa)
+int *Grafo::gulosoRandomizado(float alfa)
 {
 	int melhorResultado = this->getOrdem(), atual = 0;
-	int* resultados = new int[2];
+	int *resultados = new int[2];
+	//casos de parada do algoritmo randomizado, 500 iterações ou 200 iterações seguidas sem melhora no resultado
 	for (int i = 0, semMelhora = 0; i < 500 && semMelhora < 200; i++, semMelhora++)
 	{
-		ListaAdjacenteEncadeada* lista = new ListaAdjacenteEncadeada();
+		ListaAdjacenteEncadeada *lista = new ListaAdjacenteEncadeada();
 		for (int i = 0; i < this->getOrdem(); i++)
 		{
 			//preenche lista de adjacencias
-			for (No* aux = &listaAdj[i]; aux != nullptr; aux = aux->getProximoNo())
+			for (No *aux = &listaAdj[i]; aux != nullptr; aux = aux->getProximoNo())
 			{
 				lista->adiciona(i, aux->getNoDestino());
 			}
 		}
-
+		//é difinido como vértice atual um nó aleatório da sublista ordenada de melhores candidatos
 		int verticeAtual = encontraMaiorGrauRandomizado(lista, alfa);
-		ListaEncadeada* dominanteMinimo = new ListaEncadeada();
-		ListaEncadeada* valores = new ListaEncadeada();
+		ListaEncadeada *dominanteMinimo = new ListaEncadeada();
+		ListaEncadeada *valores = new ListaEncadeada();
 
 		while (lista->getTamanho() > 0)
 		{
-			if (verticeAtual == -1) {
+			//caso não existam mais nós a serem inseridos, uma solução foi encontrada
+			if (verticeAtual == -1)
+			{
 				break;
 			}
+			//adiciona o vértice atual ao conjunto solução
 			dominanteMinimo->adiciona(verticeAtual);
 
+			//caso o vértice atual não tenha vizinhos uma solução foi encontrada
 			if (lista->getNo(verticeAtual)->getGrau() == 0)
 			{
 				break;
 			}
 
+			//remove o vértice atual e os seus vizinhos da lista de candidatos
 			deletaVizinhos(verticeAtual, lista);
 			lista->deletaNo(verticeAtual);
 
+			//caso a lista esteja vazia, uma solução foi encontrada
 			if (lista->getTamanho() == 0)
 			{
 				break;
 			}
-			//caso o vetor de v�rtices tenha tamanho 1 ou 2, um v�rtice aleat�rio � incluido e finaliza a solu��o
+
+			//caso o vetor de vértices tenha tamanho 1 ou 2, um vértice aleatório é incluido e finaliza a solução
 			if (lista->getTamanho() == 1)
 			{
 				dominanteMinimo->adicionaEspecial(lista->getPos(0)->getId());
@@ -615,11 +633,13 @@ int* Grafo::gulosoRandomizado(float alfa)
 				dominanteMinimo->adicionaEspecial(lista->getPos(aleatorio)->getId());
 				break;
 			}
-			//define o no com maior grau como o pr�ximo no inicial
+
+			//é difinido como vértice atual um nó aleatório da sublista ordenada de melhores candidatos
 			verticeAtual = encontraMaiorGrauRandomizado(lista, alfa);
 		}
 
-		for (NoLista* aux = dominanteMinimo->getPosicao(0); aux != nullptr; aux = aux->getProx())
+		//verifica se a sulução encontrada é válida
+		for (NoLista *aux = dominanteMinimo->getPosicao(0); aux != nullptr; aux = aux->getProx())
 		{
 			if (valores->getTamanho() == 0)
 			{
@@ -628,7 +648,7 @@ int* Grafo::gulosoRandomizado(float alfa)
 			else
 			{
 				bool verifica = false;
-				for (NoLista* aux1 = valores->getPosicao(0); aux1 != nullptr; aux1 = aux1->getProx())
+				for (NoLista *aux1 = valores->getPosicao(0); aux1 != nullptr; aux1 = aux1->getProx())
 				{
 					if (aux->getInfo() == aux1->getInfo())
 					{
@@ -641,11 +661,7 @@ int* Grafo::gulosoRandomizado(float alfa)
 				}
 			}
 		}
-		atual = 0;
-		for (NoLista* aux = valores->getPosicao(0); aux != nullptr; aux = aux->getProx())
-		{
-			atual++;
-		}
+		atual = valores->getTamanho();
 		if (atual < melhorResultado)
 		{
 			melhorResultado = atual;

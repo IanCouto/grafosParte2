@@ -31,10 +31,10 @@ public:
     int getQuantAresta();
     bool isComecaZero();
 
-    //Setters
+    //Setter
     void setQuantAresta(int val);
 
-    //Outros m�todos
+    //Outros métodos
     void inserirAresta(int id, int id_destino);
     void mostrarGrafo(ofstream& arquivo_saida);
     void mostrarArestas(ofstream& arquivo_saida);

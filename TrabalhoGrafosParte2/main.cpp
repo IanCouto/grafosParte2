@@ -211,7 +211,6 @@ int main(int argc, char *argv[])
     cout << "Carregando... " << endl;
 
     //Verificação se todos os parâmetros do programa foram encontrados
-    
     if (argc != 3)
     {
         cout << "ERRO: Esperado: ./<nome_programa> <arquivo_entrada> <arquivo_saida>" << endl;
@@ -221,21 +220,18 @@ int main(int argc, char *argv[])
     //Abrindo arquivo de entrada
     ifstream arquivo_entrada;
     ofstream arquivo_saida;
-    //arquivo_entrada.open("instancias/Problem.dat_50_50_0", ios::in);
-    //arquivo_saida.open("resultado.txt", ios::out | ios::trunc);
     arquivo_entrada.open(argv[1], ios::in);
     arquivo_saida.open(argv[2], ios::out | ios::trunc);
 
     Grafo *grafo = new Grafo();
 
+    //verifica se o arquivo de entrada foi aberto
     if (arquivo_entrada.is_open())
         grafo = leitura(arquivo_entrada);
     else
         cout << "Nao foi possivel abrir o arquivo " << argv[1] << endl;
 
     cout << "Carregamento Concluido!" << endl;
-
-    //grafo->gerarResultadosGrafo(arquivo_saida);
 
     arquivo_saida << endl
                   << "------------------------------" << endl
