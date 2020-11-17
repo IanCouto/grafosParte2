@@ -195,6 +195,13 @@ Grafo *leitura(ifstream &arquivo_entrada)
         }
     }
 
+    if (grafo->isConexo()) {
+        cout << "Grafo eh conexo!" << endl;
+    }
+    else {
+        cout << "Atencao o grafo nao e conexo!" << endl;
+        exit(1);
+    }
     return grafo;
 }
 

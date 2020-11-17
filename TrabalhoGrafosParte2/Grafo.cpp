@@ -77,6 +77,51 @@ void Grafo::setQuantAresta(int val)
 }
 
 /**
+* Função que faz busca em profundidade
+* @param v vértice atual
+* @param visitados vetor de vértices visitados
+* @param lista lista com vértices para serem visitados
+*/
+void Grafo::buscaEmProfundidade(int v, bool visitados[], ListaEncadeada *lista)
+{
+	//Marca o vértice atual como visitado
+	visitados[v] = true;
+
+	//Percorre os vizinhos do vértice atual e coloca na lista para serem visitados
+	for (No* aux = &listaAdj[v]; aux != nullptr; aux = aux->getProximoNo()) {
+		if (!visitados[aux->getNoDestino()]) {
+			lista->adicionaEspecial(aux->getNoDestino());
+		}
+	}
+	
+	while (lista->getTamanho() > 0) {
+		int x = lista->getUltimo();
+		lista->removeValor(x);
+		buscaEmProfundidade(x, visitados, lista);
+	}
+}
+
+/*
+* Função para verificar se o grafo é conexo
+* @return bool 
+*/
+bool Grafo::isConexo() {
+	bool* visitados = new bool[this->getOrdem()];
+	// Marca todos os vértices como não visitados
+	for (int i = 0; i < this->getOrdem(); i++)
+		visitados[i] = false;
+	ListaEncadeada * lista= new ListaEncadeada();
+	buscaEmProfundidade(0, visitados,lista);
+
+	for (int i = 0; i < this->getOrdem(); i++) {
+		if (visitados[i] == false)
+			return false;
+	}
+	delete lista;
+	return true;
+}
+
+/**
  * fun��o auxiliar para inserir arestas no grafo
  * @param id id do nó de origem
  * @param id_destino id do nó de destino
@@ -165,10 +210,12 @@ void Grafo::mostrarGrafo(ofstream &arquivo_saida)
 	arquivo_saida << "------------GRAFO-------------" << endl;
 	arquivo_saida << "  No  |  No(s) Vizinho(s) " << endl;
 	arquivo_saida << "------------------------------" << endl;
-	int atual = 0;
+	int vertices = 0;
+	int arestas = 0;
 	//acertar a posição dos elementos a serem imprimidos
 	for (int i = 0; i < getOrdem(); i++)
 	{
+		vertices++;
 		if (!comecaZero && i == 0)
 		{
 			arquivo_saida << this->getOrdem();
@@ -208,6 +255,7 @@ void Grafo::mostrarGrafo(ofstream &arquivo_saida)
 		//percorre o nó imprimindo todas as arestas
 		for (No *a = &listaAdj[i]; a != nullptr; a = a->getProximoNo())
 		{
+			arestas++;
 			if (!comecaZero && a->getNoDestino() == 0)
 			{
 				if (a->getProximoNo() != nullptr)
@@ -225,6 +273,9 @@ void Grafo::mostrarGrafo(ofstream &arquivo_saida)
 		}
 		arquivo_saida << endl;
 	}
+
+	arquivo_saida << "Número de vértices: " << vertices<<endl;
+	arquivo_saida << "Número de arestas: " <<arestas<< endl;
 	arquivo_saida << "--------------------------------------------------------------------------------------------------------" << endl
 				  << endl;
 }
@@ -239,6 +290,7 @@ void Grafo::mostrarNos(ofstream &arquivo_saida)
 	arquivo_saida << "  No  |   Grau " << endl;
 	arquivo_saida << "------------------------------" << endl;
 	int atual = 0;
+	int arestas = 0;
 	//acertar a posi��o dos elementos a serem imprimidos
 	for (int i = 0; i < getOrdem(); i++)
 	{
@@ -281,11 +333,13 @@ void Grafo::mostrarNos(ofstream &arquivo_saida)
 		//percorre o grafo, imprimindo as arestas
 		for (No *a = &listaAdj[i]; a != nullptr; a = a->getProximoNo())
 		{
+			arestas++;
 			atual++;
 		}
 		arquivo_saida << atual << endl;
 		atual = 0;
 	}
+	arquivo_saida << "Número de arestas: " << arestas << endl;
 	arquivo_saida << "--------------------------------------------------------------------------------------------------------" << endl
 				  << endl;
 }

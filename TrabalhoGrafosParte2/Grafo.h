@@ -19,6 +19,8 @@ private:
     bool auxInserirAresta(int id, int id_destino);
     int encontraMaiorGrau(ListaAdjacenteEncadeada* lista);
     int encontraMaiorGrauRandomizado(ListaAdjacenteEncadeada* lista, float alfa);
+    void buscaEmProfundidade(int no, bool visitados[], ListaEncadeada* lista);
+    
 
 public:
     //Contrutor e Destrutor
@@ -35,6 +37,7 @@ public:
     void setQuantAresta(int val);
 
     //Outros métodos
+    bool isConexo();
     void inserirAresta(int id, int id_destino);
     void mostrarGrafo(ofstream& arquivo_saida);
     void mostrarArestas(ofstream& arquivo_saida);

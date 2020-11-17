@@ -21,6 +21,7 @@ public:
     bool verificaElemento(int val); //verifica se o valor está na lista
     void imprimeLista();//imprime a lista
     NoLista* getPosicao(int pos); //retorna o valor na posicao pos
+    int getUltimo(); //retorna o ultimo valor
 };
 
 #endif // LISTAENCADEADA_H_INCLUDED

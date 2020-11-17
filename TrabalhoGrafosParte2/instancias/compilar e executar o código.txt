@@ -1,2 +1,2 @@
 g++ *.c* -o exec.exe
-exec.exe instancias/grafo_800_5000_0.txt resultados/resultado.txt
+exec.exe instancias/Problem.dat_800_0_0 resultados/resultado.txt

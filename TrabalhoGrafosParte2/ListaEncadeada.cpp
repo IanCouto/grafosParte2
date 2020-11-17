@@ -119,9 +119,48 @@ void ListaEncadeada::adiciona(int val, int info2)
  */
 void ListaEncadeada::removeValor(int val)
 {
+    if (this->getTamanho() > 0) {
+        NoLista* p = nullptr;
+        if (tamanho == 1 && noInicio->getInfo() == val) {
+            delete noInicio;
+            noInicio = nullptr;
+            noFim = nullptr;
+            this->tamanho--;
+        }
+        else if (noInicio->getInfo() == val) {
+            p = noInicio;
+            noInicio = noInicio->getProx();
+        }
+        else if (noFim->getInfo() == val) {
+            p = noFim;
+            noFim = noFim->getAnt();
+        }
+        else {
+            //Percorre a lista para ver se no é encontrado
+            for (NoLista* aux = noInicio; aux != nullptr; aux = aux->getProx()) {
+                if (aux->getInfo() == val) {
+                    p = aux;
+                    break;
+                }
+            }
+        }
+        if (tamanho > 0) {
+            if (p != nullptr) {
+                if (p->getAnt() != nullptr)
+                    p->getAnt()->setProx(p->getProx());
+                if (p->getProx() != nullptr)
+                    p->getProx()->setAnt(p->getAnt());
+                this->tamanho--;
+            }
+        }
+        delete p;
+    }
+    /*
     int cont = 0;
-    for (NoLista* aux = noInicio; aux != nullptr; aux = aux->getProx(), cont++)
+    NoLista* p = nullptr;
+    for (NoLista* aux = noInicio; aux != nullptr; aux = p, cont++)
     {
+         p= aux->getProx();
         if (aux->getInfo() == val || aux->getInfo2() == val)
         {
             //Caso base
@@ -143,6 +182,7 @@ void ListaEncadeada::removeValor(int val)
             free(aux);
         }
     }
+    */
 }
 
 /**
@@ -210,6 +250,11 @@ NoLista* ListaEncadeada::getPosicao(int pos)
         }
     }
     return nullptr;
+}
+
+int ListaEncadeada::getUltimo()
+{
+    return noFim->getInfo();
 }
 
 /*
