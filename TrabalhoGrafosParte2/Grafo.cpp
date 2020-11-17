@@ -289,7 +289,6 @@ void Grafo::mostrarNos(ofstream &arquivo_saida)
 	arquivo_saida << "  No  |   Grau " << endl;
 	arquivo_saida << "------------------------------" << endl;
 	int atual = 0;
-	int arestas = 0;
 	//acertar a posi��o dos elementos a serem imprimidos
 	for (int i = 0; i < getOrdem(); i++)
 	{
@@ -338,7 +337,7 @@ void Grafo::mostrarNos(ofstream &arquivo_saida)
 		arquivo_saida << atual << endl;
 		atual = 0;
 	}
-	arquivo_saida << "Número de arestas: " << arestas/2 << endl;
+	
 	arquivo_saida << "--------------------------------------------------------------------------------------------------------" << endl
 				  << endl;
 }
@@ -374,6 +373,7 @@ void Grafo::mostrarArestas(ofstream &arquivo_saida)
 			}
 		}
 	}
+	arquivo_saida << "Número de arestas: " << this->quant_aresta << endl;
 	arquivo_saida << "--------------------------------------------------------------------------------------------------------" << endl
 				  << endl;
 }
