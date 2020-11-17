@@ -331,7 +331,6 @@ void Grafo::mostrarNos(ofstream &arquivo_saida)
 		//percorre o grafo, imprimindo as arestas
 		for (No *a = &listaAdj[i]; a != nullptr; a = a->getProximoNo())
 		{
-			arestas++;
 			atual++;
 		}
 		arquivo_saida << atual << endl;
