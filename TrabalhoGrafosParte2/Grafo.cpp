@@ -273,9 +273,8 @@ void Grafo::mostrarGrafo(ofstream &arquivo_saida)
 		}
 		arquivo_saida << endl;
 	}
-
 	arquivo_saida << "Número de vértices: " << vertices<<endl;
-	arquivo_saida << "Número de arestas: " <<arestas<< endl;
+	arquivo_saida << "Número de arestas: " <<arestas/2<< endl;
 	arquivo_saida << "--------------------------------------------------------------------------------------------------------" << endl
 				  << endl;
 }
@@ -339,7 +338,7 @@ void Grafo::mostrarNos(ofstream &arquivo_saida)
 		arquivo_saida << atual << endl;
 		atual = 0;
 	}
-	arquivo_saida << "Número de arestas: " << arestas << endl;
+	arquivo_saida << "Número de arestas: " << arestas/2 << endl;
 	arquivo_saida << "--------------------------------------------------------------------------------------------------------" << endl
 				  << endl;
 }
